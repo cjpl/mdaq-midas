@@ -1,0 +1,75 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+#include /usr/share/cdbs/1/rules/debhelper.mk
+#include /usr/share/cdbs/1/class/autotools.mk
+
+# Uncomment this to turn on verbose mode.
+export DH_VERBOSE=1
+
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+# PKGDIR
+override_dh_auto_build:
+	dh_auto_build -- build
+override_dh_auto_configure:
+	@echo "Skip!"
+
+pre-build:
+	cp -rvp $(CURDIR)/debian/autoconf/* $(CURDIR)
+
+## Build source with root support
+BUILD_R_TMPD=$(CURDIR)/debian/build/root
+root-builddir: pre-build
+	@mkdir -p $(BUILD_R_TMPD)
+
+root-build: root-builddir
+	@cd $(BUILD_R_TMPD) && \
+	$(CURDIR)/configure --enable-root --prefix=/usr \
+	   --exec-prefix=/usr/lib/daq-midas --docdir=/usr/share/doc/daq-midas \
+	   --includedir=/usr/lib/daq-midas/include \
+	   --datadir=/usr/share/daq-midas \
+	&& $(MAKE) DESTDIR=`pwd` install
+
+## Build source without root support
+BUILD_NR_TMPD=$(CURDIR)/debian/build/noroot
+noroot-builddir: pre-build
+	@mkdir -p $(BUILD_NR_TMPD)
+
+noroot-build: noroot-builddir
+	@cd $(BUILD_NR_TMPD) && \
+	$(CURDIR)/configure --disable-root --prefix=/usr \
+	   --exec-prefix=/usr/lib/daq-midas --docdir=/usr/share/doc/daq-midas \
+	   --includedir=/usr/lib/daq-midas/include \
+	   --datadir=/usr/share/daq-midas \
+	&& $(MAKE) DESTDIR=`pwd` install
+
+HTML_TMPD=$(CURDIR)/debian/build/doc
+dox-build:
+	@mkdir -p $(HTML_TMPD)
+	@cd midas/doxfiles && doxygen midox.cfg
+	@cd midas/doxfiles && for i in def html latex man midox.log ; do \
+	   mv -f $$i $(HTML_TMPD) ; done
+	@tar zxvf $(CURDIR)/midasdoc-images.tar.gz -C $(HTML_TMPD)
+	@mv -f $(HTML_TMPD)/images/* $(HTML_TMPD)/html/
+	@rmdir $(HTML_TMPD)/images
+
+##############################################################################
+%:
+	dh $@
+
+build: root-build noroot-build dox-build
+
+pre-clean:
+	@rm -rf $(BUILD_R_TMPD)
+	@rm -rf $(BUILD_NR_TMPD)
+	@rm -rf $(CURDIR)/debian/build
+	@rm -rf $(CURDIR)/debian/daq-midas-root
+	@rm -rf $(CURDIR)/debian/daq-midas-dev-root
+	@rm -rf $(CURDIR)/debian/daq-midas-noroot
+	@rm -rf $(CURDIR)/debian/daq-midas-dev-noroot
+	@rm -rf $(CURDIR)/debian/daq-midas-doc
+	@cd $(CURDIR)/debian && rm -f *.debhelper *.substvars *.log
+
+#binary-arch:
+

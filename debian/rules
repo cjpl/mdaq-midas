@@ -26,9 +26,9 @@ root-builddir: pre-build
 root-build: root-builddir
 	@cd $(BUILD_R_TMPD) && \
 	$(CURDIR)/configure --enable-root --prefix=/usr \
-	   --exec-prefix=/usr/lib/daq-midas --docdir=/usr/share/doc/daq-midas \
-	   --includedir=/usr/lib/daq-midas/include \
-	   --datadir=/usr/share/daq-midas \
+	   --exec-prefix=/usr/lib/mdaq --docdir=/usr/share/doc/mdaq \
+	   --includedir=/usr/lib/mdaq/include \
+	   --datadir=/usr/share/mdaq \
 	&& $(MAKE) DESTDIR=`pwd` install
 
 ## Build source without root support
@@ -39,9 +39,9 @@ noroot-builddir: pre-build
 noroot-build: noroot-builddir
 	@cd $(BUILD_NR_TMPD) && \
 	$(CURDIR)/configure --disable-root --prefix=/usr \
-	   --exec-prefix=/usr/lib/daq-midas --docdir=/usr/share/doc/daq-midas \
-	   --includedir=/usr/lib/daq-midas/include \
-	   --datadir=/usr/share/daq-midas \
+	   --exec-prefix=/usr/lib/mdaq --docdir=/usr/share/doc/mdaq \
+	   --includedir=/usr/lib/mdaq/include \
+	   --datadir=/usr/share/mdaq \
 	&& $(MAKE) DESTDIR=`pwd` install
 
 HTML_TMPD=$(CURDIR)/debian/build/doc
@@ -64,11 +64,9 @@ pre-clean:
 	@rm -rf $(BUILD_R_TMPD)
 	@rm -rf $(BUILD_NR_TMPD)
 	@rm -rf $(CURDIR)/debian/build
-	@rm -rf $(CURDIR)/debian/daq-midas-root
-	@rm -rf $(CURDIR)/debian/daq-midas-dev-root
-	@rm -rf $(CURDIR)/debian/daq-midas-noroot
-	@rm -rf $(CURDIR)/debian/daq-midas-dev-noroot
-	@rm -rf $(CURDIR)/debian/daq-midas-doc
+	@rm -rf $(CURDIR)/debian/mdaq-root
+	@rm -rf $(CURDIR)/debian/mdaq-noroot
+	@rm -rf $(CURDIR)/debian/mdaq-doc
 	@cd $(CURDIR)/debian && rm -f *.debhelper *.substvars *.log
 
 #binary-arch:

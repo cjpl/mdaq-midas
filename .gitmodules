@@ -1,0 +1,6 @@
+[submodule "midas"]
+	path = midas
+	url = git@memes:bot-midas.git
+[submodule "mxml"]
+	path = mxml
+	url = git@memes:bot-mxml.git

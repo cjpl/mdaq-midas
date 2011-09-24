@@ -1,0 +1,147 @@
+#!/usr/bin/env bash
+
+# check path
+fullpath1=`readlink $0`
+if [ "$?" -ne "0" ]; then
+    fullpath1=$0
+else
+    if [ ${fullpath1##/} = $fullpath1 ] && [ ${fullpath1##~} = $fullpath1 ]; then
+        # relative path, prepend directory where executable was found
+	lpath=`dirname $0`
+	fullpath1=$lpath/$fullpath1
+    fi
+fi
+progdir=`dirname $fullpath1`
+runningdir=`pwd`
+if [ ${progdir##/} != $progdir ] || [ ${progdir##~} != $progdir ]; then
+    # absolute path
+    fullpath=$progdir
+else
+    # relative path
+    if [ $progdir != "." ]; then
+	fullpath=$runningdir/$progdir
+    else
+	fullpath=$runningdir
+    fi
+fi
+# work around readlink versions not having -f option
+fullpath1=`readlink $fullpath`
+if [ "$?" -ne "0" ]; then
+    fullpath1=$fullpath
+fi
+
+target=@target@
+platform=@platform@
+
+prefix=@prefix@
+bindir=@bindir@
+libdir=@libdir@
+incdir=@includedir@
+datadir=@datarootdir@
+srcdir=@datadir@/src
+examplesdir=@docdir@/examples
+drvdir=@datadir@/drivers
+
+config="@mdaq_config_args@"
+
+enable_root=@mdaq_enable_root@
+enable_root_static=@mdaq_enable_root_static@
+mdaq_cflags="@mdaq_cflags@ -I@includedir@"
+mdaq_libs="@mdaq_libs@ -L@libdir@ -lmidas"
+mdaq_shlibs="@mdaq_libs@ -L@libdir@ -lmidas-shared"
+
+version=@PACKAGE_VERSION@
+
+altcc="@CC@"
+altcxx="@CXX@"
+altld="@LD@"
+
+#### Main
+usage="\
+Usage: mdaq-config [--config] [--target] [--platform]\
+ [--cflags] [--libs] [--shlibs] [--enable-root] [--enable-root-static]\
+ [--prefix] [--bindir] [--libdir] [--incdir] [--datadir] [--srcdir]\
+ [--examplesdir] [--drvdir]\
+ [--help] [--version]"
+
+if test $# -eq 0; then
+    echo "${usage}" 1>&2
+    exit 1
+fi
+
+out=""
+
+while test $# -gt 0; do
+    case "$1" in
+	-*=*) optarg=`echo "$1" | sed 's/[-_a-zA-Z0-9]*=//'` ;;
+	*)    optarg= ;;
+    esac
+
+    case $1 in
+	--config)
+	    out="$out $config"
+	    ;;
+	--target)
+	    out="$out $target"
+	    ;;
+	--platform)
+	    out="$out $platform"
+	    ;;
+	--cflags)
+	    out="$out ${mdaq_cflags}"
+	    ;;
+	--libs)
+	    out="$out ${mdaq_libs}"
+	    ;;
+	--shlibs)
+	    out="$out ${mdaq_shlibs}"
+	    ;;
+	--enable-root)
+	    out="$out ${enable_root}"
+	    ;;
+	--enable-root-static)
+	    out="$out ${enable_root_static}"
+	    ;;
+	--prefix)
+	    out="$out $prefix"
+	    ;;
+	--bindir)
+	    out="$out $bindir"
+	    ;;
+	--libdir)
+	    out="$out $libdir"
+	    ;;
+	--incdir)
+	    out="$out $incdir"
+	    ;;
+	--datadir)
+	    out="$out $datadir"
+	    ;;
+	--srcdir)
+	    out="$out $srcdir"
+	    ;;
+	--examplesdir)
+	    out="$out $examplesdir"
+	    ;;
+	--drvdir)
+	    out="$out $drvdir"
+	    ;;
+	--version)
+	    out="$out $version"
+	    ;;
+	--help)
+	    echo "${usage}"
+	    ;;
+	*)
+      ### Give an error
+	    echo "Unknown argument \"$1\"!" 1>&2
+	    echo "${usage}" 1>&2
+	    exit 1
+	    ;;
+    esac
+    shift
+done
+
+## Output
+echo $out
+

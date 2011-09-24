@@ -1,0 +1,6 @@
+debian/build/root/usr/bin/mdaq-config             /usr/bin
+debian/build/root/usr/lib/daq-midas/bin		 /usr/lib/daq-midas
+debian/build/root/usr/lib/daq-midas/lib/libmidas-shared-2.3.0.so  /usr/lib/daq-midas/lib
+debian/build/root/usr/lib/daq-midas/lib/libmidas-shared.la	  /usr/lib/daq-midas/lib
+debian/build/root/usr/lib/daq-midas/lib/libmidas-shared.so	  /usr/lib/daq-midas/lib
+debian/build/root/usr/lib/daq-midas/lib/libmidas.a		  /usr/lib/daq-midas/lib

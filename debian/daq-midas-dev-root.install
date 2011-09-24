@@ -1,0 +1,8 @@
+debian/build/root/usr/lib/daq-midas/lib/hmana.o		/usr/lib/daq-midas/lib
+debian/build/root/usr/lib/daq-midas/lib/mfe.o		/usr/lib/daq-midas/lib
+debian/build/root/usr/lib/daq-midas/lib/mana.o		/usr/lib/daq-midas/lib
+debian/build/root/usr/lib/daq-midas/lib/rmana.o		/usr/lib/daq-midas/lib
+debian/build/root/usr/lib/daq-midas/lib/fal.o		/usr/lib/daq-midas/lib
+debian/build/root/usr/lib/daq-midas/include 		/usr/lib/daq-midas
+debian/build/root/usr/share/daq-midas	 		/usr/share
+midas/examples/       					/usr/share/doc/daq-midas

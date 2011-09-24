@@ -4,3 +4,10 @@ debian/build/noroot/usr/lib/daq-midas/lib/libmidas-shared-2.3.0.so  /usr/lib/daq
 debian/build/noroot/usr/lib/daq-midas/lib/libmidas-shared.la	    /usr/lib/daq-midas/lib
 debian/build/noroot/usr/lib/daq-midas/lib/libmidas-shared.so	    /usr/lib/daq-midas/lib
 debian/build/noroot/usr/lib/daq-midas/lib/libmidas.a		    /usr/lib/daq-midas/lib
+debian/build/noroot/usr/lib/daq-midas/lib/hmana.o	/usr/lib/daq-midas/lib
+debian/build/noroot/usr/lib/daq-midas/lib/mfe.o		/usr/lib/daq-midas/lib
+debian/build/noroot/usr/lib/daq-midas/lib/mana.o	/usr/lib/daq-midas/lib
+debian/build/noroot/usr/lib/daq-midas/lib/fal.o		/usr/lib/daq-midas/lib
+debian/build/noroot/usr/lib/daq-midas/include 		/usr/lib/daq-midas
+debian/build/noroot/usr/share/daq-midas	 		/usr/share
+midas/examples/       					/usr/share/doc/daq-midas

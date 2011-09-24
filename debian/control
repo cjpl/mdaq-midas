@@ -1,31 +1,17 @@
-Source: daq-midas
+Source: mdaq
 Section: misc
 Priority: extra
 Maintainer: Exaos Lee <exaos.lee@gmail.com>
-Build-Depends: debhelper (>= 7.0.50~), libc6-dev, zlib1g-dev, libmysqlclient-dev, unixodbc-dev, root-system, bash-completion
+Build-Depends: debhelper (>= 7.0.50~), libc6-dev, zlib1g-dev, libmysqlclient-dev, unixodbc-dev, root-system, bash-completion, python-yaml
 Standards-Version: 3.8.0
 Homepage: http://midas.psi.ch/
 Vcs-Svn: svn+ssh://svn@savannah.psi.ch/repos/meg/midas/trunk
 Vcs-Browser: http://savannah.psi.ch/websvn/listing.php?repname=midas&path=%2Ftrunk%2F
 
-# Package: daq-midas
-# Architecture: any
-# Depends: ${shlibs:Depends}, ${misc:Depends}
-# Description: MIDAS DAQ software suite
-#  Midas is a versatile Data acquisition System for medium scale physics
-#  experiments. Midas is a result of a development effort made by Stefan Ritt at
-#  PSI/Switzerland (Midas@PSI) in collaboration with the members of the Data
-#  acquisition group at Triumf/Canada.
-#  .
-#  The main purpose of the MIDAS DAQ is to provide:
-#  * data collection from local and/or remote hardware source.
-#  * data recording to common storage media.
-#  * Full data flow control.
-#  .
-#  This is a virtual package provided by 'daq-midas-root' or 'daq-midas-noroot'.
-
-Package: daq-midas-doc
+Package: mdaq-doc
 Architecture: all
+Conflicts: daq-midas-doc
+Replaces: daq-midas-doc
 Description: MIDAS DAQ software - documentation
  Midas is a versatile Data acquisition System for medium scale physics
  experiments. Midas is a result of a development effort made by Stefan Ritt at
@@ -36,12 +22,12 @@ Description: MIDAS DAQ software - documentation
  installation, setup, running, and development.
  The documentation package also contains examples.
 
-Package: daq-midas-root
+Package: mdaq-root
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, root-system
-Provides: daq-midas
-Conflicts: daq-midas-noroot
-Replaces: daq-midas-noroot
+Provides: mdaq
+Conflicts: mdaq-noroot, daq-midas-root, daq-midas-dev-root
+Replaces: mdaq-noroot, daq-midas-root, daq-midas-dev-root
 Description: MIDAS DAQ software suite with root
  Midas is a versatile Data acquisition System for medium scale physics
  experiments. Midas is a result of a development effort made by Stefan Ritt at
@@ -55,12 +41,12 @@ Description: MIDAS DAQ software suite with root
  .
  This package provide the full MIDAS environment with 'root-system' installed.
 
-Package: daq-midas-noroot
+Package: mdaq-noroot
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Provides: daq-midas
-Conflicts: daq-midas-root
-Replaces: daq-midas-root
+Provides: mdaq
+Conflicts: mdaq-root, daq-midas-noroot, daq-midas-dev-noroot
+Replaces: mdaq-root, daq-midas-noroot, daq-midas-dev-noroot
 Description: MIDAS DAQ software suite without root
  Midas is a versatile Data acquisition System for medium scale physics
  experiments. Midas is a result of a development effort made by Stefan Ritt at
@@ -74,47 +60,7 @@ Description: MIDAS DAQ software suite without root
  .
  This package provide MIDAS environment without ROOT.
 
-Package: daq-midas-dev-root
-Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, daq-midas-root
-Provides: daq-midas-dev
-Conflicts: daq-midas-dev-noroot
-Replaces: daq-midas-dev-noroot
-Description: MIDAS DAQ software - developments
- Midas is a versatile Data acquisition System for medium scale physics
- experiments. Midas is a result of a development effort made by Stefan Ritt at
- PSI/Switzerland (Midas@PSI) in collaboration with the members of the Data
- acquisition group at Triumf/Canada.
- .
- This package provides the development files needed to compile a MIDAS DAQ
- codes, including:
- * headers, objects and necessary sources
- * various drivers - VME, CAMAC, etc.
- * examples
- .
- This development package have to be used with 'root-system' installed.
-
-Package: daq-midas-dev-noroot
-Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, daq-midas-noroot
-Provides: daq-midas-dev
-Conflicts: daq-midas-dev-root
-Replaces: daq-midas-dev-root
-Description: MIDAS DAQ software - developments
- Midas is a versatile Data acquisition System for medium scale physics
- experiments. Midas is a result of a development effort made by Stefan Ritt at
- PSI/Switzerland (Midas@PSI) in collaboration with the members of the Data
- acquisition group at Triumf/Canada.
- .
- This package provides the development files needed to compile a MIDAS DAQ
- codes, including:
- * headers, objects and necessary sources
- * various drivers - VME, CAMAC, etc.
- * examples
- .
- This development package can be used without 'root-system' installed.
-
-# Package: daq-midas-extra
+# Package: mdaq-utils
 # Architecture: any
 # Depends: ${shlibs:Depends}, ${misc:Depends}
 # Description: MIDAS DAQ software - extra stuff

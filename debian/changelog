@@ -1,3 +1,9 @@
+mdaq (2.3.0+r5065-2) unstable; urgency=low
+
+  * Rename package name to "mdaq-XXX"
+  
+ -- Exaos Lee <exaos.lee@gmail.com> Sun, 25 Sep 2011 02:43:50 +0800
+
 daq-midas (2.3.0+r5065-1) unstable; urgency=low
 
   * Initial release.

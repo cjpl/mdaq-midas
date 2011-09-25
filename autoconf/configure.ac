@@ -7,7 +7,7 @@ AC_INIT([mdaq], [2.3.0+r5065], [exaos.lee@gmail.com])
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
-#AC_INIT_AUTOMAKE()
+AM_INIT_AUTOMAKE(mdaq, 2.3)
 
 ############################################################
 # Checking sources
@@ -48,9 +48,9 @@ AC_PROG_CC_C_O
 AC_PROG_CXX_C_O
 AC_PROG_INSTALL
 #C_PROG_MAKE_SET
-#AC_PROG_RANLIB
+AC_PROG_RANLIB
 #AC_LIBTOOL_DLOPEN
-#AC_PROG_LIBTOOL
+AC_PROG_LIBTOOL
 
 AC_SUBST(mdaq_cflags)
 AC_SUBST(mdaq_osflags)

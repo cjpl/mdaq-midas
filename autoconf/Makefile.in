@@ -43,9 +43,8 @@ EXTRA_PROGRAMS = mh2sql$(EXEEXT) dio$(EXEEXT) mlxspeaker$(EXEEXT)
 subdir = .
 DIST_COMMON = $(am__configure_deps) $(dist_bin_SCRIPTS) \
 	$(include_HEADERS) $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
-	$(top_srcdir)/addons/mdaq-config.in $(top_srcdir)/configure \
-	compile config.guess config.sub depcomp install-sh ltmain.sh \
-	missing
+	$(srcdir)/mdaq-config.in $(top_srcdir)/configure compile \
+	config.guess config.sub depcomp install-sh ltmain.sh missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -53,7 +52,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
-CONFIG_CLEAN_FILES = addons/mdaq-config
+CONFIG_CLEAN_FILES = mdaq-config
 CONFIG_CLEAN_VPATH_FILES =
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
@@ -259,11 +258,7 @@ DIST_ARCHIVES = $(distdir).tar.gz
 GZIP_ENV = --best
 distuninstallcheck_listfiles = find . -type f -print
 distcleancheck_listfiles = find . -type f -print
-
-#  Makefile.am for MIDAS automake
-#  2011-06-17: created by Exaos Lee (exaos.lee@gmail.com)
-########################################################################
-VPATH = @srcdir@/midas/include:@srcdir@/midas/src:@srcdir@/midas/utils:@srcdir@/mxml:@mscb_dir@
+VPATH = @srcdir@/../midas/include:@srcdir@/../midas/src:@srcdir@/../midas/utils:@srcdir@/../mxml:@mscb_dir@
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
 AR = @AR@
@@ -403,26 +398,31 @@ target_vendor = @target_vendor@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+
+#  Makefile.am for MIDAS automake
+#  2011-06-17: created by Exaos Lee (exaos.lee@gmail.com)
+########################################################################
+AUTOMAKE_OPTIONS = foreign
 #ACLOCAL_AMFLAGS = -I m4
 ROOTSYS = @root_sys@
 MDAQ_CFLAGS = @mdaq_cflags@
 MDAQ_LIBS = @mdaq_libs@ $(LIBS)
-AM_CFLAGS = -I@srcdir@/midas/include -I@srcdir@/mxml $(MDAQ_CFLAGS)
+AM_CFLAGS = -I@srcdir@/../midas/include -I@srcdir@/../mxml $(MDAQ_CFLAGS)
 AM_CXXFLAGS = $(AM_CFLAGS) @root_cflags@
 AM_LDFLAGS = $(MDAQ_LIBS)
-MDAQ_LIBSRCS = @srcdir@/midas/src/midas.c \
-@srcdir@/midas/src/system.c \
-@srcdir@/midas/src/mrpc.c \
-@srcdir@/midas/src/odb.c \
-@srcdir@/midas/src/ftplib.c \
-@srcdir@/midas/src/dm_eb.c \
-@srcdir@/midas/src/history_midas.cxx \
-@srcdir@/midas/src/history_sql.cxx \
-@srcdir@/midas/src/history.c \
-@srcdir@/midas/src/alarm.c \
-@srcdir@/midas/src/elog.c \
-@srcdir@/mxml/mxml.c \
-@srcdir@/mxml/strlcpy.c
+MDAQ_LIBSRCS = @srcdir@/../midas/src/midas.c \
+@srcdir@/../midas/src/system.c \
+@srcdir@/../midas/src/mrpc.c \
+@srcdir@/../midas/src/odb.c \
+@srcdir@/../midas/src/ftplib.c \
+@srcdir@/../midas/src/dm_eb.c \
+@srcdir@/../midas/src/history_midas.cxx \
+@srcdir@/../midas/src/history_sql.cxx \
+@srcdir@/../midas/src/history.c \
+@srcdir@/../midas/src/alarm.c \
+@srcdir@/../midas/src/elog.c \
+@srcdir@/../mxml/mxml.c \
+@srcdir@/../mxml/strlcpy.c
 
 lib_LIBRARIES = libmidas.a
 libmidas_a_SOURCES = $(MDAQ_LIBSRCS)
@@ -432,27 +432,27 @@ libmidas_shared_la_CFLAGS = $(AM_CFLAGS)
 libmidas_shared_la_CXXFLAGS = $(AM_CXXFLAGS)
 #libmidas_shared_la_LDFLAGS = -shared #-module -avoid-version
 libmidas_shared_la_LDFLAGS = -shared -release 2.3.0
-include_HEADERS = @srcdir@/midas/include/cfortran.h \
-@srcdir@/midas/include/esone.h \
-@srcdir@/midas/include/ftplib.h \
-@srcdir@/midas/include/hardware.h \
-@srcdir@/midas/include/hbook.h \
-@srcdir@/midas/include/history.h \
-@srcdir@/midas/include/mcstd.h \
-@srcdir@/midas/include/mdsupport.h \
-@srcdir@/midas/include/mfbstd.h \
-@srcdir@/midas/include/mgd.h \
-@srcdir@/midas/include/midas.h \
-@srcdir@/midas/include/midas.inc \
-@srcdir@/midas/include/midasinc.h \
-@srcdir@/midas/include/midas_macro.h \
-@srcdir@/midas/include/mrpc.h \
-@srcdir@/midas/include/msystem.h \
-@srcdir@/midas/include/musbstd.h \
-@srcdir@/midas/include/mvmestd.h \
-@srcdir@/midas/include/pvm3.h \
-@srcdir@/midas/include/ybos.h \
-@srcdir@/mxml/mxml.h @srcdir@/mxml/strlcpy.h
+include_HEADERS = @srcdir@/../midas/include/cfortran.h \
+@srcdir@/../midas/include/esone.h \
+@srcdir@/../midas/include/ftplib.h \
+@srcdir@/../midas/include/hardware.h \
+@srcdir@/../midas/include/hbook.h \
+@srcdir@/../midas/include/history.h \
+@srcdir@/../midas/include/mcstd.h \
+@srcdir@/../midas/include/mdsupport.h \
+@srcdir@/../midas/include/mfbstd.h \
+@srcdir@/../midas/include/mgd.h \
+@srcdir@/../midas/include/midas.h \
+@srcdir@/../midas/include/midas.inc \
+@srcdir@/../midas/include/midasinc.h \
+@srcdir@/../midas/include/midas_macro.h \
+@srcdir@/../midas/include/mrpc.h \
+@srcdir@/../midas/include/msystem.h \
+@srcdir@/../midas/include/musbstd.h \
+@srcdir@/../midas/include/mvmestd.h \
+@srcdir@/../midas/include/pvm3.h \
+@srcdir@/../midas/include/ybos.h \
+@srcdir@/../mxml/mxml.h @srcdir@/../mxml/strlcpy.h
 
 LDADD = libmidas.a
 CORE_UTILS = mserver mhttpd mlogger odbedit mtape mhist mstat mcnaf \
@@ -460,23 +460,23 @@ CORE_UTILS = mserver mhttpd mlogger odbedit mtape mhist mstat mcnaf \
 
 EXTRA_UTILS = mfe_link_test mana_link_test @mdaq_osprogs@
 # Scritps
-dist_bin_SCRIPTS = @srcdir@/midas/utils/stripchart.tcl  \
-@srcdir@/midas/utils/lazy_castor.perl \
-@srcdir@/midas/utils/lazy_copy.perl \
-@srcdir@/midas/utils/lazy_dcache.perl \
-@srcdir@/midas/utils/lazy_test.perl \
-addons/mdaq-config
+dist_bin_SCRIPTS = @srcdir@/../midas/utils/stripchart.tcl  \
+@srcdir@/../midas/utils/lazy_castor.perl \
+@srcdir@/../midas/utils/lazy_copy.perl \
+@srcdir@/../midas/utils/lazy_dcache.perl \
+@srcdir@/../midas/utils/lazy_test.perl \
+mdaq-config
 
 
 # per-code configure
-mhttpd_SOURCES = @srcdir@/midas/src/mhttpd.cxx @srcdir@/midas/src/mgd.c
+mhttpd_SOURCES = @srcdir@/../midas/src/mhttpd.cxx @srcdir@/../midas/src/mgd.c
 mhttpd_LDADD = @mscb_obj@ libmidas.a
 mhttpd_CXXFLAGS = $(AM_CXXFLAGS) -I@mscb_dir@
 mhttpd_DEPENDENCIES = @mscb_obj@
 mlogger_SOURCES = mlogger.cxx
 mlogger_LDFLAGS = @root_libs@ ${MDAQ_LIBS}
 odbedit_SOURCES = odbedit.c cmdedit.c
-mcnaf_SOURCES = mcnaf.c @srcdir@/midas/drivers/camac/camacrpc.c
+mcnaf_SOURCES = mcnaf.c @srcdir@/../midas/drivers/camac/camacrpc.c
 mdump_SOURCES = mdump.c mdsupport.c
 mhdump_SOURCES = mhdump.cxx
 mtransition_SOURCES = mtransition.cxx
@@ -484,9 +484,9 @@ lazylogger_SOURCES = mdsupport.c
 lazylogger_LDADD = lazylogger.o libmidas.a
 lazylogger_LDFLAGS = $(AM_LIBS) @root_glibs@
 lazylogger_LINK = $(CXX) $(AM_CXXFLAGS) -o $@
-mfe_link_test_SOURCES = @srcdir@/midas/src/mfe.c
+mfe_link_test_SOURCES = @srcdir@/../midas/src/mfe.c
 mfe_link_test_CFLAGS = -DLINK_TEST $(AM_CFLAGS)
-mana_link_test_SOURCES = @srcdir@/midas/src/mana.c
+mana_link_test_SOURCES = @srcdir@/../midas/src/mana.c
 mana_link_test_CFLAGS = -DLINK_TEST $(AM_CFLAGS)
 mh2sql_SOURCES = mh2sql.cxx
 dio_SOURCES = dio.c
@@ -496,7 +496,7 @@ mlxspeaker_SOURCES = mlxspeaker.c
 FE_OBJS = mfe.o fal.o mana.o @anaobj_cern@ @anaobj_root@
 
 ### Documentation
-mdaq_imgs = @srcdir@/midasdoc-images.tar.gz
+mdaq_imgs = @srcdir@/../addons/midasdoc-images.tar.gz
 all: all-am
 
 .SUFFIXES:
@@ -535,7 +535,7 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	$(am__cd) $(srcdir) && $(ACLOCAL) $(ACLOCAL_AMFLAGS)
 $(am__aclocal_m4_deps):
-addons/mdaq-config: $(top_builddir)/config.status $(top_srcdir)/addons/mdaq-config.in
+mdaq-config: $(top_builddir)/config.status $(srcdir)/mdaq-config.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 install-libLIBRARIES: $(lib_LIBRARIES)
 	@$(NORMAL_INSTALL)
@@ -825,292 +825,292 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
-midas.o: @srcdir@/midas/src/midas.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT midas.o -MD -MP -MF $(DEPDIR)/midas.Tpo -c -o midas.o `test -f '@srcdir@/midas/src/midas.c' || echo '$(srcdir)/'`@srcdir@/midas/src/midas.c
+midas.o: @srcdir@/../midas/src/midas.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT midas.o -MD -MP -MF $(DEPDIR)/midas.Tpo -c -o midas.o `test -f '@srcdir@/../midas/src/midas.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/midas.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/midas.Tpo $(DEPDIR)/midas.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/midas.c' object='midas.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/midas.c' object='midas.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o midas.o `test -f '@srcdir@/midas/src/midas.c' || echo '$(srcdir)/'`@srcdir@/midas/src/midas.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o midas.o `test -f '@srcdir@/../midas/src/midas.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/midas.c
 
-midas.obj: @srcdir@/midas/src/midas.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT midas.obj -MD -MP -MF $(DEPDIR)/midas.Tpo -c -o midas.obj `if test -f '@srcdir@/midas/src/midas.c'; then $(CYGPATH_W) '@srcdir@/midas/src/midas.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/midas.c'; fi`
+midas.obj: @srcdir@/../midas/src/midas.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT midas.obj -MD -MP -MF $(DEPDIR)/midas.Tpo -c -o midas.obj `if test -f '@srcdir@/../midas/src/midas.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/midas.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/midas.c'; fi`
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/midas.Tpo $(DEPDIR)/midas.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/midas.c' object='midas.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/midas.c' object='midas.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o midas.obj `if test -f '@srcdir@/midas/src/midas.c'; then $(CYGPATH_W) '@srcdir@/midas/src/midas.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/midas.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o midas.obj `if test -f '@srcdir@/../midas/src/midas.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/midas.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/midas.c'; fi`
 
-system.o: @srcdir@/midas/src/system.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT system.o -MD -MP -MF $(DEPDIR)/system.Tpo -c -o system.o `test -f '@srcdir@/midas/src/system.c' || echo '$(srcdir)/'`@srcdir@/midas/src/system.c
+system.o: @srcdir@/../midas/src/system.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT system.o -MD -MP -MF $(DEPDIR)/system.Tpo -c -o system.o `test -f '@srcdir@/../midas/src/system.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/system.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/system.Tpo $(DEPDIR)/system.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/system.c' object='system.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/system.c' object='system.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o system.o `test -f '@srcdir@/midas/src/system.c' || echo '$(srcdir)/'`@srcdir@/midas/src/system.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o system.o `test -f '@srcdir@/../midas/src/system.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/system.c
 
-system.obj: @srcdir@/midas/src/system.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT system.obj -MD -MP -MF $(DEPDIR)/system.Tpo -c -o system.obj `if test -f '@srcdir@/midas/src/system.c'; then $(CYGPATH_W) '@srcdir@/midas/src/system.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/system.c'; fi`
+system.obj: @srcdir@/../midas/src/system.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT system.obj -MD -MP -MF $(DEPDIR)/system.Tpo -c -o system.obj `if test -f '@srcdir@/../midas/src/system.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/system.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/system.c'; fi`
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/system.Tpo $(DEPDIR)/system.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/system.c' object='system.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/system.c' object='system.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o system.obj `if test -f '@srcdir@/midas/src/system.c'; then $(CYGPATH_W) '@srcdir@/midas/src/system.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/system.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o system.obj `if test -f '@srcdir@/../midas/src/system.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/system.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/system.c'; fi`
 
-mrpc.o: @srcdir@/midas/src/mrpc.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT mrpc.o -MD -MP -MF $(DEPDIR)/mrpc.Tpo -c -o mrpc.o `test -f '@srcdir@/midas/src/mrpc.c' || echo '$(srcdir)/'`@srcdir@/midas/src/mrpc.c
+mrpc.o: @srcdir@/../midas/src/mrpc.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT mrpc.o -MD -MP -MF $(DEPDIR)/mrpc.Tpo -c -o mrpc.o `test -f '@srcdir@/../midas/src/mrpc.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/mrpc.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/mrpc.Tpo $(DEPDIR)/mrpc.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/mrpc.c' object='mrpc.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/mrpc.c' object='mrpc.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o mrpc.o `test -f '@srcdir@/midas/src/mrpc.c' || echo '$(srcdir)/'`@srcdir@/midas/src/mrpc.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o mrpc.o `test -f '@srcdir@/../midas/src/mrpc.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/mrpc.c
 
-mrpc.obj: @srcdir@/midas/src/mrpc.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT mrpc.obj -MD -MP -MF $(DEPDIR)/mrpc.Tpo -c -o mrpc.obj `if test -f '@srcdir@/midas/src/mrpc.c'; then $(CYGPATH_W) '@srcdir@/midas/src/mrpc.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/mrpc.c'; fi`
+mrpc.obj: @srcdir@/../midas/src/mrpc.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT mrpc.obj -MD -MP -MF $(DEPDIR)/mrpc.Tpo -c -o mrpc.obj `if test -f '@srcdir@/../midas/src/mrpc.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/mrpc.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/mrpc.c'; fi`
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/mrpc.Tpo $(DEPDIR)/mrpc.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/mrpc.c' object='mrpc.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/mrpc.c' object='mrpc.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o mrpc.obj `if test -f '@srcdir@/midas/src/mrpc.c'; then $(CYGPATH_W) '@srcdir@/midas/src/mrpc.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/mrpc.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o mrpc.obj `if test -f '@srcdir@/../midas/src/mrpc.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/mrpc.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/mrpc.c'; fi`
 
-odb.o: @srcdir@/midas/src/odb.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT odb.o -MD -MP -MF $(DEPDIR)/odb.Tpo -c -o odb.o `test -f '@srcdir@/midas/src/odb.c' || echo '$(srcdir)/'`@srcdir@/midas/src/odb.c
+odb.o: @srcdir@/../midas/src/odb.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT odb.o -MD -MP -MF $(DEPDIR)/odb.Tpo -c -o odb.o `test -f '@srcdir@/../midas/src/odb.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/odb.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/odb.Tpo $(DEPDIR)/odb.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/odb.c' object='odb.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/odb.c' object='odb.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o odb.o `test -f '@srcdir@/midas/src/odb.c' || echo '$(srcdir)/'`@srcdir@/midas/src/odb.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o odb.o `test -f '@srcdir@/../midas/src/odb.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/odb.c
 
-odb.obj: @srcdir@/midas/src/odb.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT odb.obj -MD -MP -MF $(DEPDIR)/odb.Tpo -c -o odb.obj `if test -f '@srcdir@/midas/src/odb.c'; then $(CYGPATH_W) '@srcdir@/midas/src/odb.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/odb.c'; fi`
+odb.obj: @srcdir@/../midas/src/odb.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT odb.obj -MD -MP -MF $(DEPDIR)/odb.Tpo -c -o odb.obj `if test -f '@srcdir@/../midas/src/odb.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/odb.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/odb.c'; fi`
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/odb.Tpo $(DEPDIR)/odb.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/odb.c' object='odb.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/odb.c' object='odb.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o odb.obj `if test -f '@srcdir@/midas/src/odb.c'; then $(CYGPATH_W) '@srcdir@/midas/src/odb.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/odb.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o odb.obj `if test -f '@srcdir@/../midas/src/odb.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/odb.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/odb.c'; fi`
 
-ftplib.o: @srcdir@/midas/src/ftplib.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT ftplib.o -MD -MP -MF $(DEPDIR)/ftplib.Tpo -c -o ftplib.o `test -f '@srcdir@/midas/src/ftplib.c' || echo '$(srcdir)/'`@srcdir@/midas/src/ftplib.c
+ftplib.o: @srcdir@/../midas/src/ftplib.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT ftplib.o -MD -MP -MF $(DEPDIR)/ftplib.Tpo -c -o ftplib.o `test -f '@srcdir@/../midas/src/ftplib.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/ftplib.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/ftplib.Tpo $(DEPDIR)/ftplib.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/ftplib.c' object='ftplib.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/ftplib.c' object='ftplib.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o ftplib.o `test -f '@srcdir@/midas/src/ftplib.c' || echo '$(srcdir)/'`@srcdir@/midas/src/ftplib.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o ftplib.o `test -f '@srcdir@/../midas/src/ftplib.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/ftplib.c
 
-ftplib.obj: @srcdir@/midas/src/ftplib.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT ftplib.obj -MD -MP -MF $(DEPDIR)/ftplib.Tpo -c -o ftplib.obj `if test -f '@srcdir@/midas/src/ftplib.c'; then $(CYGPATH_W) '@srcdir@/midas/src/ftplib.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/ftplib.c'; fi`
+ftplib.obj: @srcdir@/../midas/src/ftplib.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT ftplib.obj -MD -MP -MF $(DEPDIR)/ftplib.Tpo -c -o ftplib.obj `if test -f '@srcdir@/../midas/src/ftplib.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/ftplib.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/ftplib.c'; fi`
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/ftplib.Tpo $(DEPDIR)/ftplib.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/ftplib.c' object='ftplib.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/ftplib.c' object='ftplib.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o ftplib.obj `if test -f '@srcdir@/midas/src/ftplib.c'; then $(CYGPATH_W) '@srcdir@/midas/src/ftplib.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/ftplib.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o ftplib.obj `if test -f '@srcdir@/../midas/src/ftplib.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/ftplib.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/ftplib.c'; fi`
 
-dm_eb.o: @srcdir@/midas/src/dm_eb.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT dm_eb.o -MD -MP -MF $(DEPDIR)/dm_eb.Tpo -c -o dm_eb.o `test -f '@srcdir@/midas/src/dm_eb.c' || echo '$(srcdir)/'`@srcdir@/midas/src/dm_eb.c
+dm_eb.o: @srcdir@/../midas/src/dm_eb.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT dm_eb.o -MD -MP -MF $(DEPDIR)/dm_eb.Tpo -c -o dm_eb.o `test -f '@srcdir@/../midas/src/dm_eb.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/dm_eb.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/dm_eb.Tpo $(DEPDIR)/dm_eb.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/dm_eb.c' object='dm_eb.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/dm_eb.c' object='dm_eb.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o dm_eb.o `test -f '@srcdir@/midas/src/dm_eb.c' || echo '$(srcdir)/'`@srcdir@/midas/src/dm_eb.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o dm_eb.o `test -f '@srcdir@/../midas/src/dm_eb.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/dm_eb.c
 
-dm_eb.obj: @srcdir@/midas/src/dm_eb.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT dm_eb.obj -MD -MP -MF $(DEPDIR)/dm_eb.Tpo -c -o dm_eb.obj `if test -f '@srcdir@/midas/src/dm_eb.c'; then $(CYGPATH_W) '@srcdir@/midas/src/dm_eb.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/dm_eb.c'; fi`
+dm_eb.obj: @srcdir@/../midas/src/dm_eb.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT dm_eb.obj -MD -MP -MF $(DEPDIR)/dm_eb.Tpo -c -o dm_eb.obj `if test -f '@srcdir@/../midas/src/dm_eb.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/dm_eb.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/dm_eb.c'; fi`
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/dm_eb.Tpo $(DEPDIR)/dm_eb.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/dm_eb.c' object='dm_eb.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/dm_eb.c' object='dm_eb.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o dm_eb.obj `if test -f '@srcdir@/midas/src/dm_eb.c'; then $(CYGPATH_W) '@srcdir@/midas/src/dm_eb.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/dm_eb.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o dm_eb.obj `if test -f '@srcdir@/../midas/src/dm_eb.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/dm_eb.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/dm_eb.c'; fi`
 
-history.o: @srcdir@/midas/src/history.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT history.o -MD -MP -MF $(DEPDIR)/history.Tpo -c -o history.o `test -f '@srcdir@/midas/src/history.c' || echo '$(srcdir)/'`@srcdir@/midas/src/history.c
+history.o: @srcdir@/../midas/src/history.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT history.o -MD -MP -MF $(DEPDIR)/history.Tpo -c -o history.o `test -f '@srcdir@/../midas/src/history.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/history.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/history.Tpo $(DEPDIR)/history.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/history.c' object='history.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/history.c' object='history.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o history.o `test -f '@srcdir@/midas/src/history.c' || echo '$(srcdir)/'`@srcdir@/midas/src/history.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o history.o `test -f '@srcdir@/../midas/src/history.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/history.c
 
-history.obj: @srcdir@/midas/src/history.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT history.obj -MD -MP -MF $(DEPDIR)/history.Tpo -c -o history.obj `if test -f '@srcdir@/midas/src/history.c'; then $(CYGPATH_W) '@srcdir@/midas/src/history.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/history.c'; fi`
+history.obj: @srcdir@/../midas/src/history.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT history.obj -MD -MP -MF $(DEPDIR)/history.Tpo -c -o history.obj `if test -f '@srcdir@/../midas/src/history.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/history.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/history.c'; fi`
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/history.Tpo $(DEPDIR)/history.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/history.c' object='history.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/history.c' object='history.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o history.obj `if test -f '@srcdir@/midas/src/history.c'; then $(CYGPATH_W) '@srcdir@/midas/src/history.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/history.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o history.obj `if test -f '@srcdir@/../midas/src/history.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/history.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/history.c'; fi`
 
-alarm.o: @srcdir@/midas/src/alarm.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT alarm.o -MD -MP -MF $(DEPDIR)/alarm.Tpo -c -o alarm.o `test -f '@srcdir@/midas/src/alarm.c' || echo '$(srcdir)/'`@srcdir@/midas/src/alarm.c
+alarm.o: @srcdir@/../midas/src/alarm.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT alarm.o -MD -MP -MF $(DEPDIR)/alarm.Tpo -c -o alarm.o `test -f '@srcdir@/../midas/src/alarm.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/alarm.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/alarm.Tpo $(DEPDIR)/alarm.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/alarm.c' object='alarm.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/alarm.c' object='alarm.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o alarm.o `test -f '@srcdir@/midas/src/alarm.c' || echo '$(srcdir)/'`@srcdir@/midas/src/alarm.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o alarm.o `test -f '@srcdir@/../midas/src/alarm.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/alarm.c
 
-alarm.obj: @srcdir@/midas/src/alarm.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT alarm.obj -MD -MP -MF $(DEPDIR)/alarm.Tpo -c -o alarm.obj `if test -f '@srcdir@/midas/src/alarm.c'; then $(CYGPATH_W) '@srcdir@/midas/src/alarm.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/alarm.c'; fi`
+alarm.obj: @srcdir@/../midas/src/alarm.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT alarm.obj -MD -MP -MF $(DEPDIR)/alarm.Tpo -c -o alarm.obj `if test -f '@srcdir@/../midas/src/alarm.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/alarm.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/alarm.c'; fi`
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/alarm.Tpo $(DEPDIR)/alarm.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/alarm.c' object='alarm.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/alarm.c' object='alarm.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o alarm.obj `if test -f '@srcdir@/midas/src/alarm.c'; then $(CYGPATH_W) '@srcdir@/midas/src/alarm.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/alarm.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o alarm.obj `if test -f '@srcdir@/../midas/src/alarm.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/alarm.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/alarm.c'; fi`
 
-elog.o: @srcdir@/midas/src/elog.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT elog.o -MD -MP -MF $(DEPDIR)/elog.Tpo -c -o elog.o `test -f '@srcdir@/midas/src/elog.c' || echo '$(srcdir)/'`@srcdir@/midas/src/elog.c
+elog.o: @srcdir@/../midas/src/elog.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT elog.o -MD -MP -MF $(DEPDIR)/elog.Tpo -c -o elog.o `test -f '@srcdir@/../midas/src/elog.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/elog.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/elog.Tpo $(DEPDIR)/elog.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/elog.c' object='elog.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/elog.c' object='elog.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o elog.o `test -f '@srcdir@/midas/src/elog.c' || echo '$(srcdir)/'`@srcdir@/midas/src/elog.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o elog.o `test -f '@srcdir@/../midas/src/elog.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/elog.c
 
-elog.obj: @srcdir@/midas/src/elog.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT elog.obj -MD -MP -MF $(DEPDIR)/elog.Tpo -c -o elog.obj `if test -f '@srcdir@/midas/src/elog.c'; then $(CYGPATH_W) '@srcdir@/midas/src/elog.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/elog.c'; fi`
+elog.obj: @srcdir@/../midas/src/elog.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT elog.obj -MD -MP -MF $(DEPDIR)/elog.Tpo -c -o elog.obj `if test -f '@srcdir@/../midas/src/elog.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/elog.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/elog.c'; fi`
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/elog.Tpo $(DEPDIR)/elog.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/elog.c' object='elog.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/elog.c' object='elog.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o elog.obj `if test -f '@srcdir@/midas/src/elog.c'; then $(CYGPATH_W) '@srcdir@/midas/src/elog.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/elog.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o elog.obj `if test -f '@srcdir@/../midas/src/elog.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/elog.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/elog.c'; fi`
 
-mxml.o: @srcdir@/mxml/mxml.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT mxml.o -MD -MP -MF $(DEPDIR)/mxml.Tpo -c -o mxml.o `test -f '@srcdir@/mxml/mxml.c' || echo '$(srcdir)/'`@srcdir@/mxml/mxml.c
+mxml.o: @srcdir@/../mxml/mxml.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT mxml.o -MD -MP -MF $(DEPDIR)/mxml.Tpo -c -o mxml.o `test -f '@srcdir@/../mxml/mxml.c' || echo '$(srcdir)/'`@srcdir@/../mxml/mxml.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/mxml.Tpo $(DEPDIR)/mxml.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/mxml/mxml.c' object='mxml.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../mxml/mxml.c' object='mxml.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o mxml.o `test -f '@srcdir@/mxml/mxml.c' || echo '$(srcdir)/'`@srcdir@/mxml/mxml.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o mxml.o `test -f '@srcdir@/../mxml/mxml.c' || echo '$(srcdir)/'`@srcdir@/../mxml/mxml.c
 
-mxml.obj: @srcdir@/mxml/mxml.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT mxml.obj -MD -MP -MF $(DEPDIR)/mxml.Tpo -c -o mxml.obj `if test -f '@srcdir@/mxml/mxml.c'; then $(CYGPATH_W) '@srcdir@/mxml/mxml.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/mxml/mxml.c'; fi`
+mxml.obj: @srcdir@/../mxml/mxml.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT mxml.obj -MD -MP -MF $(DEPDIR)/mxml.Tpo -c -o mxml.obj `if test -f '@srcdir@/../mxml/mxml.c'; then $(CYGPATH_W) '@srcdir@/../mxml/mxml.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../mxml/mxml.c'; fi`
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/mxml.Tpo $(DEPDIR)/mxml.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/mxml/mxml.c' object='mxml.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../mxml/mxml.c' object='mxml.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o mxml.obj `if test -f '@srcdir@/mxml/mxml.c'; then $(CYGPATH_W) '@srcdir@/mxml/mxml.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/mxml/mxml.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o mxml.obj `if test -f '@srcdir@/../mxml/mxml.c'; then $(CYGPATH_W) '@srcdir@/../mxml/mxml.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../mxml/mxml.c'; fi`
 
-strlcpy.o: @srcdir@/mxml/strlcpy.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT strlcpy.o -MD -MP -MF $(DEPDIR)/strlcpy.Tpo -c -o strlcpy.o `test -f '@srcdir@/mxml/strlcpy.c' || echo '$(srcdir)/'`@srcdir@/mxml/strlcpy.c
+strlcpy.o: @srcdir@/../mxml/strlcpy.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT strlcpy.o -MD -MP -MF $(DEPDIR)/strlcpy.Tpo -c -o strlcpy.o `test -f '@srcdir@/../mxml/strlcpy.c' || echo '$(srcdir)/'`@srcdir@/../mxml/strlcpy.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/strlcpy.Tpo $(DEPDIR)/strlcpy.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/mxml/strlcpy.c' object='strlcpy.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../mxml/strlcpy.c' object='strlcpy.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o strlcpy.o `test -f '@srcdir@/mxml/strlcpy.c' || echo '$(srcdir)/'`@srcdir@/mxml/strlcpy.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o strlcpy.o `test -f '@srcdir@/../mxml/strlcpy.c' || echo '$(srcdir)/'`@srcdir@/../mxml/strlcpy.c
 
-strlcpy.obj: @srcdir@/mxml/strlcpy.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT strlcpy.obj -MD -MP -MF $(DEPDIR)/strlcpy.Tpo -c -o strlcpy.obj `if test -f '@srcdir@/mxml/strlcpy.c'; then $(CYGPATH_W) '@srcdir@/mxml/strlcpy.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/mxml/strlcpy.c'; fi`
+strlcpy.obj: @srcdir@/../mxml/strlcpy.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT strlcpy.obj -MD -MP -MF $(DEPDIR)/strlcpy.Tpo -c -o strlcpy.obj `if test -f '@srcdir@/../mxml/strlcpy.c'; then $(CYGPATH_W) '@srcdir@/../mxml/strlcpy.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../mxml/strlcpy.c'; fi`
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/strlcpy.Tpo $(DEPDIR)/strlcpy.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/mxml/strlcpy.c' object='strlcpy.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../mxml/strlcpy.c' object='strlcpy.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o strlcpy.obj `if test -f '@srcdir@/mxml/strlcpy.c'; then $(CYGPATH_W) '@srcdir@/mxml/strlcpy.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/mxml/strlcpy.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o strlcpy.obj `if test -f '@srcdir@/../mxml/strlcpy.c'; then $(CYGPATH_W) '@srcdir@/../mxml/strlcpy.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../mxml/strlcpy.c'; fi`
 
-libmidas_shared_la-midas.lo: @srcdir@/midas/src/midas.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -MT libmidas_shared_la-midas.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-midas.Tpo -c -o libmidas_shared_la-midas.lo `test -f '@srcdir@/midas/src/midas.c' || echo '$(srcdir)/'`@srcdir@/midas/src/midas.c
+libmidas_shared_la-midas.lo: @srcdir@/../midas/src/midas.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -MT libmidas_shared_la-midas.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-midas.Tpo -c -o libmidas_shared_la-midas.lo `test -f '@srcdir@/../midas/src/midas.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/midas.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmidas_shared_la-midas.Tpo $(DEPDIR)/libmidas_shared_la-midas.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/midas.c' object='libmidas_shared_la-midas.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/midas.c' object='libmidas_shared_la-midas.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -c -o libmidas_shared_la-midas.lo `test -f '@srcdir@/midas/src/midas.c' || echo '$(srcdir)/'`@srcdir@/midas/src/midas.c
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -c -o libmidas_shared_la-midas.lo `test -f '@srcdir@/../midas/src/midas.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/midas.c
 
-libmidas_shared_la-system.lo: @srcdir@/midas/src/system.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -MT libmidas_shared_la-system.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-system.Tpo -c -o libmidas_shared_la-system.lo `test -f '@srcdir@/midas/src/system.c' || echo '$(srcdir)/'`@srcdir@/midas/src/system.c
+libmidas_shared_la-system.lo: @srcdir@/../midas/src/system.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -MT libmidas_shared_la-system.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-system.Tpo -c -o libmidas_shared_la-system.lo `test -f '@srcdir@/../midas/src/system.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/system.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmidas_shared_la-system.Tpo $(DEPDIR)/libmidas_shared_la-system.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/system.c' object='libmidas_shared_la-system.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/system.c' object='libmidas_shared_la-system.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -c -o libmidas_shared_la-system.lo `test -f '@srcdir@/midas/src/system.c' || echo '$(srcdir)/'`@srcdir@/midas/src/system.c
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -c -o libmidas_shared_la-system.lo `test -f '@srcdir@/../midas/src/system.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/system.c
 
-libmidas_shared_la-mrpc.lo: @srcdir@/midas/src/mrpc.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -MT libmidas_shared_la-mrpc.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-mrpc.Tpo -c -o libmidas_shared_la-mrpc.lo `test -f '@srcdir@/midas/src/mrpc.c' || echo '$(srcdir)/'`@srcdir@/midas/src/mrpc.c
+libmidas_shared_la-mrpc.lo: @srcdir@/../midas/src/mrpc.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -MT libmidas_shared_la-mrpc.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-mrpc.Tpo -c -o libmidas_shared_la-mrpc.lo `test -f '@srcdir@/../midas/src/mrpc.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/mrpc.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmidas_shared_la-mrpc.Tpo $(DEPDIR)/libmidas_shared_la-mrpc.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/mrpc.c' object='libmidas_shared_la-mrpc.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/mrpc.c' object='libmidas_shared_la-mrpc.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -c -o libmidas_shared_la-mrpc.lo `test -f '@srcdir@/midas/src/mrpc.c' || echo '$(srcdir)/'`@srcdir@/midas/src/mrpc.c
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -c -o libmidas_shared_la-mrpc.lo `test -f '@srcdir@/../midas/src/mrpc.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/mrpc.c
 
-libmidas_shared_la-odb.lo: @srcdir@/midas/src/odb.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -MT libmidas_shared_la-odb.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-odb.Tpo -c -o libmidas_shared_la-odb.lo `test -f '@srcdir@/midas/src/odb.c' || echo '$(srcdir)/'`@srcdir@/midas/src/odb.c
+libmidas_shared_la-odb.lo: @srcdir@/../midas/src/odb.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -MT libmidas_shared_la-odb.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-odb.Tpo -c -o libmidas_shared_la-odb.lo `test -f '@srcdir@/../midas/src/odb.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/odb.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmidas_shared_la-odb.Tpo $(DEPDIR)/libmidas_shared_la-odb.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/odb.c' object='libmidas_shared_la-odb.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/odb.c' object='libmidas_shared_la-odb.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -c -o libmidas_shared_la-odb.lo `test -f '@srcdir@/midas/src/odb.c' || echo '$(srcdir)/'`@srcdir@/midas/src/odb.c
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -c -o libmidas_shared_la-odb.lo `test -f '@srcdir@/../midas/src/odb.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/odb.c
 
-libmidas_shared_la-ftplib.lo: @srcdir@/midas/src/ftplib.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -MT libmidas_shared_la-ftplib.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-ftplib.Tpo -c -o libmidas_shared_la-ftplib.lo `test -f '@srcdir@/midas/src/ftplib.c' || echo '$(srcdir)/'`@srcdir@/midas/src/ftplib.c
+libmidas_shared_la-ftplib.lo: @srcdir@/../midas/src/ftplib.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -MT libmidas_shared_la-ftplib.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-ftplib.Tpo -c -o libmidas_shared_la-ftplib.lo `test -f '@srcdir@/../midas/src/ftplib.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/ftplib.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmidas_shared_la-ftplib.Tpo $(DEPDIR)/libmidas_shared_la-ftplib.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/ftplib.c' object='libmidas_shared_la-ftplib.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/ftplib.c' object='libmidas_shared_la-ftplib.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -c -o libmidas_shared_la-ftplib.lo `test -f '@srcdir@/midas/src/ftplib.c' || echo '$(srcdir)/'`@srcdir@/midas/src/ftplib.c
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -c -o libmidas_shared_la-ftplib.lo `test -f '@srcdir@/../midas/src/ftplib.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/ftplib.c
 
-libmidas_shared_la-dm_eb.lo: @srcdir@/midas/src/dm_eb.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -MT libmidas_shared_la-dm_eb.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-dm_eb.Tpo -c -o libmidas_shared_la-dm_eb.lo `test -f '@srcdir@/midas/src/dm_eb.c' || echo '$(srcdir)/'`@srcdir@/midas/src/dm_eb.c
+libmidas_shared_la-dm_eb.lo: @srcdir@/../midas/src/dm_eb.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -MT libmidas_shared_la-dm_eb.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-dm_eb.Tpo -c -o libmidas_shared_la-dm_eb.lo `test -f '@srcdir@/../midas/src/dm_eb.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/dm_eb.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmidas_shared_la-dm_eb.Tpo $(DEPDIR)/libmidas_shared_la-dm_eb.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/dm_eb.c' object='libmidas_shared_la-dm_eb.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/dm_eb.c' object='libmidas_shared_la-dm_eb.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -c -o libmidas_shared_la-dm_eb.lo `test -f '@srcdir@/midas/src/dm_eb.c' || echo '$(srcdir)/'`@srcdir@/midas/src/dm_eb.c
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -c -o libmidas_shared_la-dm_eb.lo `test -f '@srcdir@/../midas/src/dm_eb.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/dm_eb.c
 
-libmidas_shared_la-history.lo: @srcdir@/midas/src/history.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -MT libmidas_shared_la-history.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-history.Tpo -c -o libmidas_shared_la-history.lo `test -f '@srcdir@/midas/src/history.c' || echo '$(srcdir)/'`@srcdir@/midas/src/history.c
+libmidas_shared_la-history.lo: @srcdir@/../midas/src/history.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -MT libmidas_shared_la-history.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-history.Tpo -c -o libmidas_shared_la-history.lo `test -f '@srcdir@/../midas/src/history.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/history.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmidas_shared_la-history.Tpo $(DEPDIR)/libmidas_shared_la-history.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/history.c' object='libmidas_shared_la-history.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/history.c' object='libmidas_shared_la-history.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -c -o libmidas_shared_la-history.lo `test -f '@srcdir@/midas/src/history.c' || echo '$(srcdir)/'`@srcdir@/midas/src/history.c
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -c -o libmidas_shared_la-history.lo `test -f '@srcdir@/../midas/src/history.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/history.c
 
-libmidas_shared_la-alarm.lo: @srcdir@/midas/src/alarm.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -MT libmidas_shared_la-alarm.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-alarm.Tpo -c -o libmidas_shared_la-alarm.lo `test -f '@srcdir@/midas/src/alarm.c' || echo '$(srcdir)/'`@srcdir@/midas/src/alarm.c
+libmidas_shared_la-alarm.lo: @srcdir@/../midas/src/alarm.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -MT libmidas_shared_la-alarm.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-alarm.Tpo -c -o libmidas_shared_la-alarm.lo `test -f '@srcdir@/../midas/src/alarm.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/alarm.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmidas_shared_la-alarm.Tpo $(DEPDIR)/libmidas_shared_la-alarm.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/alarm.c' object='libmidas_shared_la-alarm.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/alarm.c' object='libmidas_shared_la-alarm.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -c -o libmidas_shared_la-alarm.lo `test -f '@srcdir@/midas/src/alarm.c' || echo '$(srcdir)/'`@srcdir@/midas/src/alarm.c
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -c -o libmidas_shared_la-alarm.lo `test -f '@srcdir@/../midas/src/alarm.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/alarm.c
 
-libmidas_shared_la-elog.lo: @srcdir@/midas/src/elog.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -MT libmidas_shared_la-elog.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-elog.Tpo -c -o libmidas_shared_la-elog.lo `test -f '@srcdir@/midas/src/elog.c' || echo '$(srcdir)/'`@srcdir@/midas/src/elog.c
+libmidas_shared_la-elog.lo: @srcdir@/../midas/src/elog.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -MT libmidas_shared_la-elog.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-elog.Tpo -c -o libmidas_shared_la-elog.lo `test -f '@srcdir@/../midas/src/elog.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/elog.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmidas_shared_la-elog.Tpo $(DEPDIR)/libmidas_shared_la-elog.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/elog.c' object='libmidas_shared_la-elog.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/elog.c' object='libmidas_shared_la-elog.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -c -o libmidas_shared_la-elog.lo `test -f '@srcdir@/midas/src/elog.c' || echo '$(srcdir)/'`@srcdir@/midas/src/elog.c
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -c -o libmidas_shared_la-elog.lo `test -f '@srcdir@/../midas/src/elog.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/elog.c
 
-libmidas_shared_la-mxml.lo: @srcdir@/mxml/mxml.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -MT libmidas_shared_la-mxml.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-mxml.Tpo -c -o libmidas_shared_la-mxml.lo `test -f '@srcdir@/mxml/mxml.c' || echo '$(srcdir)/'`@srcdir@/mxml/mxml.c
+libmidas_shared_la-mxml.lo: @srcdir@/../mxml/mxml.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -MT libmidas_shared_la-mxml.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-mxml.Tpo -c -o libmidas_shared_la-mxml.lo `test -f '@srcdir@/../mxml/mxml.c' || echo '$(srcdir)/'`@srcdir@/../mxml/mxml.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmidas_shared_la-mxml.Tpo $(DEPDIR)/libmidas_shared_la-mxml.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/mxml/mxml.c' object='libmidas_shared_la-mxml.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../mxml/mxml.c' object='libmidas_shared_la-mxml.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -c -o libmidas_shared_la-mxml.lo `test -f '@srcdir@/mxml/mxml.c' || echo '$(srcdir)/'`@srcdir@/mxml/mxml.c
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -c -o libmidas_shared_la-mxml.lo `test -f '@srcdir@/../mxml/mxml.c' || echo '$(srcdir)/'`@srcdir@/../mxml/mxml.c
 
-libmidas_shared_la-strlcpy.lo: @srcdir@/mxml/strlcpy.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -MT libmidas_shared_la-strlcpy.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-strlcpy.Tpo -c -o libmidas_shared_la-strlcpy.lo `test -f '@srcdir@/mxml/strlcpy.c' || echo '$(srcdir)/'`@srcdir@/mxml/strlcpy.c
+libmidas_shared_la-strlcpy.lo: @srcdir@/../mxml/strlcpy.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -MT libmidas_shared_la-strlcpy.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-strlcpy.Tpo -c -o libmidas_shared_la-strlcpy.lo `test -f '@srcdir@/../mxml/strlcpy.c' || echo '$(srcdir)/'`@srcdir@/../mxml/strlcpy.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmidas_shared_la-strlcpy.Tpo $(DEPDIR)/libmidas_shared_la-strlcpy.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/mxml/strlcpy.c' object='libmidas_shared_la-strlcpy.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../mxml/strlcpy.c' object='libmidas_shared_la-strlcpy.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -c -o libmidas_shared_la-strlcpy.lo `test -f '@srcdir@/mxml/strlcpy.c' || echo '$(srcdir)/'`@srcdir@/mxml/strlcpy.c
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CFLAGS) $(CFLAGS) -c -o libmidas_shared_la-strlcpy.lo `test -f '@srcdir@/../mxml/strlcpy.c' || echo '$(srcdir)/'`@srcdir@/../mxml/strlcpy.c
 
-mana_link_test-mana.o: @srcdir@/midas/src/mana.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mana_link_test_CFLAGS) $(CFLAGS) -MT mana_link_test-mana.o -MD -MP -MF $(DEPDIR)/mana_link_test-mana.Tpo -c -o mana_link_test-mana.o `test -f '@srcdir@/midas/src/mana.c' || echo '$(srcdir)/'`@srcdir@/midas/src/mana.c
+mana_link_test-mana.o: @srcdir@/../midas/src/mana.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mana_link_test_CFLAGS) $(CFLAGS) -MT mana_link_test-mana.o -MD -MP -MF $(DEPDIR)/mana_link_test-mana.Tpo -c -o mana_link_test-mana.o `test -f '@srcdir@/../midas/src/mana.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/mana.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/mana_link_test-mana.Tpo $(DEPDIR)/mana_link_test-mana.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/mana.c' object='mana_link_test-mana.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/mana.c' object='mana_link_test-mana.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mana_link_test_CFLAGS) $(CFLAGS) -c -o mana_link_test-mana.o `test -f '@srcdir@/midas/src/mana.c' || echo '$(srcdir)/'`@srcdir@/midas/src/mana.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mana_link_test_CFLAGS) $(CFLAGS) -c -o mana_link_test-mana.o `test -f '@srcdir@/../midas/src/mana.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/mana.c
 
-mana_link_test-mana.obj: @srcdir@/midas/src/mana.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mana_link_test_CFLAGS) $(CFLAGS) -MT mana_link_test-mana.obj -MD -MP -MF $(DEPDIR)/mana_link_test-mana.Tpo -c -o mana_link_test-mana.obj `if test -f '@srcdir@/midas/src/mana.c'; then $(CYGPATH_W) '@srcdir@/midas/src/mana.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/mana.c'; fi`
+mana_link_test-mana.obj: @srcdir@/../midas/src/mana.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mana_link_test_CFLAGS) $(CFLAGS) -MT mana_link_test-mana.obj -MD -MP -MF $(DEPDIR)/mana_link_test-mana.Tpo -c -o mana_link_test-mana.obj `if test -f '@srcdir@/../midas/src/mana.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/mana.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/mana.c'; fi`
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/mana_link_test-mana.Tpo $(DEPDIR)/mana_link_test-mana.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/mana.c' object='mana_link_test-mana.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/mana.c' object='mana_link_test-mana.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mana_link_test_CFLAGS) $(CFLAGS) -c -o mana_link_test-mana.obj `if test -f '@srcdir@/midas/src/mana.c'; then $(CYGPATH_W) '@srcdir@/midas/src/mana.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/mana.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mana_link_test_CFLAGS) $(CFLAGS) -c -o mana_link_test-mana.obj `if test -f '@srcdir@/../midas/src/mana.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/mana.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/mana.c'; fi`
 
-camacrpc.o: @srcdir@/midas/drivers/camac/camacrpc.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT camacrpc.o -MD -MP -MF $(DEPDIR)/camacrpc.Tpo -c -o camacrpc.o `test -f '@srcdir@/midas/drivers/camac/camacrpc.c' || echo '$(srcdir)/'`@srcdir@/midas/drivers/camac/camacrpc.c
+camacrpc.o: @srcdir@/../midas/drivers/camac/camacrpc.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT camacrpc.o -MD -MP -MF $(DEPDIR)/camacrpc.Tpo -c -o camacrpc.o `test -f '@srcdir@/../midas/drivers/camac/camacrpc.c' || echo '$(srcdir)/'`@srcdir@/../midas/drivers/camac/camacrpc.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/camacrpc.Tpo $(DEPDIR)/camacrpc.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/drivers/camac/camacrpc.c' object='camacrpc.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/drivers/camac/camacrpc.c' object='camacrpc.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o camacrpc.o `test -f '@srcdir@/midas/drivers/camac/camacrpc.c' || echo '$(srcdir)/'`@srcdir@/midas/drivers/camac/camacrpc.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o camacrpc.o `test -f '@srcdir@/../midas/drivers/camac/camacrpc.c' || echo '$(srcdir)/'`@srcdir@/../midas/drivers/camac/camacrpc.c
 
-camacrpc.obj: @srcdir@/midas/drivers/camac/camacrpc.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT camacrpc.obj -MD -MP -MF $(DEPDIR)/camacrpc.Tpo -c -o camacrpc.obj `if test -f '@srcdir@/midas/drivers/camac/camacrpc.c'; then $(CYGPATH_W) '@srcdir@/midas/drivers/camac/camacrpc.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/drivers/camac/camacrpc.c'; fi`
+camacrpc.obj: @srcdir@/../midas/drivers/camac/camacrpc.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT camacrpc.obj -MD -MP -MF $(DEPDIR)/camacrpc.Tpo -c -o camacrpc.obj `if test -f '@srcdir@/../midas/drivers/camac/camacrpc.c'; then $(CYGPATH_W) '@srcdir@/../midas/drivers/camac/camacrpc.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/drivers/camac/camacrpc.c'; fi`
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/camacrpc.Tpo $(DEPDIR)/camacrpc.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/drivers/camac/camacrpc.c' object='camacrpc.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/drivers/camac/camacrpc.c' object='camacrpc.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o camacrpc.obj `if test -f '@srcdir@/midas/drivers/camac/camacrpc.c'; then $(CYGPATH_W) '@srcdir@/midas/drivers/camac/camacrpc.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/drivers/camac/camacrpc.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o camacrpc.obj `if test -f '@srcdir@/../midas/drivers/camac/camacrpc.c'; then $(CYGPATH_W) '@srcdir@/../midas/drivers/camac/camacrpc.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/drivers/camac/camacrpc.c'; fi`
 
-mfe_link_test-mfe.o: @srcdir@/midas/src/mfe.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mfe_link_test_CFLAGS) $(CFLAGS) -MT mfe_link_test-mfe.o -MD -MP -MF $(DEPDIR)/mfe_link_test-mfe.Tpo -c -o mfe_link_test-mfe.o `test -f '@srcdir@/midas/src/mfe.c' || echo '$(srcdir)/'`@srcdir@/midas/src/mfe.c
+mfe_link_test-mfe.o: @srcdir@/../midas/src/mfe.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mfe_link_test_CFLAGS) $(CFLAGS) -MT mfe_link_test-mfe.o -MD -MP -MF $(DEPDIR)/mfe_link_test-mfe.Tpo -c -o mfe_link_test-mfe.o `test -f '@srcdir@/../midas/src/mfe.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/mfe.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/mfe_link_test-mfe.Tpo $(DEPDIR)/mfe_link_test-mfe.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/mfe.c' object='mfe_link_test-mfe.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/mfe.c' object='mfe_link_test-mfe.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mfe_link_test_CFLAGS) $(CFLAGS) -c -o mfe_link_test-mfe.o `test -f '@srcdir@/midas/src/mfe.c' || echo '$(srcdir)/'`@srcdir@/midas/src/mfe.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mfe_link_test_CFLAGS) $(CFLAGS) -c -o mfe_link_test-mfe.o `test -f '@srcdir@/../midas/src/mfe.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/mfe.c
 
-mfe_link_test-mfe.obj: @srcdir@/midas/src/mfe.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mfe_link_test_CFLAGS) $(CFLAGS) -MT mfe_link_test-mfe.obj -MD -MP -MF $(DEPDIR)/mfe_link_test-mfe.Tpo -c -o mfe_link_test-mfe.obj `if test -f '@srcdir@/midas/src/mfe.c'; then $(CYGPATH_W) '@srcdir@/midas/src/mfe.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/mfe.c'; fi`
+mfe_link_test-mfe.obj: @srcdir@/../midas/src/mfe.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mfe_link_test_CFLAGS) $(CFLAGS) -MT mfe_link_test-mfe.obj -MD -MP -MF $(DEPDIR)/mfe_link_test-mfe.Tpo -c -o mfe_link_test-mfe.obj `if test -f '@srcdir@/../midas/src/mfe.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/mfe.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/mfe.c'; fi`
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/mfe_link_test-mfe.Tpo $(DEPDIR)/mfe_link_test-mfe.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/mfe.c' object='mfe_link_test-mfe.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/mfe.c' object='mfe_link_test-mfe.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mfe_link_test_CFLAGS) $(CFLAGS) -c -o mfe_link_test-mfe.obj `if test -f '@srcdir@/midas/src/mfe.c'; then $(CYGPATH_W) '@srcdir@/midas/src/mfe.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/mfe.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mfe_link_test_CFLAGS) $(CFLAGS) -c -o mfe_link_test-mfe.obj `if test -f '@srcdir@/../midas/src/mfe.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/mfe.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/mfe.c'; fi`
 
-mgd.o: @srcdir@/midas/src/mgd.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT mgd.o -MD -MP -MF $(DEPDIR)/mgd.Tpo -c -o mgd.o `test -f '@srcdir@/midas/src/mgd.c' || echo '$(srcdir)/'`@srcdir@/midas/src/mgd.c
+mgd.o: @srcdir@/../midas/src/mgd.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT mgd.o -MD -MP -MF $(DEPDIR)/mgd.Tpo -c -o mgd.o `test -f '@srcdir@/../midas/src/mgd.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/mgd.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/mgd.Tpo $(DEPDIR)/mgd.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/mgd.c' object='mgd.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/mgd.c' object='mgd.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o mgd.o `test -f '@srcdir@/midas/src/mgd.c' || echo '$(srcdir)/'`@srcdir@/midas/src/mgd.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o mgd.o `test -f '@srcdir@/../midas/src/mgd.c' || echo '$(srcdir)/'`@srcdir@/../midas/src/mgd.c
 
-mgd.obj: @srcdir@/midas/src/mgd.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT mgd.obj -MD -MP -MF $(DEPDIR)/mgd.Tpo -c -o mgd.obj `if test -f '@srcdir@/midas/src/mgd.c'; then $(CYGPATH_W) '@srcdir@/midas/src/mgd.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/mgd.c'; fi`
+mgd.obj: @srcdir@/../midas/src/mgd.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT mgd.obj -MD -MP -MF $(DEPDIR)/mgd.Tpo -c -o mgd.obj `if test -f '@srcdir@/../midas/src/mgd.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/mgd.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/mgd.c'; fi`
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/mgd.Tpo $(DEPDIR)/mgd.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/midas/src/mgd.c' object='mgd.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='@srcdir@/../midas/src/mgd.c' object='mgd.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o mgd.obj `if test -f '@srcdir@/midas/src/mgd.c'; then $(CYGPATH_W) '@srcdir@/midas/src/mgd.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/mgd.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o mgd.obj `if test -f '@srcdir@/../midas/src/mgd.c'; then $(CYGPATH_W) '@srcdir@/../midas/src/mgd.c'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/mgd.c'; fi`
 
 .cxx.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -1133,61 +1133,61 @@ mgd.obj: @srcdir@/midas/src/mgd.c
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LTCXXCOMPILE) -c -o $@ $<
 
-history_midas.o: @srcdir@/midas/src/history_midas.cxx
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT history_midas.o -MD -MP -MF $(DEPDIR)/history_midas.Tpo -c -o history_midas.o `test -f '@srcdir@/midas/src/history_midas.cxx' || echo '$(srcdir)/'`@srcdir@/midas/src/history_midas.cxx
+history_midas.o: @srcdir@/../midas/src/history_midas.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT history_midas.o -MD -MP -MF $(DEPDIR)/history_midas.Tpo -c -o history_midas.o `test -f '@srcdir@/../midas/src/history_midas.cxx' || echo '$(srcdir)/'`@srcdir@/../midas/src/history_midas.cxx
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/history_midas.Tpo $(DEPDIR)/history_midas.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='@srcdir@/midas/src/history_midas.cxx' object='history_midas.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='@srcdir@/../midas/src/history_midas.cxx' object='history_midas.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o history_midas.o `test -f '@srcdir@/midas/src/history_midas.cxx' || echo '$(srcdir)/'`@srcdir@/midas/src/history_midas.cxx
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o history_midas.o `test -f '@srcdir@/../midas/src/history_midas.cxx' || echo '$(srcdir)/'`@srcdir@/../midas/src/history_midas.cxx
 
-history_midas.obj: @srcdir@/midas/src/history_midas.cxx
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT history_midas.obj -MD -MP -MF $(DEPDIR)/history_midas.Tpo -c -o history_midas.obj `if test -f '@srcdir@/midas/src/history_midas.cxx'; then $(CYGPATH_W) '@srcdir@/midas/src/history_midas.cxx'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/history_midas.cxx'; fi`
+history_midas.obj: @srcdir@/../midas/src/history_midas.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT history_midas.obj -MD -MP -MF $(DEPDIR)/history_midas.Tpo -c -o history_midas.obj `if test -f '@srcdir@/../midas/src/history_midas.cxx'; then $(CYGPATH_W) '@srcdir@/../midas/src/history_midas.cxx'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/history_midas.cxx'; fi`
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/history_midas.Tpo $(DEPDIR)/history_midas.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='@srcdir@/midas/src/history_midas.cxx' object='history_midas.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='@srcdir@/../midas/src/history_midas.cxx' object='history_midas.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o history_midas.obj `if test -f '@srcdir@/midas/src/history_midas.cxx'; then $(CYGPATH_W) '@srcdir@/midas/src/history_midas.cxx'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/history_midas.cxx'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o history_midas.obj `if test -f '@srcdir@/../midas/src/history_midas.cxx'; then $(CYGPATH_W) '@srcdir@/../midas/src/history_midas.cxx'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/history_midas.cxx'; fi`
 
-history_sql.o: @srcdir@/midas/src/history_sql.cxx
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT history_sql.o -MD -MP -MF $(DEPDIR)/history_sql.Tpo -c -o history_sql.o `test -f '@srcdir@/midas/src/history_sql.cxx' || echo '$(srcdir)/'`@srcdir@/midas/src/history_sql.cxx
+history_sql.o: @srcdir@/../midas/src/history_sql.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT history_sql.o -MD -MP -MF $(DEPDIR)/history_sql.Tpo -c -o history_sql.o `test -f '@srcdir@/../midas/src/history_sql.cxx' || echo '$(srcdir)/'`@srcdir@/../midas/src/history_sql.cxx
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/history_sql.Tpo $(DEPDIR)/history_sql.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='@srcdir@/midas/src/history_sql.cxx' object='history_sql.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='@srcdir@/../midas/src/history_sql.cxx' object='history_sql.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o history_sql.o `test -f '@srcdir@/midas/src/history_sql.cxx' || echo '$(srcdir)/'`@srcdir@/midas/src/history_sql.cxx
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o history_sql.o `test -f '@srcdir@/../midas/src/history_sql.cxx' || echo '$(srcdir)/'`@srcdir@/../midas/src/history_sql.cxx
 
-history_sql.obj: @srcdir@/midas/src/history_sql.cxx
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT history_sql.obj -MD -MP -MF $(DEPDIR)/history_sql.Tpo -c -o history_sql.obj `if test -f '@srcdir@/midas/src/history_sql.cxx'; then $(CYGPATH_W) '@srcdir@/midas/src/history_sql.cxx'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/history_sql.cxx'; fi`
+history_sql.obj: @srcdir@/../midas/src/history_sql.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT history_sql.obj -MD -MP -MF $(DEPDIR)/history_sql.Tpo -c -o history_sql.obj `if test -f '@srcdir@/../midas/src/history_sql.cxx'; then $(CYGPATH_W) '@srcdir@/../midas/src/history_sql.cxx'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/history_sql.cxx'; fi`
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/history_sql.Tpo $(DEPDIR)/history_sql.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='@srcdir@/midas/src/history_sql.cxx' object='history_sql.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='@srcdir@/../midas/src/history_sql.cxx' object='history_sql.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o history_sql.obj `if test -f '@srcdir@/midas/src/history_sql.cxx'; then $(CYGPATH_W) '@srcdir@/midas/src/history_sql.cxx'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/history_sql.cxx'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o history_sql.obj `if test -f '@srcdir@/../midas/src/history_sql.cxx'; then $(CYGPATH_W) '@srcdir@/../midas/src/history_sql.cxx'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/history_sql.cxx'; fi`
 
-libmidas_shared_la-history_midas.lo: @srcdir@/midas/src/history_midas.cxx
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CXXFLAGS) $(CXXFLAGS) -MT libmidas_shared_la-history_midas.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-history_midas.Tpo -c -o libmidas_shared_la-history_midas.lo `test -f '@srcdir@/midas/src/history_midas.cxx' || echo '$(srcdir)/'`@srcdir@/midas/src/history_midas.cxx
+libmidas_shared_la-history_midas.lo: @srcdir@/../midas/src/history_midas.cxx
+@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CXXFLAGS) $(CXXFLAGS) -MT libmidas_shared_la-history_midas.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-history_midas.Tpo -c -o libmidas_shared_la-history_midas.lo `test -f '@srcdir@/../midas/src/history_midas.cxx' || echo '$(srcdir)/'`@srcdir@/../midas/src/history_midas.cxx
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libmidas_shared_la-history_midas.Tpo $(DEPDIR)/libmidas_shared_la-history_midas.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='@srcdir@/midas/src/history_midas.cxx' object='libmidas_shared_la-history_midas.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='@srcdir@/../midas/src/history_midas.cxx' object='libmidas_shared_la-history_midas.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CXXFLAGS) $(CXXFLAGS) -c -o libmidas_shared_la-history_midas.lo `test -f '@srcdir@/midas/src/history_midas.cxx' || echo '$(srcdir)/'`@srcdir@/midas/src/history_midas.cxx
+@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CXXFLAGS) $(CXXFLAGS) -c -o libmidas_shared_la-history_midas.lo `test -f '@srcdir@/../midas/src/history_midas.cxx' || echo '$(srcdir)/'`@srcdir@/../midas/src/history_midas.cxx
 
-libmidas_shared_la-history_sql.lo: @srcdir@/midas/src/history_sql.cxx
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CXXFLAGS) $(CXXFLAGS) -MT libmidas_shared_la-history_sql.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-history_sql.Tpo -c -o libmidas_shared_la-history_sql.lo `test -f '@srcdir@/midas/src/history_sql.cxx' || echo '$(srcdir)/'`@srcdir@/midas/src/history_sql.cxx
+libmidas_shared_la-history_sql.lo: @srcdir@/../midas/src/history_sql.cxx
+@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CXXFLAGS) $(CXXFLAGS) -MT libmidas_shared_la-history_sql.lo -MD -MP -MF $(DEPDIR)/libmidas_shared_la-history_sql.Tpo -c -o libmidas_shared_la-history_sql.lo `test -f '@srcdir@/../midas/src/history_sql.cxx' || echo '$(srcdir)/'`@srcdir@/../midas/src/history_sql.cxx
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libmidas_shared_la-history_sql.Tpo $(DEPDIR)/libmidas_shared_la-history_sql.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='@srcdir@/midas/src/history_sql.cxx' object='libmidas_shared_la-history_sql.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='@srcdir@/../midas/src/history_sql.cxx' object='libmidas_shared_la-history_sql.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CXXFLAGS) $(CXXFLAGS) -c -o libmidas_shared_la-history_sql.lo `test -f '@srcdir@/midas/src/history_sql.cxx' || echo '$(srcdir)/'`@srcdir@/midas/src/history_sql.cxx
+@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmidas_shared_la_CXXFLAGS) $(CXXFLAGS) -c -o libmidas_shared_la-history_sql.lo `test -f '@srcdir@/../midas/src/history_sql.cxx' || echo '$(srcdir)/'`@srcdir@/../midas/src/history_sql.cxx
 
-mhttpd-mhttpd.o: @srcdir@/midas/src/mhttpd.cxx
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mhttpd_CXXFLAGS) $(CXXFLAGS) -MT mhttpd-mhttpd.o -MD -MP -MF $(DEPDIR)/mhttpd-mhttpd.Tpo -c -o mhttpd-mhttpd.o `test -f '@srcdir@/midas/src/mhttpd.cxx' || echo '$(srcdir)/'`@srcdir@/midas/src/mhttpd.cxx
+mhttpd-mhttpd.o: @srcdir@/../midas/src/mhttpd.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mhttpd_CXXFLAGS) $(CXXFLAGS) -MT mhttpd-mhttpd.o -MD -MP -MF $(DEPDIR)/mhttpd-mhttpd.Tpo -c -o mhttpd-mhttpd.o `test -f '@srcdir@/../midas/src/mhttpd.cxx' || echo '$(srcdir)/'`@srcdir@/../midas/src/mhttpd.cxx
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/mhttpd-mhttpd.Tpo $(DEPDIR)/mhttpd-mhttpd.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='@srcdir@/midas/src/mhttpd.cxx' object='mhttpd-mhttpd.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='@srcdir@/../midas/src/mhttpd.cxx' object='mhttpd-mhttpd.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mhttpd_CXXFLAGS) $(CXXFLAGS) -c -o mhttpd-mhttpd.o `test -f '@srcdir@/midas/src/mhttpd.cxx' || echo '$(srcdir)/'`@srcdir@/midas/src/mhttpd.cxx
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mhttpd_CXXFLAGS) $(CXXFLAGS) -c -o mhttpd-mhttpd.o `test -f '@srcdir@/../midas/src/mhttpd.cxx' || echo '$(srcdir)/'`@srcdir@/../midas/src/mhttpd.cxx
 
-mhttpd-mhttpd.obj: @srcdir@/midas/src/mhttpd.cxx
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mhttpd_CXXFLAGS) $(CXXFLAGS) -MT mhttpd-mhttpd.obj -MD -MP -MF $(DEPDIR)/mhttpd-mhttpd.Tpo -c -o mhttpd-mhttpd.obj `if test -f '@srcdir@/midas/src/mhttpd.cxx'; then $(CYGPATH_W) '@srcdir@/midas/src/mhttpd.cxx'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/mhttpd.cxx'; fi`
+mhttpd-mhttpd.obj: @srcdir@/../midas/src/mhttpd.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mhttpd_CXXFLAGS) $(CXXFLAGS) -MT mhttpd-mhttpd.obj -MD -MP -MF $(DEPDIR)/mhttpd-mhttpd.Tpo -c -o mhttpd-mhttpd.obj `if test -f '@srcdir@/../midas/src/mhttpd.cxx'; then $(CYGPATH_W) '@srcdir@/../midas/src/mhttpd.cxx'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/mhttpd.cxx'; fi`
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/mhttpd-mhttpd.Tpo $(DEPDIR)/mhttpd-mhttpd.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='@srcdir@/midas/src/mhttpd.cxx' object='mhttpd-mhttpd.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='@srcdir@/../midas/src/mhttpd.cxx' object='mhttpd-mhttpd.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mhttpd_CXXFLAGS) $(CXXFLAGS) -c -o mhttpd-mhttpd.obj `if test -f '@srcdir@/midas/src/mhttpd.cxx'; then $(CYGPATH_W) '@srcdir@/midas/src/mhttpd.cxx'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/midas/src/mhttpd.cxx'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mhttpd_CXXFLAGS) $(CXXFLAGS) -c -o mhttpd-mhttpd.obj `if test -f '@srcdir@/../midas/src/mhttpd.cxx'; then $(CYGPATH_W) '@srcdir@/../midas/src/mhttpd.cxx'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/mhttpd.cxx'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -1576,44 +1576,44 @@ hmana.o: mana.c msystem.h midas.h midasinc.h mrpc.h
 rmana.o: mana.c msystem.h midas.h midasinc.h mrpc.h
 	$(CXX) -DUSE_ROOT $(AM_CXXFLAGS) -c -o $@ $<
 dox: $(mdaq_imgs)
-	@cd @srcdir@/midas/doxfiles && doxygen midox.cfg
+	@cd @srcdir@/../midas/doxfiles && doxygen midox.cfg
 	@tar zxvf $(mdaq_imgs)
-	@cp -rvp images/* @srcdir@/midas/doxfiles/html/
+	@cp -rvp images/* @srcdir@/../midas/doxfiles/html/
 
 pdf-local: dox
-	@cp -rvp images/* @srcdir@/midas/doxfiles/latex
-	@cd @srcdir@/midas/doxfiles/latex && $(MAKE) pdf
+	@cp -rvp images/* @srcdir@/../midas/doxfiles/latex
+	@cd @srcdir@/../midas/doxfiles/latex && $(MAKE) pdf
 
 $(mdaq_imgs):
 	wget --no-check-certificate -O $@ -c https://midas.psi.ch/download/doc/midasdoc-images.tar.gz
 
 ######################################################################
 
-install-exec-local: fe_backend_objs addons/mdaq-config
+install-exec-local: fe_backend_objs mdaq-config
 	$(INSTALL) $(FE_OBJS) $(DESTDIR)/@libdir@
 	@mkdir -p $(DESTDIR)/@prefix@/bin
-	$(INSTALL) addons/mdaq-config $(DESTDIR)/@prefix@/bin/mdaq-config
+	$(INSTALL) mdaq-config $(DESTDIR)/@prefix@/bin/mdaq-config
 
 install-data-local:
 # src
-	@cd @srcdir@/midas/src && find ./ -type f -exec \
+	@cd @srcdir@/../midas/src && find ./ -type f -exec \
 	   $(INSTALL) -v -D -m 644 "{}" "$(DESTDIR)/@datadir@/src/{}" \;
 # examples
-	@cd @srcdir@/midas/examples && find ./ -type f -exec \
+	@cd @srcdir@/../midas/examples && find ./ -type f -exec \
 	   $(INSTALL) -v -D -m 644 "{}" "$(DESTDIR)/@docdir@/examples/{}" \;
 # drivers
-	@cd @srcdir@/midas/drivers && find ./ -type f -exec \
+	@cd @srcdir@/../midas/drivers && find ./ -type f -exec \
 	   $(INSTALL) -v -D -m 644 "{}" "$(DESTDIR)/@datadir@/drivers/{}" \;
 # install config file
-	@mkdir -p $(DESTDIR)/etc
-	$(INSTALL) -v -D -m 644 @srcdir@/addons/exptab $(DESTDIR)/etc/exptab
+	@mkdir -p $(DESTDIR)/@datadir@/etc
+	$(INSTALL) -v -D -m 644 @srcdir@/../addons/exptab $(DESTDIR)/@datadir@/etc/exptab
 
 install-html-local: dox
-	@cd @srcdir@/midas/doxfiles && find ./html/ -type f -exec \
+	@cd @srcdir@/../midas/doxfiles && find ./html/ -type f -exec \
 	   $(INSTALL) -v -D -m 644 "{}" "$(DESTDIR)/@htmldir@/{}" \;
 
 install-man-local: dox
-	@cd @srcdir@/midas/doxfiles && find ./man/ -type f -exec \
+	@cd @srcdir@/../midas/doxfiles && find ./man/ -type f -exec \
 	   $(INSTALL) -v -D -m 644 "{}" "@mandir@/{}" \;
 
 uninstall-local:

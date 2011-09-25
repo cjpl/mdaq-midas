@@ -1,31 +1,33 @@
 #  Makefile.am for MIDAS automake
 #  2011-06-17: created by Exaos Lee (exaos.lee@gmail.com)
 ########################################################################
-VPATH = @srcdir@/midas/include:@srcdir@/midas/src:@srcdir@/midas/utils:@srcdir@/mxml:@mscb_dir@
+AUTOMAKE_OPTIONS = foreign
+
+VPATH = @srcdir@/../midas/include:@srcdir@/../midas/src:@srcdir@/../midas/utils:@srcdir@/../mxml:@mscb_dir@
 #ACLOCAL_AMFLAGS = -I m4
 
 ROOTSYS = @root_sys@
 MDAQ_CFLAGS = @mdaq_cflags@
 MDAQ_LIBS =  @mdaq_libs@ $(LIBS)
 
-AM_CFLAGS = -I@srcdir@/midas/include -I@srcdir@/mxml $(MDAQ_CFLAGS)
+AM_CFLAGS = -I@srcdir@/../midas/include -I@srcdir@/../mxml $(MDAQ_CFLAGS)
 AM_CXXFLAGS = $(AM_CFLAGS) @root_cflags@
 AM_LDFLAGS = $(MDAQ_LIBS)
 
 ## Core Library
-MDAQ_LIBSRCS = @srcdir@/midas/src/midas.c \
-@srcdir@/midas/src/system.c \
-@srcdir@/midas/src/mrpc.c \
-@srcdir@/midas/src/odb.c \
-@srcdir@/midas/src/ftplib.c \
-@srcdir@/midas/src/dm_eb.c \
-@srcdir@/midas/src/history_midas.cxx \
-@srcdir@/midas/src/history_sql.cxx \
-@srcdir@/midas/src/history.c \
-@srcdir@/midas/src/alarm.c \
-@srcdir@/midas/src/elog.c \
-@srcdir@/mxml/mxml.c \
-@srcdir@/mxml/strlcpy.c
+MDAQ_LIBSRCS = @srcdir@/../midas/src/midas.c \
+@srcdir@/../midas/src/system.c \
+@srcdir@/../midas/src/mrpc.c \
+@srcdir@/../midas/src/odb.c \
+@srcdir@/../midas/src/ftplib.c \
+@srcdir@/../midas/src/dm_eb.c \
+@srcdir@/../midas/src/history_midas.cxx \
+@srcdir@/../midas/src/history_sql.cxx \
+@srcdir@/../midas/src/history.c \
+@srcdir@/../midas/src/alarm.c \
+@srcdir@/../midas/src/elog.c \
+@srcdir@/../mxml/mxml.c \
+@srcdir@/../mxml/strlcpy.c
 
 lib_LIBRARIES = libmidas.a
 libmidas_a_SOURCES = $(MDAQ_LIBSRCS)
@@ -36,27 +38,27 @@ libmidas_shared_la_CFLAGS = $(AM_CFLAGS)
 libmidas_shared_la_CXXFLAGS = $(AM_CXXFLAGS)
 #libmidas_shared_la_LDFLAGS = -shared #-module -avoid-version
 libmidas_shared_la_LDFLAGS = -shared -release 2.3.0
-include_HEADERS =@srcdir@/midas/include/cfortran.h \
-@srcdir@/midas/include/esone.h \
-@srcdir@/midas/include/ftplib.h \
-@srcdir@/midas/include/hardware.h \
-@srcdir@/midas/include/hbook.h \
-@srcdir@/midas/include/history.h \
-@srcdir@/midas/include/mcstd.h \
-@srcdir@/midas/include/mdsupport.h \
-@srcdir@/midas/include/mfbstd.h \
-@srcdir@/midas/include/mgd.h \
-@srcdir@/midas/include/midas.h \
-@srcdir@/midas/include/midas.inc \
-@srcdir@/midas/include/midasinc.h \
-@srcdir@/midas/include/midas_macro.h \
-@srcdir@/midas/include/mrpc.h \
-@srcdir@/midas/include/msystem.h \
-@srcdir@/midas/include/musbstd.h \
-@srcdir@/midas/include/mvmestd.h \
-@srcdir@/midas/include/pvm3.h \
-@srcdir@/midas/include/ybos.h \
-@srcdir@/mxml/mxml.h @srcdir@/mxml/strlcpy.h
+include_HEADERS =@srcdir@/../midas/include/cfortran.h \
+@srcdir@/../midas/include/esone.h \
+@srcdir@/../midas/include/ftplib.h \
+@srcdir@/../midas/include/hardware.h \
+@srcdir@/../midas/include/hbook.h \
+@srcdir@/../midas/include/history.h \
+@srcdir@/../midas/include/mcstd.h \
+@srcdir@/../midas/include/mdsupport.h \
+@srcdir@/../midas/include/mfbstd.h \
+@srcdir@/../midas/include/mgd.h \
+@srcdir@/../midas/include/midas.h \
+@srcdir@/../midas/include/midas.inc \
+@srcdir@/../midas/include/midasinc.h \
+@srcdir@/../midas/include/midas_macro.h \
+@srcdir@/../midas/include/mrpc.h \
+@srcdir@/../midas/include/msystem.h \
+@srcdir@/../midas/include/musbstd.h \
+@srcdir@/../midas/include/mvmestd.h \
+@srcdir@/../midas/include/pvm3.h \
+@srcdir@/../midas/include/ybos.h \
+@srcdir@/../mxml/mxml.h @srcdir@/../mxml/strlcpy.h
 LDADD = libmidas.a
 
 ## Utilities
@@ -67,25 +69,25 @@ EXTRA_UTILS = mfe_link_test mana_link_test @mdaq_osprogs@
 ## Programs
 bin_PROGRAMS = $(CORE_UTILS) $(EXTRA_UTILS)
 # Scritps
-dist_bin_SCRIPTS = @srcdir@/midas/utils/stripchart.tcl  \
-@srcdir@/midas/utils/lazy_castor.perl \
-@srcdir@/midas/utils/lazy_copy.perl \
-@srcdir@/midas/utils/lazy_dcache.perl \
-@srcdir@/midas/utils/lazy_test.perl \
+dist_bin_SCRIPTS = @srcdir@/../midas/utils/stripchart.tcl  \
+@srcdir@/../midas/utils/lazy_castor.perl \
+@srcdir@/../midas/utils/lazy_copy.perl \
+@srcdir@/../midas/utils/lazy_dcache.perl \
+@srcdir@/../midas/utils/lazy_test.perl \
 mdaq-config
 
 mscb.o: mscb.c
 	$(CXX) $(AM_CXXFLAGS) -c -o $@ $<
 
 # per-code configure
-mhttpd_SOURCES = @srcdir@/midas/src/mhttpd.cxx @srcdir@/midas/src/mgd.c
+mhttpd_SOURCES = @srcdir@/../midas/src/mhttpd.cxx @srcdir@/../midas/src/mgd.c
 mhttpd_LDADD =  @mscb_obj@ libmidas.a
 mhttpd_CXXFLAGS = $(AM_CXXFLAGS) -I@mscb_dir@
 mhttpd_DEPENDENCIES = @mscb_obj@
 mlogger_SOURCES = mlogger.cxx
 mlogger_LDFLAGS = @root_libs@ ${MDAQ_LIBS}
 odbedit_SOURCES = odbedit.c cmdedit.c
-mcnaf_SOURCES = mcnaf.c @srcdir@/midas/drivers/camac/camacrpc.c
+mcnaf_SOURCES = mcnaf.c @srcdir@/../midas/drivers/camac/camacrpc.c
 mdump_SOURCES = mdump.c mdsupport.c
 mhdump_SOURCES = mhdump.cxx
 mtransition_SOURCES = mtransition.cxx
@@ -97,9 +99,9 @@ lazylogger_LDADD = lazylogger.o libmidas.a
 lazylogger_LDFLAGS = $(AM_LIBS) @root_glibs@
 lazylogger_LINK = $(CXX) $(AM_CXXFLAGS) -o $@
 
-mfe_link_test_SOURCES = @srcdir@/midas/src/mfe.c
+mfe_link_test_SOURCES = @srcdir@/../midas/src/mfe.c
 mfe_link_test_CFLAGS = -DLINK_TEST $(AM_CFLAGS)
-mana_link_test_SOURCES = @srcdir@/midas/src/mana.c
+mana_link_test_SOURCES = @srcdir@/../midas/src/mana.c
 mana_link_test_CFLAGS = -DLINK_TEST $(AM_CFLAGS)
 
 ## listing all optionally built programs in EXTRA_PROGRAMS
@@ -127,15 +129,15 @@ rmana.o: mana.c msystem.h midas.h midasinc.h mrpc.h
 	$(CXX) -DUSE_ROOT $(AM_CXXFLAGS) -c -o $@ $<
 
 ### Documentation
-mdaq_imgs=@srcdir@/midasdoc-images.tar.gz
+mdaq_imgs=@srcdir@/../addons/midasdoc-images.tar.gz
 dox: $(mdaq_imgs)
-	@cd @srcdir@/midas/doxfiles && doxygen midox.cfg
+	@cd @srcdir@/../midas/doxfiles && doxygen midox.cfg
 	@tar zxvf $(mdaq_imgs)
-	@cp -rvp images/* @srcdir@/midas/doxfiles/html/
+	@cp -rvp images/* @srcdir@/../midas/doxfiles/html/
 
 pdf-local: dox
-	@cp -rvp images/* @srcdir@/midas/doxfiles/latex
-	@cd @srcdir@/midas/doxfiles/latex && $(MAKE) pdf
+	@cp -rvp images/* @srcdir@/../midas/doxfiles/latex
+	@cd @srcdir@/../midas/doxfiles/latex && $(MAKE) pdf
 
 $(mdaq_imgs):
 	wget --no-check-certificate -O $@ -c https://midas.psi.ch/download/doc/midasdoc-images.tar.gz
@@ -150,24 +152,24 @@ install-exec-local: fe_backend_objs mdaq-config
 
 install-data-local:
 # src
-	@cd @srcdir@/midas/src && find ./ -type f -exec \
+	@cd @srcdir@/../midas/src && find ./ -type f -exec \
 	   $(INSTALL) -v -D -m 644 "{}" "$(DESTDIR)/@datadir@/src/{}" \;
 # examples
-	@cd @srcdir@/midas/examples && find ./ -type f -exec \
+	@cd @srcdir@/../midas/examples && find ./ -type f -exec \
 	   $(INSTALL) -v -D -m 644 "{}" "$(DESTDIR)/@docdir@/examples/{}" \;
 # drivers
-	@cd @srcdir@/midas/drivers && find ./ -type f -exec \
+	@cd @srcdir@/../midas/drivers && find ./ -type f -exec \
 	   $(INSTALL) -v -D -m 644 "{}" "$(DESTDIR)/@datadir@/drivers/{}" \;
 # install config file
-	@mkdir -p $(DESTDIR)/etc
-	$(INSTALL) -v -D -m 644 @srcdir@/addons/exptab $(DESTDIR)/etc/exptab
+	@mkdir -p $(DESTDIR)/@datadir@/etc
+	$(INSTALL) -v -D -m 644 @srcdir@/../addons/exptab $(DESTDIR)/@datadir@/etc/exptab
 
 install-html-local: dox
-	@cd @srcdir@/midas/doxfiles && find ./html/ -type f -exec \
+	@cd @srcdir@/../midas/doxfiles && find ./html/ -type f -exec \
 	   $(INSTALL) -v -D -m 644 "{}" "$(DESTDIR)/@htmldir@/{}" \;
 
 install-man-local: dox
-	@cd @srcdir@/midas/doxfiles && find ./man/ -type f -exec \
+	@cd @srcdir@/../midas/doxfiles && find ./man/ -type f -exec \
 	   $(INSTALL) -v -D -m 644 "{}" "@mandir@/{}" \;
 
 uninstall-local:

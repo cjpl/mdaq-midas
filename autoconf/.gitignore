@@ -1,0 +1,8 @@
+Makefile
+*.cache/
+*.log
+*.status
+mdaq-config
+*~
+\#*
+tmp/

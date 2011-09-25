@@ -34,6 +34,7 @@ target=@target@
 platform=@platform@
 
 prefix=@prefix@
+execdir=@exec_prefix@
 bindir=@bindir@
 libdir=@libdir@
 incdir=@includedir@
@@ -60,8 +61,8 @@ altld="@LD@"
 usage="\
 Usage: mdaq-config [--config] [--target] [--platform]\
  [--cflags] [--libs] [--shlibs] [--enable-root] [--enable-root-static]\
- [--prefix] [--bindir] [--libdir] [--incdir] [--datadir] [--srcdir]\
- [--examplesdir] [--drvdir]\
+ [--prefix] [--execdir] [--bindir] [--libdir] [--incdir] [--datadir]\
+ [--srcdir] [--examplesdir] [--drvdir]\
  [--help] [--version]"
 
 if test $# -eq 0; then
@@ -104,6 +105,9 @@ while test $# -gt 0; do
 	    ;;
 	--prefix)
 	    out="$out $prefix"
+	    ;;
+	--execdir)
+	    out="$out $execdir"
 	    ;;
 	--bindir)
 	    out="$out $bindir"

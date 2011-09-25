@@ -72,7 +72,7 @@ dist_bin_SCRIPTS = @srcdir@/midas/utils/stripchart.tcl  \
 @srcdir@/midas/utils/lazy_copy.perl \
 @srcdir@/midas/utils/lazy_dcache.perl \
 @srcdir@/midas/utils/lazy_test.perl \
-addons/mdaq-config
+mdaq-config
 
 mscb.o: mscb.c
 	$(CXX) $(AM_CXXFLAGS) -c -o $@ $<
@@ -143,10 +143,10 @@ $(mdaq_imgs):
 ######################################################################
 ## Install
 
-install-exec-local: fe_backend_objs addons/mdaq-config
+install-exec-local: fe_backend_objs mdaq-config
 	$(INSTALL) $(FE_OBJS) $(DESTDIR)/@libdir@
 	@mkdir -p $(DESTDIR)/@prefix@/bin
-	$(INSTALL) addons/mdaq-config $(DESTDIR)/@prefix@/bin/mdaq-config
+	$(INSTALL) mdaq-config $(DESTDIR)/@prefix@/bin/mdaq-config
 
 install-data-local:
 # src

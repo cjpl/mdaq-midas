@@ -2,19 +2,19 @@
 # June 17, 2011 -- created by Exaos Lee <exaos.lee(at)gmail.com>
 ###########################################################
 # Prelude
-AC_INIT([daq-midas], [2.3.0+r5065], [exaos.lee@gmail.com])
+AC_INIT([mdaq], [2.3.0+r5065], [exaos.lee@gmail.com])
 
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
-AM_INIT_AUTOMAKE([foreign -Wall -Werror])
+#AC_INIT_AUTOMAKE()
 
 ############################################################
 # Checking sources
-AC_CONFIG_SRCDIR(midas/src)
-AC_CONFIG_SRCDIR(midas/include)
-AC_CONFIG_SRCDIR(midas/utils)
-AC_CONFIG_SRCDIR(mxml)
+AC_CONFIG_SRCDIR(../midas/src)
+AC_CONFIG_SRCDIR(../midas/include)
+AC_CONFIG_SRCDIR(../midas/utils)
+AC_CONFIG_SRCDIR(../mxml)
 #AC_CONFIG_MACRO_DIR([m4])
 
 # Directories
@@ -32,9 +32,9 @@ AC_SUBST(docdir)
 test "$docdir" = '${datarootdir}/doc/${PACKAGE_TARNAME}' && docdir="${datarootdir}/doc/${PACKAGE_TARNAME}"
 
 #### Files
-dnl inc_files=`cd $srcdir/midas/include && find . -type f | xargs`
-dnl drv_files=`cd $srcdir/midas/drivers && find . -type f | xargs`
-dnl exp_files=`cd $srcdir/midas/examples && find . -type f | xargs`
+dnl inc_files=`cd $srcdir/../midas/include && find . -type f | xargs`
+dnl drv_files=`cd $srcdir/../midas/drivers && find . -type f | xargs`
+dnl exp_files=`cd $srcdir/../midas/examples && find . -type f | xargs`
 dnl AC_SUBST(inc_files)
 dnl AC_SUBST(drv_files)
 dnl AC_SUBST(exp_files)
@@ -44,13 +44,13 @@ dnl AC_SUBST(exp_files)
 AC_PROG_CXX
 AC_PROG_CC
 #AC_PROG_F77
-AM_PROG_CC_C_O
+AC_PROG_CC_C_O
 AC_PROG_CXX_C_O
 AC_PROG_INSTALL
 #C_PROG_MAKE_SET
 #AC_PROG_RANLIB
-AC_LIBTOOL_DLOPEN
-AC_PROG_LIBTOOL
+#AC_LIBTOOL_DLOPEN
+#AC_PROG_LIBTOOL
 
 AC_SUBST(mdaq_cflags)
 AC_SUBST(mdaq_osflags)
@@ -222,12 +222,12 @@ AS_IF([test "X$enable_cernlib" != "Xno"], [
 AC_ARG_ENABLE(mscb,
   AC_HELP_STRING([--disable-mscb], [build with mscb]))
 AS_IF([test "X$enable_mscb" != "Xno"], [
-  #AC_CONFIG_SRCDIR(midas/mscb)
-  if test -d ${srcdir}/midas/mscb ; then
+  #AC_CONFIG_SRCDIR(../midas/mscb)
+  if test -d ${srcdir}/../midas/mscb ; then
      mdaq_cflags="${mdaq_cflags} -DHAVE_MSCB"
      #mdaq_osprogs="${mdaq_osprogs}"
      AC_SUBST(mscb_dir)
-     mscb_dir=$srcdir/midas/mscb
+     mscb_dir=$srcdir/../midas/mscb
      AC_SUBST(mscb_obj)
      mscb_obj=mscb.o
   else
@@ -263,6 +263,6 @@ mdaq_config_args="$ac_cs_config"
 
 ############################################################
 # Outputs
-AC_CONFIG_FILES([Makefile addons/mdaq-config])
+AC_CONFIG_FILES([Makefile mdaq-config])
 AC_OUTPUT
 

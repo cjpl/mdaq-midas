@@ -262,7 +262,7 @@ def mdaq_exp(args):
 def run_args(args):
     opt_fcnf = ''
     if "-c" in args: opt_fcnf = "-c"
-    elif "--config" in args: opt_fcnf = "-c"
+    elif "--config" in args: opt_fcnf = "--config"
     else: pass
     if opt_fcnf:
         fidx = args.index(opt_fcnf)+1

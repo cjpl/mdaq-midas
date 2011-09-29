@@ -1,4 +1,4 @@
-build/root/usr/bin/mdaq-config           /usr/bin
+build/root/usr/bin/                      /usr/
 build/root/usr/lib/mdaq/bin		 /usr/lib/mdaq
 build/root/usr/lib/mdaq/lib		 /usr/lib/mdaq
 build/root/usr/lib/mdaq/include 	 /usr/lib/mdaq

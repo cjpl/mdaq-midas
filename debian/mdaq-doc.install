@@ -1,1 +1,1 @@
-debian/build/doc/html  /usr/share/doc/mdaq
+build/doc/html  /usr/share/doc/mdaq

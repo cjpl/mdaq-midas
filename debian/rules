@@ -18,13 +18,12 @@ override_dh_auto_configure:
 pre-build:
 	cd $(CURDIR) && ./prepare-src.sh
 
-## Build source with root support
-BUILD_R_TMPD=$(CURDIR)/build/root
-builddir-root: pre-build
-	@mkdir -p $(BUILD_R_TMPD)
+BUILD_DIR=$(CURDIR)/build
 
-build-root: builddir-root
-	@cd $(BUILD_R_TMPD) && \
+## Build source with root support
+build-root:
+	@mkdir -p $(BUILD_DIR)/root
+	@cd $(BUILD_DIR)/root && \
 	$(CURDIR)/autoconf/configure --enable-root --prefix=/usr \
 	   --exec-prefix=/usr/lib/mdaq --docdir=/usr/share/doc/mdaq \
 	   --includedir=/usr/lib/mdaq/include \
@@ -32,12 +31,9 @@ build-root: builddir-root
 	&& $(MAKE) DESTDIR=`pwd` install
 
 ## Build source without root support
-BUILD_NR_TMPD=$(CURDIR)/build/noroot
-builddir-noroot: pre-build
-	@mkdir -p $(BUILD_NR_TMPD)
-
 build-noroot: builddir-noroot
-	@cd $(BUILD_NR_TMPD) && \
+	@mkdir -p $(BUILD_DIR)/noroot
+	@cd $(BUILD_DIR)/noroot && \
 	$(CURDIR)/autoconf/configure --disable-root --prefix=/usr \
 	   --exec-prefix=/usr/lib/mdaq --docdir=/usr/share/doc/mdaq \
 	   --includedir=/usr/lib/mdaq/include \
@@ -45,15 +41,14 @@ build-noroot: builddir-noroot
 	&& $(MAKE) DESTDIR=`pwd` install
 
 ## Build docs
-HTML_TMPD=$(CURDIR)/build/doc
 dox-build:
-	@mkdir -p $(HTML_TMPD)
+	@mkdir -p $(BUILD_DIR)/doc
 	@cd midas/doxfiles && doxygen midox.cfg
 	@cd midas/doxfiles && for i in def html latex man midox.log ; do \
-	   mv -f $$i $(HTML_TMPD) ; done
-	@tar zxvf $(CURDIR)/midasdoc-images.tar.gz -C $(HTML_TMPD)
-	@mv -f $(HTML_TMPD)/images/* $(HTML_TMPD)/html/
-	@rmdir $(HTML_TMPD)/images
+	   mv -f $$i $(BUILD_DIR)/doc ; done
+	@tar zxvf $(CURDIR)/midasdoc-images.tar.gz -C $(BUILD_DIR)/doc
+	@mv -f $(BUILD_DIR)/doc/images/* $(BUILD_DIR)/doc/html/
+	@rmdir $(BUILD_DIR)/doc/images
 
 ##############################################################################
 %:
@@ -62,12 +57,7 @@ dox-build:
 build: build-root build-noroot dox-build
 
 pre-clean:
-	@rm -rf $(BUILD_R_TMPD)
-	@rm -rf $(BUILD_NR_TMPD)
-	@rm -rf $(CURDIR)/debian/build
-	@rm -rf $(CURDIR)/debian/mdaq-root
-	@rm -rf $(CURDIR)/debian/mdaq-noroot
-	@rm -rf $(CURDIR)/debian/mdaq-doc
+	@rm -rf $(BUILD_DIR)
 	@cd $(CURDIR)/debian && rm -f *.debhelper *.substvars *.log
 
 #binary-arch:

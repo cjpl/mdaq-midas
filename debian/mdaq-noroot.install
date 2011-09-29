@@ -1,14 +1,14 @@
-debian/build/noroot/usr/bin/mdaq-config        /usr/bin
-debian/build/noroot/usr/lib/mdaq/bin/     /usr/lib/mdaq
-debian/build/noroot/usr/lib/mdaq/lib/libmidas-shared-2.3.0.so  /usr/lib/mdaq/lib
-debian/build/noroot/usr/lib/mdaq/lib/libmidas-shared.la	    /usr/lib/mdaq/lib
-debian/build/noroot/usr/lib/mdaq/lib/libmidas-shared.so	    /usr/lib/mdaq/lib
-debian/build/noroot/usr/lib/mdaq/lib/libmidas.a		    /usr/lib/mdaq/lib
-debian/build/noroot/usr/lib/mdaq/lib/hmana.o	/usr/lib/mdaq/lib
-debian/build/noroot/usr/lib/mdaq/lib/mfe.o		/usr/lib/mdaq/lib
-debian/build/noroot/usr/lib/mdaq/lib/mana.o	/usr/lib/mdaq/lib
-debian/build/noroot/usr/lib/mdaq/lib/fal.o		/usr/lib/mdaq/lib
-debian/build/noroot/usr/lib/mdaq/include 		/usr/lib/mdaq
-debian/build/noroot/usr/share/mdaq	 		/usr/share
+build/noroot/usr/bin/mdaq-config        /usr/bin
+build/noroot/usr/lib/mdaq/bin/     /usr/lib/mdaq
+build/noroot/usr/lib/mdaq/lib/libmidas-shared-2.3.0.so  /usr/lib/mdaq/lib
+build/noroot/usr/lib/mdaq/lib/libmidas-shared.la	    /usr/lib/mdaq/lib
+build/noroot/usr/lib/mdaq/lib/libmidas-shared.so	    /usr/lib/mdaq/lib
+build/noroot/usr/lib/mdaq/lib/libmidas.a		    /usr/lib/mdaq/lib
+build/noroot/usr/lib/mdaq/lib/hmana.o	/usr/lib/mdaq/lib
+build/noroot/usr/lib/mdaq/lib/mfe.o		/usr/lib/mdaq/lib
+build/noroot/usr/lib/mdaq/lib/mana.o	/usr/lib/mdaq/lib
+build/noroot/usr/lib/mdaq/lib/fal.o		/usr/lib/mdaq/lib
+build/noroot/usr/lib/mdaq/include 		/usr/lib/mdaq
+build/noroot/usr/share/mdaq	 		/usr/share
 midas/examples/       					/usr/share/doc/mdaq
 

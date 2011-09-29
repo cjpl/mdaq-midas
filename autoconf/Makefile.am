@@ -155,15 +155,15 @@ install-data-local:
 # src
 	@cd @srcdir@/../midas/src && find ./ -type f -exec \
 	   $(INSTALL) -v -D -m 644 "{}" "$(DESTDIR)/@datadir@/src/{}" \;
-# examples
-	@cd @srcdir@/../midas/examples && find ./ -type f -exec \
-	   $(INSTALL) -v -D -m 644 "{}" "$(DESTDIR)/@docdir@/examples/{}" \;
 # drivers
 	@cd @srcdir@/../midas/drivers && find ./ -type f -exec \
 	   $(INSTALL) -v -D -m 644 "{}" "$(DESTDIR)/@datadir@/drivers/{}" \;
+# examples
+	@cd @srcdir@/../midas/examples && find ./ -type f -exec \
+	   $(INSTALL) -v -D -m 644 "{}" "$(DESTDIR)/@docdir@/examples/{}" \;
 # install config file
-	@mkdir -p $(DESTDIR)/@datadir@/etc
-	$(INSTALL) -v -D -m 644 @srcdir@/../addons/exptab $(DESTDIR)/@datadir@/etc/exptab
+	@mkdir -p $(DESTDIR)/@docdir@/etc
+	$(INSTALL) -v -D -m 644 @srcdir@/../addons/exptab $(DESTDIR)/@docdir@/etc/exptab
 # Install mdaq.yaml example to docdir
 	$(INSTALL) -v -D -m 644 @srcdir@/../addons/mdaq.yaml $(DESTDIR)/@dodcdir@/mdaq.yaml
 

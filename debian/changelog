@@ -1,3 +1,11 @@
+mdaq (2.3.0+r5916-1) unstable; urgency=low
+
+  * New upstream source
+  * midas: 2.3.0, r5916, 2011-09-26 11:26:50 +0800
+  * mxml: r70, 2011-09-14 19:46:24 +0800
+
+ -- Exaos Lee <Exaos.Lee@gmail.com>  Thu, 29 Sep 2011 17:18:25 +0800
+
 mdaq (2.3.0+r5065-3) unstable; urgency=low
 
   * Fix bugs in mdaq.py

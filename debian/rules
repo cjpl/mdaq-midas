@@ -16,7 +16,7 @@ override_dh_auto_configure:
 	@echo "Skip!"
 
 pre-build:
-	cd $(CURDIR) && ./prepare-src.sh
+	cd $(CURDIR) && ./autoconf/prepare-src.sh
 
 BUILD_DIR=$(CURDIR)/build
 

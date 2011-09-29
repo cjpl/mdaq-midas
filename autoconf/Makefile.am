@@ -92,10 +92,8 @@ mdump_SOURCES = mdump.c mdsupport.c
 mhdump_SOURCES = mhdump.cxx
 mtransition_SOURCES = mtransition.cxx
 
-lazylogger.o: lazylogger.c
-	$(CXX) $(AM_CXXFLAGS) -c -o $@ $<
-lazylogger_SOURCES =  mdsupport.c
-lazylogger_LDADD = lazylogger.o libmidas.a
+lazylogger_SOURCES =  mdsupport.c lazylogger.cxx
+lazylogger_LDADD = libmidas.a
 lazylogger_LDFLAGS = $(AM_LIBS) @root_glibs@
 lazylogger_LINK = $(CXX) $(AM_CXXFLAGS) -o $@
 

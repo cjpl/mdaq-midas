@@ -5,3 +5,6 @@ debian/patches/
 tmp/
 *~
 \#*~
+mxml/
+midas/
+midasdoc-images.tar.gz

@@ -18,13 +18,17 @@ else:
 #-----------------------------------------------------------------------
 verbose = True
 
-def find_execfile(execf, path=None):
-    if os.path.isfile(execf): return execf
+def which(program):
+    def is_exe(fpath): return os.path.exists(fpath) and os.access(fpath,os.X_OK)
+
+    fpath, fname = os.path.split(program)
+    if fpath:
+        if is_exe(program): return program
     else:
-        if path is None: path = os.environ['PATH']
-        for p in os.path.split(os.path.pathsep):
-            f = os.path.join(p,execf)
-            if os.path.isfile(f): return f
+        for path in os.environ["PATH"].split(os.pathsep):
+            exe_file = os.path.join(path, program)
+            if is_exe(exe_file): return exe_file
+
     return None
 
 def dict_sign(dest, orig):
@@ -52,14 +56,18 @@ def kill_prog(pname):
 #-----------------------------------------------------------------------
 
 # MIDASSYS: midas
-mdaq_cfg = find_execfile("mdaq_config")
-mdaq_bin = "/usr/lib/daq-midas/bin"
-mdaq_dir = "/usr/lib/daq-midas"
-if mdaq_cfg:
-    mdaq_bin = getoutput("%s --bindir"%(mdaq_cfg))
-    mdaq_dir = getoutput("%s --execdir"%(mdaq_cfg))
+mdaq_cfg = which("mdaq-config")
+mdaq_dir = ""
+mdaq_bin = ""
+mdaq_enabled = True
+mdaq_errmsg  = '''
+#### Your MIDAS environment is not set properly!
+#### Please check it!
+'''
+
+# Default MIDAS system information
 mdaq_sys = {
-    'path':mdaq_dir, 'bin':mdaq_bin, 'exptab':'',
+    'path': '', 'bin': '', 'exptab': '',
     'host':'localhost',
     'mserver': { # MIDAS Server
         'enabled': True,  'options': ['-D', '-m'] },
@@ -69,8 +77,32 @@ mdaq_sys = {
         'enabled': True,  'options': ['-D',] },
     'odbedit': { # OnlineDB Editor
         'enabled': False,  'options': [],
-        'script':''},
-    }
+        'script':''} }
+
+# Check the midas installation
+def check_mdaq_install():
+    global mdaq_dir, mdaq_bin, mdaq_enabled
+
+    # check paths
+    mdaq_dir, mdaq_bin = mdaq_sys['path'], mdaq_sys['bin']
+    if mdaq_cfg:
+        if not mdaq_dir: mdaq_dir = getoutput("%s --execdir"%(mdaq_cfg))
+        if not mdaq_bin: mdaq_bin = getoutput("%s --bindir"%(mdaq_cfg))
+    elif 'MIDASSYS' in os.environ:
+        if not mdaq_dir: mdaq_dir = os.environ['MIDASSYS']
+        if not mdaq_bin: mdaq_bin = os.path.join(os.environ['MIDASSYS'],'bin')
+    else:
+        print("Either enviroment \"MIDASSYS\" defined nor mdaq-config found!")
+        print("You should check your MIDAS package installation!")
+        print(mdaq_errmsg)
+        mdaq_enabled = False
+    if not os.path.isdir(mdaq_bin) or not os.path.isdir(mdaq_dir):
+        print(mdaq_errmsg)
+        mdaq_enabled = False
+
+    # check MIDASSYS environment
+    if 'MIDASSYS' not in os.environ:
+        os.environ.setdefault("MIDASSYS", mdaq_dir)
 
 #-----------------------------------------------------------------------
 # mdaq run
@@ -102,8 +134,11 @@ exp_conf = {
                   'options': ["-D",] }
     }
 
+#-----------------------------------------------------------------------
+# Read configuration
+
 def read_conf(fcnf):
-    global mdaq_sys, exp_conf
+    global mdaq_sys, mdaq_enabled, exp_conf
 
     if not os.path.isfile(fcnf) and verbose:
         print("Configure file %s not found!"%fcnf)
@@ -119,7 +154,10 @@ def read_conf(fcnf):
     # MIDAS system
     if 'mdaq_sys' in cnf: dict_sign( mdaq_sys, cnf['mdaq_sys'] )
 
-    # Experiment options
+    # check MIDAS installation
+    check_mdaq_install()
+
+    # Experiment options: MIDAS runtime mode -- local or remotely?
     global exp_opts
     daq_dir = os.path.abspath(exp_conf['paths']['base'])
     if exp_conf['id']:
@@ -134,11 +172,9 @@ def read_conf(fcnf):
         print("## In this mode, you cannot access DAQ remotely!\n")
         os.environ.setdefault("MIDAS_DIR", daq_dir)
 
-    # Apply MDAQ_SYS environment
-    if "MIDASSYS" not in os.environ:
-        os.environ.setdefault("MIDASSYS", mdaq_sys['path'])
-
+#-----------------------------------------------------------------------
 # Experiment session operations: info, start, stop, restart, status
+
 def exp_info():
     if os.path.isfile(exp_fcnf):
         print("## Get settings from file:", exp_fcnf, "\n")
@@ -255,8 +291,9 @@ def mdaq_exp(args):
     if o.config: exp_fcnf = o.config
     read_conf(exp_fcnf)
 
-    if o.stop_all and a[0] == "stop": exp_stop(True)
-    else:   eval("exp_%s()"%(a[0]))
+    if mdaq_enabled:
+        if o.stop_all and a[0] == "stop": exp_stop(True)
+        else:   eval("exp_%s()"%(a[0]))
 
 # run args
 def run_args(args):
@@ -272,7 +309,7 @@ def run_args(args):
             args.remove(opt_fcnf)
         else: usage(); return
     else: read_conf(exp_fcnf)
-    mdaq_run(args)
+    if mdaq_enabled: mdaq_run(args)
 
 #-----------------------------------------------------------------------
 def usage():

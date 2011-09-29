@@ -31,12 +31,13 @@ else
 fi
 
 # Downloading midasdoc.tar.gz
-if [[ -f midasdoc-images.tar.gz ]]; then
+if [[ -f midas/doc/midasdoc-images.tar.gz ]]; then
     echo "## midasdoc-images.tar.gz already exists."
     echo
 else
     echo "## Downloading midasdoc-images.tar.gz ..."
     wget -c ${MIDASDOC_URL}
+    mv midasdoc-images.tar.gz midas/doc/
     echo
 fi
 

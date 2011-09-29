@@ -17,8 +17,8 @@ fi
 
 OLD_DIR=`pwd`
 cd ${MDAQ_WDIR}
-tar --transform 's,^,${ORIG_PREFIX}/,S' -czvf ${ORIG_FILE} \
-    midas/ mxml/ midasdoc-images.tar.gz addons/ autoconf/
+tar --transform "s,^,${ORIG_PREFIX}/,S" -czvf ${ORIG_FILE} \
+    midas/ mxml/ addons/ autoconf/
 
 cd ${OLD_DIR}
 

@@ -16,35 +16,36 @@ override_dh_auto_configure:
 	@echo "Skip!"
 
 pre-build:
-	cp -rvp $(CURDIR)/debian/autoconf/* $(CURDIR)
+	cd $(CURDIR) && ./prepare-src.sh
 
 ## Build source with root support
-BUILD_R_TMPD=$(CURDIR)/debian/build/root
-root-builddir: pre-build
+BUILD_R_TMPD=$(CURDIR)/build/root
+builddir-root: pre-build
 	@mkdir -p $(BUILD_R_TMPD)
 
-root-build: root-builddir
+build-root: builddir-root
 	@cd $(BUILD_R_TMPD) && \
-	$(CURDIR)/configure --enable-root --prefix=/usr \
+	$(CURDIR)/autoconf/configure --enable-root --prefix=/usr \
 	   --exec-prefix=/usr/lib/mdaq --docdir=/usr/share/doc/mdaq \
 	   --includedir=/usr/lib/mdaq/include \
 	   --datadir=/usr/share/mdaq \
 	&& $(MAKE) DESTDIR=`pwd` install
 
 ## Build source without root support
-BUILD_NR_TMPD=$(CURDIR)/debian/build/noroot
-noroot-builddir: pre-build
+BUILD_NR_TMPD=$(CURDIR)/build/noroot
+builddir-noroot: pre-build
 	@mkdir -p $(BUILD_NR_TMPD)
 
-noroot-build: noroot-builddir
+build-noroot: builddir-noroot
 	@cd $(BUILD_NR_TMPD) && \
-	$(CURDIR)/configure --disable-root --prefix=/usr \
+	$(CURDIR)/autoconf/configure --disable-root --prefix=/usr \
 	   --exec-prefix=/usr/lib/mdaq --docdir=/usr/share/doc/mdaq \
 	   --includedir=/usr/lib/mdaq/include \
 	   --datadir=/usr/share/mdaq \
 	&& $(MAKE) DESTDIR=`pwd` install
 
-HTML_TMPD=$(CURDIR)/debian/build/doc
+## Build docs
+HTML_TMPD=$(CURDIR)/build/doc
 dox-build:
 	@mkdir -p $(HTML_TMPD)
 	@cd midas/doxfiles && doxygen midox.cfg
@@ -58,7 +59,7 @@ dox-build:
 %:
 	dh $@
 
-build: root-build noroot-build dox-build
+build: build-root build-noroot dox-build
 
 pre-clean:
 	@rm -rf $(BUILD_R_TMPD)

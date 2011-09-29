@@ -1,3 +1,10 @@
+mdaq (2.3.0+r5065-3) unstable; urgency=low
+
+  * Fix bugs in mdaq.py
+  * Add new option to mdaq-config: --execdir
+
+ -- Exaos Lee <Exaos.Lee@gmail.com>  Thu, 29 Sep 2011 15:43:55 +0800
+
 mdaq (2.3.0+r5065-2) unstable; urgency=low
 
   * Rename package name to "mdaq-XXX"

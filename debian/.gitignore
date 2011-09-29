@@ -3,3 +3,6 @@ files
 *.log
 *.substvars
 *.debhelper
+mdaq-doc/
+mdaq-root/
+mdaq-noroot/

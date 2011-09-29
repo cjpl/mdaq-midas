@@ -43,10 +43,20 @@ build-noroot:
 ## Build docs
 dox-build:
 	@mkdir -p $(BUILD_DIR)/doc
-	@cd $(CURDIR)/midas/doc && ln -s $(CURDIR)/midasdoc-images.tar.gz ./
-	@cd $(CURDIR)/midas/doc && make html
+	-cd $(CURDIR)/midas/doc/src/ && ./make_contents.pl > contents_output.txt 2>&1
+	-cd $(CURDIR)/midas/doc/src/ && ./doit.pl > doit_output.txt 2>&1
+	-cd $(CURDIR)/midas/doc/src/ && ./make_index.pl > index_output.txt 2>&1
+	-cd $(CURDIR)/midas/doc && rm -f src/*.tmp src/sorted_info.txt.*
+	cd $(CURDIR)/midas/doc && tar zxvf midasdoc-images.tar.gz
+	cd $(CURDIR)/midas/doc && doxygen
+	cd $(CURDIR)/midas/doc && cp -p src/*.js src/*.css html/
+	@echo "Copying files ..."
 	@mv $(CURDIR)/midas/doc/html $(BUILD_DIR)/doc
 	@mv $(CURDIR)/midas/doc/images $(BUILD_DIR)/doc
+	@echo "Clean up midas/doc/ ..."
+	-cd $(CURDIR)/midas/doc/src && \
+		rm -f *_output.txt *_info.txt docindex.dox Organization.dox
+	-cd $(CURDIR)/midas/doc && rm -rf def/ latex/ man/ *.log
 
 ##############################################################################
 %:

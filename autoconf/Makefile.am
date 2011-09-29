@@ -8,7 +8,7 @@ VPATH = @srcdir@/../midas/include:@srcdir@/../midas/src:@srcdir@/../midas/utils:
 
 ROOTSYS = @root_sys@
 MDAQ_CFLAGS = @mdaq_cflags@
-MDAQ_LIBS =  @mdaq_libs@ $(LIBS)
+MDAQ_LIBS =  @mdaq_libs@
 
 AM_CFLAGS = -I@srcdir@/../midas/include -I@srcdir@/../mxml $(MDAQ_CFLAGS)
 AM_CXXFLAGS = $(AM_CFLAGS) @root_cflags@
@@ -31,12 +31,12 @@ MDAQ_LIBSRCS = @srcdir@/../midas/src/midas.c \
 
 lib_LIBRARIES = libmidas.a
 libmidas_a_SOURCES = $(MDAQ_LIBSRCS)
+libmidas_a_DEPENDENCIES = @mscb_obj@
 
 lib_LTLIBRARIES = libmidas-shared.la
 libmidas_shared_la_SOURCES =  $(MDAQ_LIBSRCS)
 libmidas_shared_la_CFLAGS = $(AM_CFLAGS)
 libmidas_shared_la_CXXFLAGS = $(AM_CXXFLAGS)
-#libmidas_shared_la_LDFLAGS = -shared #-module -avoid-version
 libmidas_shared_la_LDFLAGS = -shared -release 2.3.0
 include_HEADERS =@srcdir@/../midas/include/cfortran.h \
 @srcdir@/../midas/include/esone.h \

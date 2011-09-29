@@ -118,9 +118,9 @@ am_dio_OBJECTS = dio.$(OBJEXT)
 dio_OBJECTS = $(am_dio_OBJECTS)
 dio_LDADD = $(LDADD)
 dio_DEPENDENCIES = libmidas.a
-am_lazylogger_OBJECTS = mdsupport.$(OBJEXT)
+am_lazylogger_OBJECTS = mdsupport.$(OBJEXT) lazylogger.$(OBJEXT)
 lazylogger_OBJECTS = $(am_lazylogger_OBJECTS)
-lazylogger_DEPENDENCIES = lazylogger.o libmidas.a
+lazylogger_DEPENDENCIES = libmidas.a
 am_mana_link_test_OBJECTS = mana_link_test-mana.$(OBJEXT)
 mana_link_test_OBJECTS = $(am_mana_link_test_OBJECTS)
 mana_link_test_LDADD = $(LDADD)
@@ -406,7 +406,7 @@ AUTOMAKE_OPTIONS = foreign
 #ACLOCAL_AMFLAGS = -I m4
 ROOTSYS = @root_sys@
 MDAQ_CFLAGS = @mdaq_cflags@
-MDAQ_LIBS = @mdaq_libs@ $(LIBS)
+MDAQ_LIBS = @mdaq_libs@
 AM_CFLAGS = -I@srcdir@/../midas/include -I@srcdir@/../mxml $(MDAQ_CFLAGS)
 AM_CXXFLAGS = $(AM_CFLAGS) @root_cflags@
 AM_LDFLAGS = $(MDAQ_LIBS)
@@ -426,11 +426,11 @@ MDAQ_LIBSRCS = @srcdir@/../midas/src/midas.c \
 
 lib_LIBRARIES = libmidas.a
 libmidas_a_SOURCES = $(MDAQ_LIBSRCS)
+libmidas_a_DEPENDENCIES = @mscb_obj@
 lib_LTLIBRARIES = libmidas-shared.la
 libmidas_shared_la_SOURCES = $(MDAQ_LIBSRCS)
 libmidas_shared_la_CFLAGS = $(AM_CFLAGS)
 libmidas_shared_la_CXXFLAGS = $(AM_CXXFLAGS)
-#libmidas_shared_la_LDFLAGS = -shared #-module -avoid-version
 libmidas_shared_la_LDFLAGS = -shared -release 2.3.0
 include_HEADERS = @srcdir@/../midas/include/cfortran.h \
 @srcdir@/../midas/include/esone.h \
@@ -480,8 +480,8 @@ mcnaf_SOURCES = mcnaf.c @srcdir@/../midas/drivers/camac/camacrpc.c
 mdump_SOURCES = mdump.c mdsupport.c
 mhdump_SOURCES = mhdump.cxx
 mtransition_SOURCES = mtransition.cxx
-lazylogger_SOURCES = mdsupport.c
-lazylogger_LDADD = lazylogger.o libmidas.a
+lazylogger_SOURCES = mdsupport.c lazylogger.cxx
+lazylogger_LDADD = libmidas.a
 lazylogger_LDFLAGS = $(AM_LIBS) @root_glibs@
 lazylogger_LINK = $(CXX) $(AM_CXXFLAGS) -o $@
 mfe_link_test_SOURCES = @srcdir@/../midas/src/mfe.c
@@ -763,6 +763,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/history.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/history_midas.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/history_sql.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lazylogger.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmidas_shared_la-alarm.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmidas_shared_la-dm_eb.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmidas_shared_la-elog.Plo@am__quote@
@@ -1556,9 +1557,6 @@ uninstall-am: uninstall-binPROGRAMS uninstall-dist_binSCRIPTS \
 
 
 mscb.o: mscb.c
-	$(CXX) $(AM_CXXFLAGS) -c -o $@ $<
-
-lazylogger.o: lazylogger.c
 	$(CXX) $(AM_CXXFLAGS) -c -o $@ $<
 
 fe_backend_objs: $(FE_OBJS)

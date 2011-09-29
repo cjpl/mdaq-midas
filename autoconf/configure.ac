@@ -2,7 +2,7 @@
 # June 17, 2011 -- created by Exaos Lee <exaos.lee(at)gmail.com>
 ###########################################################
 # Prelude
-AC_INIT([mdaq], [2.3.0+r5065], [exaos.lee@gmail.com])
+AC_INIT([mdaq], [2.3.0+r5196], [exaos.lee@gmail.com])
 
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
@@ -18,8 +18,7 @@ AC_CONFIG_SRCDIR(../mxml)
 #AC_CONFIG_MACRO_DIR([m4])
 
 # Directories
-AC_PREFIX_DEFAULT([/usr/local])
-AC_PREFIX_DEFAULT([`pwd`])
+AC_PREFIX_DEFAULT([`pwd`]) # ([/usr/local])
 test "$prefix" = NONE && prefix=$ac_default_prefix
 test "$exec_prefix" = NONE && exec_prefix=$prefix
 test "$bindir" = '${exec_prefix}/bin' && bindir="$exec_prefix/bin"
@@ -31,25 +30,14 @@ test "$datadir" = '${datarootdir}' && datadir="${datarootdir}"
 AC_SUBST(docdir)
 test "$docdir" = '${datarootdir}/doc/${PACKAGE_TARNAME}' && docdir="${datarootdir}/doc/${PACKAGE_TARNAME}"
 
-#### Files
-dnl inc_files=`cd $srcdir/../midas/include && find . -type f | xargs`
-dnl drv_files=`cd $srcdir/../midas/drivers && find . -type f | xargs`
-dnl exp_files=`cd $srcdir/../midas/examples && find . -type f | xargs`
-dnl AC_SUBST(inc_files)
-dnl AC_SUBST(drv_files)
-dnl AC_SUBST(exp_files)
-
 ############################################################
 # Checks for compilers
 AC_PROG_CXX
 AC_PROG_CC
-#AC_PROG_F77
 AC_PROG_CC_C_O
 AC_PROG_CXX_C_O
 AC_PROG_INSTALL
-#C_PROG_MAKE_SET
 AC_PROG_RANLIB
-#AC_LIBTOOL_DLOPEN
 AC_PROG_LIBTOOL
 
 AC_SUBST(mdaq_cflags)
@@ -222,10 +210,8 @@ AS_IF([test "X$enable_cernlib" != "Xno"], [
 AC_ARG_ENABLE(mscb,
   AC_HELP_STRING([--disable-mscb], [build with mscb]))
 AS_IF([test "X$enable_mscb" != "Xno"], [
-  #AC_CONFIG_SRCDIR(../midas/mscb)
   if test -d ${srcdir}/../midas/mscb ; then
      mdaq_cflags="${mdaq_cflags} -DHAVE_MSCB"
-     #mdaq_osprogs="${mdaq_osprogs}"
      AC_SUBST(mscb_dir)
      mscb_dir=$srcdir/../midas/mscb
      AC_SUBST(mscb_obj)
@@ -254,8 +240,8 @@ AC_MSG_NOTICE([LIBS = $LIBS])
 mdaq_libs="$LIBS ${mdaq_libs}"
 AC_MSG_NOTICE([MDAQ_LIBS = ${mdaq_libs}])
 AC_SUBST(mdaq_config_args)
-#mdaq_config_args="$ac_config_status_args"
-mdaq_config_args="$ac_cs_config"
+mdaq_config_args=$ac_cs_config
+AC_MSG_NOTICE([mdaq_config_args = ${ac_cs_config}])
 
 ############################################################
 # Headers

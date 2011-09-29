@@ -1,15 +1,14 @@
 #!/bin/bash
 
-OLD_DIR=`pwd`
-WKD=`pwd`/../
-
 MIDAS_SVN="svn+ssh://svn@savannah.psi.ch/afs/psi.ch/project/meg/svn/midas/trunk"
 MIDAS_REV=5196
 MXML_SVN="svn+ssh://svn@savannah.psi.ch/afs/psi.ch/project/meg/svn/mxml/trunk"
 MXML_REV=70
 MIDASDOC_URL="http://ladd00.triumf.ca/~daqweb/ftp/midasdoc-images.tar.gz"
 
-cd ${WKD}
+OLD_DIR=`pwd`
+MDAQ_WDIR=$(dirname $(readlink -f $0))/../
+cd ${MDAQ_WDIR}
 
 # Checkout mxml
 if [[ ! -d midas ]]; then
@@ -17,7 +16,7 @@ if [[ ! -d midas ]]; then
     svn checkout ${MXML_SVN} -r ${MXML_REV} mxml
 else
     echo "## The mxml directory already exists."
-    echo "## Please make sure it is what you need manually!"
+    echo "## Please make sure it is what you need!"
     echo
 fi
 
@@ -27,7 +26,7 @@ if [[ ! -d midas ]]; then
     svn checkout ${MIDAS_SVN} -r ${MIDAS_REV} midas
 else
     echo "## The midas directory already exists."
-    echo "## Please make sure it is what you need manually!"
+    echo "## Please make sure it is what you need!"
     echo
 fi
 

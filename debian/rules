@@ -31,7 +31,7 @@ build-root:
 	&& $(MAKE) DESTDIR=`pwd` install
 
 ## Build source without root support
-build-noroot: builddir-noroot
+build-noroot:
 	@mkdir -p $(BUILD_DIR)/noroot
 	@cd $(BUILD_DIR)/noroot && \
 	$(CURDIR)/autoconf/configure --disable-root --prefix=/usr \

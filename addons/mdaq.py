@@ -51,7 +51,7 @@ def get_status(pfile):
 # Kill all running program
 def kill_prog(pname):
     print("Stopping %s ..."%pname)
-    [os.kill(i,signal.SIGTERM) for i in get_pids(pname)]
+    for i in get_pids(pname): os.kill(i,signal.SIGTERM)
 
 #-----------------------------------------------------------------------
 
@@ -131,7 +131,11 @@ exp_conf = {
                   'options': ["-D",] },
     'analyzer': { 'info': "Online analyzer",
                   'name': 'analyzer',
-                  'options': ["-D",] }
+                  'options': ["-D",] },
+    'codes': { # special codes to run, FIXME
+        'pre' : { }, # run before frontend
+        'post': { }, # run after others
+        },
     }
 
 #-----------------------------------------------------------------------

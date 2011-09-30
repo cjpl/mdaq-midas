@@ -7,10 +7,4 @@ mdaq-config
 \#*
 tmp/
 .deps/
-bin/
-images/
-include/
-lib/
-libtool
-share/
-
+aclocal.m4

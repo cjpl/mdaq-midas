@@ -1,5 +1,4 @@
 .pc/
-autoconf/aclocal.m4
 build/
 debian/patches/
 tmp/

@@ -20,25 +20,25 @@ pre-build:
 
 BUILD_DIR=$(CURDIR)/build
 
-## Build source with root support
-build-root:
-	@mkdir -p $(BUILD_DIR)/root
-	@cd $(BUILD_DIR)/root && \
-	$(CURDIR)/autoconf/configure --enable-root --prefix=/usr \
-	   --exec-prefix=/usr/lib/mdaq --docdir=/usr/share/doc/mdaq \
-	   --includedir=/usr/lib/mdaq/include \
-	   --datadir=/usr/share/mdaq \
-	&& $(MAKE) DESTDIR=`pwd` install
-
 ## Build source without root support
 build-noroot:
 	@mkdir -p $(BUILD_DIR)/noroot
-	@cd $(BUILD_DIR)/noroot && \
+	@cd $(BUILD_DIR) && \
 	$(CURDIR)/autoconf/configure --disable-root --prefix=/usr \
 	   --exec-prefix=/usr/lib/mdaq --docdir=/usr/share/doc/mdaq \
 	   --includedir=/usr/lib/mdaq/include \
 	   --datadir=/usr/share/mdaq \
-	&& $(MAKE) DESTDIR=`pwd` install
+	&& $(MAKE) DESTDIR=`pwd`/noroot install
+
+## Build source with root support
+build-root: build-noroot
+	@mkdir -p $(BUILD_DIR)/root
+	@cd $(BUILD_DIR) && \
+	$(CURDIR)/autoconf/configure --enable-root --prefix=/usr \
+	   --exec-prefix=/usr/lib/mdaq --docdir=/usr/share/doc/mdaq \
+	   --includedir=/usr/lib/mdaq/include \
+	   --datadir=/usr/share/mdaq \
+	&& $(MAKE) DESTDIR=`pwd`/root install
 
 ## Build docs
 dox-build:

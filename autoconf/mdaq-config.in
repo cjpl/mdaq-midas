@@ -40,8 +40,9 @@ libdir=@libdir@
 incdir=@includedir@
 datadir=@datarootdir@
 srcdir=@datadir@/src
-examplesdir=@docdir@/examples
 drvdir=@datadir@/drivers
+docdir=@docdir@
+examplesdir=@docdir@/examples
 
 config="@mdaq_config_args@"
 
@@ -62,7 +63,7 @@ usage="\
 Usage: mdaq-config [--config] [--target] [--platform]\
  [--cflags] [--libs] [--shlibs] [--enable-root] [--enable-root-static]\
  [--prefix] [--execdir] [--bindir] [--libdir] [--incdir] [--datadir]\
- [--srcdir] [--examplesdir] [--drvdir]\
+ [--srcdir] [--drvdir] [--docdir] [--examplesdir]\
  [--help] [--version]"
 
 if test $# -eq 0; then
@@ -124,11 +125,14 @@ while test $# -gt 0; do
 	--srcdir)
 	    out="$out $srcdir"
 	    ;;
-	--examplesdir)
-	    out="$out $examplesdir"
-	    ;;
 	--drvdir)
 	    out="$out $drvdir"
+	    ;;
+	--docdir)
+	    out="$out $docdir"
+	    ;;
+	--examplesdir)
+	    out="$out $examplesdir"
 	    ;;
 	--version)
 	    out="$out $version"

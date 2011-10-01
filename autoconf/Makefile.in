@@ -1607,7 +1607,7 @@ install-data-local:
 	@mkdir -p $(DESTDIR)/@docdir@/etc
 	$(INSTALL) -v -D -m 644 @srcdir@/../addons/exptab $(DESTDIR)/@docdir@/etc/exptab
 # Install mdaq.yaml example to docdir
-	$(INSTALL) -v -D -m 644 @srcdir@/../addons/mdaq.yaml $(DESTDIR)/@dodcdir@/mdaq.yaml
+	$(INSTALL) -v -D -m 644 @srcdir@/../addons/mdaq.yaml $(DESTDIR)/@docdir@/mdaq.yaml
 
 install-html-local: dox
 	@cd @srcdir@/../midas/doxfiles && find ./html/ -type f -exec \

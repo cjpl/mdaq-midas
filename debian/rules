@@ -52,7 +52,7 @@ dox-build:
 	cd $(CURDIR)/midas/doc && cp -p src/*.js src/*.css html/
 	@echo "Copying files ..."
 	@mv $(CURDIR)/midas/doc/html $(BUILD_DIR)/doc
-	@mv $(CURDIR)/midas/doc/images $(BUILD_DIR)/doc
+	@mv $(CURDIR)/midas/doc/images/* $(BUILD_DIR)/doc/html
 	@echo "Clean up midas/doc/ ..."
 	-cd $(CURDIR)/midas/doc/src && \
 		rm -f *_output.txt *_info.txt docindex.dox Organization.dox

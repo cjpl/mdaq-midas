@@ -494,9 +494,6 @@ mlxspeaker_SOURCES = mlxspeaker.c
 
 ### Special objects: frontend backend framework
 FE_OBJS = mfe.o fal.o mana.o @anaobj_cern@ @anaobj_root@
-
-### Documentation
-mdaq_imgs = @srcdir@/../addons/midasdoc-images.tar.gz
 all: all-am
 
 .SUFFIXES:
@@ -1520,7 +1517,7 @@ mostlyclean-am: mostlyclean-compile mostlyclean-generic \
 
 pdf: pdf-am
 
-pdf-am: pdf-local
+pdf-am:
 
 ps: ps-am
 
@@ -1549,8 +1546,8 @@ uninstall-am: uninstall-binPROGRAMS uninstall-dist_binSCRIPTS \
 	install-ps install-ps-am install-strip installcheck \
 	installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am pdf-local \
-	ps ps-am tags uninstall uninstall-am uninstall-binPROGRAMS \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags uninstall uninstall-am uninstall-binPROGRAMS \
 	uninstall-dist_binSCRIPTS uninstall-includeHEADERS \
 	uninstall-libLIBRARIES uninstall-libLTLIBRARIES \
 	uninstall-local
@@ -1573,17 +1570,10 @@ hmana.o: mana.c msystem.h midas.h midasinc.h mrpc.h
 
 rmana.o: mana.c msystem.h midas.h midasinc.h mrpc.h
 	$(CXX) -DUSE_ROOT $(AM_CXXFLAGS) -c -o $@ $<
-dox: $(mdaq_imgs)
-	@cd @srcdir@/../midas/doxfiles && doxygen midox.cfg
-	@tar zxvf $(mdaq_imgs)
-	@cp -rvp images/* @srcdir@/../midas/doxfiles/html/
 
-pdf-local: dox
-	@cp -rvp images/* @srcdir@/../midas/doxfiles/latex
-	@cd @srcdir@/../midas/doxfiles/latex && $(MAKE) pdf
-
-$(mdaq_imgs):
-	wget --no-check-certificate -O $@ -c https://midas.psi.ch/download/doc/midasdoc-images.tar.gz
+### Documentation
+dox-html: $(mdaq_imgs)
+	@$(MAKE) -C @srcdir@/../midas/doc html
 
 ######################################################################
 
@@ -1609,9 +1599,9 @@ install-data-local:
 # Install mdaq.yaml example to docdir
 	$(INSTALL) -v -D -m 644 @srcdir@/../addons/mdaq.yaml $(DESTDIR)/@docdir@/mdaq.yaml
 
-install-html-local: dox
-	@cd @srcdir@/../midas/doxfiles && find ./html/ -type f -exec \
-	   $(INSTALL) -v -D -m 644 "{}" "$(DESTDIR)/@htmldir@/{}" \;
+install-html-local: dox-html
+	@cd @srcdir@/../midas/doc && mv images/* html/ && find ./html/ \
+	   -type f -exec $(INSTALL) -vDm644 "{}" "$(DESTDIR)/@htmldir@/{}" \;
 
 install-man-local: dox
 	@cd @srcdir@/../midas/doxfiles && find ./man/ -type f -exec \

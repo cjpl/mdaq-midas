@@ -127,18 +127,8 @@ rmana.o: mana.c msystem.h midas.h midasinc.h mrpc.h
 	$(CXX) -DUSE_ROOT $(AM_CXXFLAGS) -c -o $@ $<
 
 ### Documentation
-mdaq_imgs=@srcdir@/../addons/midasdoc-images.tar.gz
-dox: $(mdaq_imgs)
-	@cd @srcdir@/../midas/doxfiles && doxygen midox.cfg
-	@tar zxvf $(mdaq_imgs)
-	@cp -rvp images/* @srcdir@/../midas/doxfiles/html/
-
-pdf-local: dox
-	@cp -rvp images/* @srcdir@/../midas/doxfiles/latex
-	@cd @srcdir@/../midas/doxfiles/latex && $(MAKE) pdf
-
-$(mdaq_imgs):
-	wget --no-check-certificate -O $@ -c https://midas.psi.ch/download/doc/midasdoc-images.tar.gz
+dox-html: $(mdaq_imgs)
+	@$(MAKE) -C @srcdir@/../midas/doc html
 
 ######################################################################
 ## Install
@@ -165,9 +155,9 @@ install-data-local:
 # Install mdaq.yaml example to docdir
 	$(INSTALL) -v -D -m 644 @srcdir@/../addons/mdaq.yaml $(DESTDIR)/@docdir@/mdaq.yaml
 
-install-html-local: dox
-	@cd @srcdir@/../midas/doxfiles && find ./html/ -type f -exec \
-	   $(INSTALL) -v -D -m 644 "{}" "$(DESTDIR)/@htmldir@/{}" \;
+install-html-local: dox-html
+	@cd @srcdir@/../midas/doc && mv images/* html/ && find ./html/ \
+	   -type f -exec $(INSTALL) -vDm644 "{}" "$(DESTDIR)/@htmldir@/{}" \;
 
 install-man-local: dox
 	@cd @srcdir@/../midas/doxfiles && find ./man/ -type f -exec \

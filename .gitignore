@@ -2,3 +2,23 @@ tmp/
 *~
 \#*
 debs/
+*/tmp/*
+*/build/
+*/.pc/
+*.orig.tar.gz
+*.dsc
+*.deb
+*.changes
+
+# midas
+midas/midas
+midas/mxml
+
+# roody
+roody/roody
+roody/rootana
+
+# elog
+
+# rome
+

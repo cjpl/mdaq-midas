@@ -11,14 +11,17 @@ debs/
 *.changes
 
 # midas
-midas/midas
-midas/mxml
+midas/midas/
+midas/mxml/
 
 # roody
-roody/roody
-roody/rootana
+roody/roody/
+roody/rootana/
 
 # elog
+elog/elog/
+mxml/mxml/
 
 # rome
+rome/rome/
 

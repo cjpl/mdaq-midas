@@ -1,0 +1,3 @@
+bin/roody        /usr/bin
+bin/roody_el     /usr/bin
+lib/		 /usr/lib/daq-midas/lib

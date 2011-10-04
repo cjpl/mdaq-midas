@@ -1,0 +1,6 @@
+daq-roody (1.0+r236-1) unstable; urgency=low
+
+  * Initial release: roody -- svn r236; rootana -- svn r79
+  * Add bug-fix: kill analyzer on AMD64 linux
+
+ -- Exaos Lee <exaos.lee@gmail.com>  Mon, 27 Jun 2011 15:29:26 +0800

@@ -1,0 +1,334 @@
+Description: Upstream changes introduced in version 1.0+r236-1
+ This patch has been created by dpkg-source during the package build.
+ Here's the last changelog entry, hopefully it gives details on why
+ those changes were made:
+ .
+ daq-roody (1.0+r236-1) unstable; urgency=low
+ .
+   * Initial release: roody -- svn r236; rootana -- svn r79
+   * Add bug-fix: kill analyzer on AMD64 linux
+ .
+ The person named in the Author field signed this changelog entry.
+Author: Exaos Lee <exaos.lee@gmail.com>
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+Origin: <vendor|upstream|other>, <url of original patch>
+Bug: <url in upstream bugtracker>
+Bug-Debian: http://bugs.debian.org/<bugnumber>
+Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
+Forwarded: <no|not-needed|url proving that it has been forwarded>
+Reviewed-By: <name and email of someone who approved the patch>
+Last-Update: <YYYY-MM-DD>
+
+--- /dev/null
++++ daq-roody-1.0+r236/Makefile
+@@ -0,0 +1,140 @@
++# Makefile.am for roody
++# 2011-06-27 created by Exaos Lee <Exaos.Lee(at)gmail.com>
++################################################################
++## MIDAS config
++MDAQ_CFG := $(shell which mdaq-config)
++ifndef MDAQ_CFG
++$(error "mdaq-config" not found!)
++endif
++MDAQ_CFLAGS = $(shell $(MDAQ_CFG) --cflags)
++MDAQ_LIBS   = $(shell $(MDAQ_CFG) --libs)
++
++## ROOT config
++ROOT_CFG := $(shell which root-config)
++ifndef ROOT_CFG
++$(error "root-config" not found!)
++endif
++ROOTSYS = $(shell $(ROOT_CFG) --prefix)
++ARCH := $(shell $(ROOT_CFG) --arch)
++# ROOT flags
++CINT = $(shell $(ROOT_CFG) --bindir)/rootcint
++ROOT_LIBDIR = $(shell $(ROOT_CFG) --libdir)
++ROOT_CFLAGS = $(shell $(ROOT_CFG) --cflags)
++ROOT_GLIBS  = $(shell $(ROOT_CFG) --glibs) -lXMLParser -lThread
++
++HAVE_HBOOK    := $(shell cat $(ROOT_LIBDIR)/libHbook.so 2> /dev/null)
++HAVE_MINICERN := $(shell cat $(ROOT_LIBDIR)/libminicern.so 2> /dev/null)
++HAVE_SPECTRUM := $(shell cat $(ROOT_LIBDIR)/libSpectrum.so 2> /dev/null)
++
++ifdef HAVE_HBOOK
++ROOT_CFLAGS += -DHAVE_HBOOK
++ROOT_GLIBS  += -lHbook
++ifdef HAVE_MINICERN
++ROOT_GLIBS  += -lminicern
++endif
++endif
++
++ifdef HAVE_SPECTRUM
++ROOT_GLIBS  += -lSpectrum
++endif
++
++## Arch flags
++ifeq ($(ARCH), linux)
++ARCH_FLAGS = -m32 -O2 -g
++HAVE_DEPEND = 1
++HAVE_ROODYSO = 1
++endif
++
++ifeq ($(ARCH), linuxx8664gcc)
++ARCH_FLAGS = -O2 -g
++HAVE_DEPEND = 1
++HAVE_ROODYSO = 1
++endif
++
++#-----------------------------------------------------------------------
++CXXFLAGS = $(ARCH_FLAGS) -Wall -Wuninitialized -fPIC $(MDAQ_CFLAGS) $(ROOT_CFLAGS)
++INCLUDE := -I. -Iroody/include -Iroody/src -Iaddons -IrootanalibNetDirectory
++CXXFLAGS += $(INCLUDE)
++LDFLAGS += -Llib -lNetDirectory $(ROOT_GLIBS) $(MDAQ_LIBS)
++
++################################################################
++
++ROODY_OBJS = obj/DataSourceTDirectory.o obj/Roody.o obj/RoodyDict.o \
++       obj/TGTextDialog.o obj/TGTextDialogDict.o \
++       obj/TPeakFindPanel.o obj/TPeakFindPanelDict.o \
++       obj/MTGListTree.o obj/MTGListTreeDict.o \
++       obj/TAxisLimitsDialog.o obj/TAxisLimitsDialogDict.o \
++       obj/RoodyXML.o
++
++libNetDirectory_OBJS = objnet/TNetDirectory.o \
++	objnet/TNetDirectoryDict.o \
++	objnet/netDirectoryServer.o \
++	objnet/RootLock.o
++
++#-----------------------------------------------------------------------
++ALL = pre_dir lib/libNetDirectory.a bin/roody_el bin/roody lib/roody.so
++
++.SUFFIXES: .cxx .o .so .a
++
++all: $(ALL)
++
++pre_dir:
++	@mkdir -p bin lib obj objnet
++
++bin/roody_el: obj/main_el.o $(ROODY_OBJS)
++	$(CXX) -o $@ $^ $(LDFLAGS)
++
++bin/roody: obj/main.o $(ROODY_OBJS)
++	$(CXX) -o $@ $^ $(LDFLAGS)
++
++lib/roody.so: $(ROODY_OBJS) lib/libNetDirectory.a
++	$(CXX) $^ -o $@ -shared $(LDFLAGS)
++
++lib/libNetDirectory.a: $(libNetDirectory_OBJS)
++	-rm -f $@
++	ar -rv $@ $^
++
++depend:
++ifdef HAVE_DEPEND
++	-g++ $(CXXFLAGS) $(INCLUDE) -c -MM roody/src/*.cxx > Makefile.depends1
++	sed 's#^#obj/#' Makefile.depends1 > Makefile.depends2
++	sed 's#^obj/ #   #' Makefile.depends2 > Makefile.depends
++	-rm -f Makefile.depends1 Makefile.depends2
++endif
++
++obj/main_el.o: addons/main_el.cxx addons/rootsys.h
++	$(CXX) $(CXXFLAGS) -c -o $@ $<
++
++obj/main.o: roody/src/main.cxx addons/rootsys.h
++
++addons/rootsys.h:
++	@echo "char const *rootsys = \"$(ROOTSYS)\";" > $@
++
++clean:
++	rm -v -f bin/roody_el bin/roody obj/* core roody/src/*Dict.* lib/*.so \
++		objnet/* rootana/libNetDirectory/%Dict.* lib/*.a
++
++obj/%Dict.o: roody/include/%Dict.h
++
++roody/include/%Dict.h: roody/src/%Dict.cxx
++
++roody/src/%Dict.cxx: roody/include/%.h
++	LD_LIBRARY_PATH=$(ROOT_LIBDIR) $(CINT) -f $@ -c $^
++
++obj/%.o: roody/src/%.cxx
++	$(CXX) $(CXXFLAGS) -c -o $@ $<
++
++objnet/%Dict.o: objnet/%Dict.cxx
++	$(CXX) $(CXXFLAGS) -c -o $@ $<
++
++objnet/%Dict.cxx: rootana/libNetDirectory/%.h
++	LD_LIBRARY_PATH=$(ROOT_LIBDIR) $(CINT) -f $@ -c $^
++
++objnet/%.o: rootana/libNetDirectory/%.cxx
++	$(CXX) $(CXXFLAGS) -Irootana/libNetDirectory -c -o $@ $<
++
++#obj/%.o: @srcdir@roody/src/%.cpp
++#	$(CXX) $(CXXFLAGS) -c -o $@ $<
++
++-include Makefile.depends
++
+--- daq-roody-1.0+r236.orig/roody/include/DataSourceTNetFolder.h
++++ daq-roody-1.0+r236/roody/include/DataSourceTNetFolder.h
+@@ -97,7 +97,7 @@ class DataSourceTNetFolder: public DataS
+     {
+       printf("ReadRemoteObject %s from folder %s\n", objname, foldername);
+ 
+-      uint32_t p = 0;
++      uintptr_t p = 0;
+       
+       {
+ 	std::string str = "GetPointer ";
+--- /dev/null
++++ daq-roody-1.0+r236/addons/main_el.cxx
+@@ -0,0 +1,151 @@
++//
++// main.cxx
++//
++// $Id$
++//
++
++#include <cstdlib>
++#include <iostream>
++#include <string>
++#include <getopt.h>
++using std::cout;
++using std::endl;
++using std::cerr;
++
++#include <errno.h>
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <signal.h>
++
++#ifdef OS_UNIX
++#include <unistd.h>
++#endif
++
++#ifdef OS_WINNT
++#include <process.h>
++#endif 
++
++#include "Roody.h"
++#include "TApplication.h"
++#include "rootsys.h"
++
++//******** Command line options *************
++static char* pname = NULL;
++static const char* optStr = "M:R:p:c:h?";
++static const struct option opts[] = {
++  {"mhost", required_argument, NULL, 'M'},
++  {"rhost", required_argument, NULL, 'R'},
++  {"port",  required_argument, NULL, 'p'},
++  {"config",required_argument, NULL, 'c'},
++};
++
++void usage()
++{
++  cout << "Usage:\n  " << pname 
++       << " [options] [file1.root] [file2.root] .. [filen.hbook]" << endl
++       << endl
++       << "Options:" << endl
++       << "  --mhost" << endl
++       << "  -M <mhost>    -- Connect to MIDAS server <mhost>" << endl
++       << "  --rhost" << endl
++       << "  -R <rhost>    -- Connect to ROOT server <rhost>" << endl
++       << "  --port" << endl
++       << "  -p <port>     -- Connect to port <port>" << endl
++       << "  --config" << endl
++       << "  -c <xmlfile>  -- Using config file in XML format" << endl << endl
++       << "  [files.root]  -- Load .root files" << endl
++       << "  [files.hbook] -- Load .hbook files" << endl << endl;
++}
++
++//******** Main procedure *******************
++int main(int argc, char *argv[])
++{
++  setbuf(stdout, 0);
++  setbuf(stderr, 0);
++  pname = argv[0];
++
++#ifndef OS_WINNT
++  signal(SIGBUS,  SIG_DFL);
++  signal(SIGSEGV, SIG_DFL);
++  signal(SIGPIPE, SIG_IGN);
++
++  char const *env = getenv("ROOTSYS");  // enforce compiled-in ROOTSYS settings
++  if (!env || strcmp(env,rootsys))  {
++      struct stat st;
++      int status = stat(rootsys,&st);
++      if (status != 0)	{
++	cerr << "main.cxx: Cannot use compiled-in ROOTSYS=\'"
++	     << rootsys << "\': stat() error "
++	     << errno << " (" << strerror(errno) << ")\n";
++      } else if (st.st_mode&S_IFDIR == 0) {
++	cerr << "main.cxx: Cannot use compiled-in ROOTSYS=\'"
++	     << rootsys << "\', st_mode is 0"
++	     << st.st_mode << ", probably not a directory\n";
++      } else {
++	cerr << "main.cxx: Re-executing \'" << argv[0]
++	     << "\' with compiled-in ROOTSYS=\'" << rootsys << "\'\n";
++	setenv( "ROOTSYS", rootsys, 1);
++	execvp( argv[0], argv ); // does not return
++	cerr << "execv(" << argv[0] << ") error " << errno
++	     << " (" << strerror(errno) << ")\n";
++	exit(1);
++      }
++
++      printf("main.cxx: Continuing with ROOTSYS=\'%s\' from local environment\n", env);
++  }
++#endif
++
++  char** filenames = NULL;
++  char*  hostname  = NULL;
++  char*  nhostname = NULL;
++  char*  xmlname   = NULL;
++  int port = 0;
++  int fileCount = 0;
++  int longIdx = 0;
++
++  int opt;
++  std::string temp;
++  do {
++    opt = getopt_long(argc, argv, optStr, opts, &longIdx);
++    switch(opt) {
++    case 'M': hostname = optarg; break;
++    case 'R': nhostname = optarg; break;
++    case 'p': port = atoi(optarg); break;
++    case 'c':
++      temp = optarg;
++      if(temp.find(".xml") == temp.npos) temp += ".xml";
++      strcpy(xmlname, temp.c_str());
++      break;
++    case 'h':
++    case '?':
++    case 0:  usage();  return 0;
++    break;
++    default: break;
++    }
++  } while( opt != -1 );
++  fileCount = argc - optind;
++  if(fileCount > 0)
++    filenames = argv + optind;
++
++  TApplication* app = new TApplication( "App", 0, NULL );
++  Roody* roody = new Roody();
++
++  if (xmlname)
++    roody->RestoreFile(xmlname);
++  else
++    roody->RestoreFile(NULL);
++
++  if (hostname)
++    roody->ConnectServer(hostname);
++
++  if (nhostname)
++    roody->ConnectNetDirectory(nhostname);
++
++  for (int i=0; i<fileCount; i++)
++    roody->OpenFile(filenames[i]);
++
++  app->Run(kTRUE);
++  return 0;
++}
++
++// end of file

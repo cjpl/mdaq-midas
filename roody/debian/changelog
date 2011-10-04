@@ -1,3 +1,11 @@
+mdaq-roody (1.1.0+r236-1) unstable; urgency=low
+
+  * New pacakge name: mdaq-roody
+  * Add new debian package: mdaq-rootana
+  * New dependency: mdaq-root 2.3.0+r5196
+
+ -- Exaos Lee <Exaos.Lee@gmail.com>  Wed, 05 Oct 2011 06:46:31 +0800
+
 daq-roody (1.0+r236-1) unstable; urgency=low
 
   * Initial release: roody -- svn r236; rootana -- svn r79

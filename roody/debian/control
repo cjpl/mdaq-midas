@@ -1,23 +1,35 @@
-Source: daq-roody
+Source: mdaq-roody
 Section: unknown
 Priority: extra
 Maintainer: Exaos Lee <exaos@memes>
-Build-Depends: debhelper (>= 7.0.50~), root-system, daq-midas-dev-root, libroot-hist-spectrum-dev
+Build-Depends: debhelper (>= 7.0.50~), root-system, mdaq-root | daq-midas-dev-root, libroot-hist-spectrum-dev
 Standards-Version: 3.8.4
 Homepage: http://ladd00.triumf.ca/~daqweb/doc/roody/html/
 Vcs-Svn: https://ladd00.triumf.ca/svn/roody/trunk
 Vcs-Browser: http://ladd00.triumf.ca/viewcvs/roody/trunk/
 
-Package: daq-roody
+Package: mdaq-roody
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, root-system, daq-midas-root
+Depends: ${shlibs:Depends}, ${misc:Depends}, root-system, mdaq-root | daq-midas-root
+Conflicts: daq-roody
 Description: a ROOT application to be used with daq-midas
  Roody is an application based solely on the CERN-ROOT for histogram display. It
  is meant for display of .root files and .hbook files. If running this
  application in conjunction with either the Midas analyzer or the ROME analyzer,
  it will allow to visualize online data retrieved through a socket port.
+ .
+ URL: http://daq-plone.triumf.ca/SR/ROODY
+
+Package: mdaq-rootana
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, root-system, mdaq-root | daq-midas-root
+Description: a C++ library based on ROOT to be used for data analysing
+ ROOTANA is a simple ROOT based analyzer for MIDAS.
+ .
+ URL: http://daq-plone.triumf.ca/SR/rootana
 
 # Package: daq-roody-doc
 # Architecture: all
 # Description: documentation for daq-roody
 # <insert long description, indented with spaces>
+

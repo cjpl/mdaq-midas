@@ -6,6 +6,7 @@ debs/
 */build/
 */.pc/
 *.orig.tar.gz
+*.orig/
 *.dsc
 *.deb
 *.changes

@@ -36,10 +36,11 @@ Package: mdaq-roody
 
 This package contains sources from `ROODY` and `rootana`::
 
-   1. http://daq-plone.triumf.ca/SR/ROODY
-   2. http://daq-plone.triumf.ca/SR/rootana
+1. http://daq-plone.triumf.ca/SR/ROODY
 
-You may refer to `DAQ-Triumf`_ for more related codes.
+2. http://daq-plone.triumf.ca/SR/rootana
+
+You may refer to DAQ-Triumf_ for more related codes.
 
 [FIXME]!
 

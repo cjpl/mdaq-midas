@@ -3,7 +3,7 @@ SIS1100/310X Linux Driver Packages
 
 The driver code is imported from sis1100_ driver page.
 
-.. sis1100_: http://www.struck.de/linux1100.htm
+.. _sis1100: http://www.struck.de/linux1100.htm
 
 Current version: 2.13-5
 

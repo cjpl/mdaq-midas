@@ -42,7 +42,7 @@ This package contains sources from `ROODY` and `rootana`::
 
 You may refer to DAQ-Triumf_ for more related codes.
 
-.. DAQ-Triumf_: http://daq-plone.triumf.ca/SR
+.. _DAQ-Triumf: http://daq-plone.triumf.ca/SR
 
 Package: mdaq-rome
 ~~~~~~~~~~~~~~~~~~

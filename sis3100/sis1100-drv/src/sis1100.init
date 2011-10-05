@@ -1,0 +1,116 @@
+#!/bin/sh
+
+# These definitions must match the definitions in sis1100_var.h
+MINORBITS=8
+MINORCARDBITS=2
+MINORTYPEBITS=2
+MINORUSERBITS=`expr $MINORBITS - $MINORCARDBITS - $MINORTYPEBITS`
+
+# minornumber: ccccttuu
+
+# number of cards we really want to use
+MAXCARDS=4
+# how often we want to open the same device
+MAXUSER=2
+
+modulename=sis1100
+
+basename=${modulename}_
+devdir=/tmp
+mode=666
+owner=root
+group=root
+
+types0="remote"
+types1="ram"
+types2="ctrl"
+types3="dsp"
+
+mkname () {
+    card=$1
+    type=$2
+    user=$3
+    tname=`eval echo \\\$types$type`
+    name=$devdir/${basename}`printf '%d%d' $card $user`$tname
+    echo $name
+}
+
+shiftv () {
+    val=$1
+    i=$2
+    while [ $i -gt 0 ]; do
+        val=`expr $val \* 2`
+        i=`expr $i - 1`
+    done
+    echo $val
+}
+
+if [ "$MAXCARDS" = "" ]; then
+    MAXCARDS=`shiftv 1 $MINORCARDBITS`
+fi
+#echo MAXCARDS $MAXCARDS
+
+CARDSHIFT=`expr $MINORUSERBITS + $MINORTYPEBITS`
+TYPESHIFT=$MINORUSERBITS
+MAXTYPES=`shiftv 1 $MINORTYPEBITS`
+#echo MAXTYPES $MAXTYPES
+if [ "MAXUSER" = "" ]; then
+    MAXUSER=`shiftv 1 $USERBITS`
+fi
+#echo MAXUSER $MAXUSER
+
+make_devs () {
+    if grep -q $modulename /proc/devices; then
+        major=`cat /proc/devices | awk "\\$2==\"$modulename\" {print \\$1}"`
+        echo -e \\n$modulename major: $major
+        #echo $modulename major: $major
+    else
+        echo -e \\n$modulename not loaded!
+        return
+    fi
+
+    rm -f $devdir/${basename}*
+
+    card=`expr $MAXCARDS - 1`
+    while [ $card -ge 0 ]; do
+        #echo card $card
+        type=`expr $MAXTYPES - 1`
+            while [ $type -ge 0 ]; do
+                #echo "  " type $type
+                user=`expr $MAXUSER - 1`
+                while [ $user -ge 0 ]; do
+                    #echo "    " user $user
+                    cardbits=`shiftv $card $CARDSHIFT`
+                    typebits=`shiftv $type $TYPESHIFT`
+                    minorbits=`expr $cardbits + $typebits + $user`
+                    #echo "      " bits `printf '%x' $minorbits`
+                    name=`mkname $card $type $user`
+                    #echo mknod $name c $major $minorbits
+                    mknod $name c $major $minorbits
+                    user=`expr $user - 1`
+                done
+                type=`expr $type - 1`
+            done
+        card=`expr $card - 1`
+    done
+
+    chown $owner $devdir/${basename}*
+    chgrp $group $devdir/${basename}*
+    chmod $mode $devdir/${basename}*
+}
+
+case "$1" in
+start)
+    echo -n "Creating device files for $modulename"
+    make_devs
+    echo "."
+    ;;
+stop)
+    rm -f $devdir/${basename}*
+    ;;
+*)
+    echo "Usage: /etc/init.d/sis1100 {start|stop}"
+    exit 1
+esac
+
+exit 0

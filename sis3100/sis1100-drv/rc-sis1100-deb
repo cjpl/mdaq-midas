@@ -1,0 +1,203 @@
+#! /bin/sh
+# Copyright (c) 1995-2003 SuSE Linux AG, Nuernberg, Germany.
+# All rights reserved.
+#
+# Author: Kurt Garloff
+# Please send feedback to http://www.suse.de/feedback/
+#
+# Modified by Exaos Lee, Mar. 21, 2008
+#
+### BEGIN INIT INFO
+# Provides:          sis1100
+# Required-Start:    $syslog $remote_fs
+# X-UnitedLinux-Should-Start: $time ypbind sendmail
+# Required-Stop:     $syslog $remote_fs
+# X-UnitedLinux-Should-Stop: $time ypbind sendmail
+# Default-Start:     3 5
+# Default-Stop:      0 1 2 6
+# Short-Description: sis1100 Interface to SIS1100 card
+# Description:       Start sis1100 driver
+### END INIT INFO
+# 
+
+SIS1100_MODULE_NAME=sis1100
+SIS1100_MODULE=/opt/VME-Utils/DRV-sis1100/$SIS1100_MODULE_NAME.ko
+SIS1100_BASENAME=
+SIS1100_DEVDIR=/dev/sis1100
+SIS1100_MODE=666
+SIS1100_OWNER=root
+SIS1100_GROUP=root
+
+# These definitions must match the definitions in sis1100_var.h
+MINORBITS=8
+MINORCARDBITS=2
+MINORTYPEBITS=2
+MINORUSERBITS=`expr $MINORBITS - $MINORCARDBITS - $MINORTYPEBITS`
+# USERBITS overwrites MINORUSERBITS
+USERBITS=1
+
+types0="remote"
+types1="ram"
+types2="ctrl"
+types3="dsp"
+
+mkname() {
+    card=$1
+    type=$2
+    user=$3
+    tname=`eval echo \\\$types$type`
+    name=$SIS1100_DEVDIR/${SIS1100_BASENAME}`printf '%d%d' $card $user`$tname
+    echo $name
+}
+
+shiftv() {
+    val=$1
+    i=$2
+    while [ $i -gt 0 ]; do
+        val=`expr $val \* 2`
+        i=`expr $i - 1`
+    done
+    echo $val
+}
+
+load_module() {
+    MODULE_LIST=`grep -q $SIS1100_MODULE_NAME /proc/devices`
+
+    if [ -z "${MODULE_LIST}" ] ; then
+	echo -n "Loading module ... "
+        # invoke insmod or modpobe with all arguments we got
+	if [ -f $SIS1100_MODULE ]; then
+	    insmod $SIS1100_MODULE $* || return 1
+	else
+	    modprobe $SIS1100_MODULE_NAME $* || return 1
+	fi
+	echo "DONE!"
+    fi
+}
+
+create_devices() {
+    load_module || return 1
+
+    MAXCARDS=`shiftv 1 $MINORCARDBITS`
+    CARDSHIFT=`expr $MINORUSERBITS + $MINORTYPEBITS`
+    TYPESHIFT=$MINORUSERBITS
+    MAXTYPES=`shiftv 1 $MINORTYPEBITS`
+    MAXUSER=`shiftv 1 $USERBITS`
+
+    major=`cat /proc/devices | awk "\\$2==\"$SIS1100_MODULE_NAME\" {print \\$1}"`
+    
+    remove_devices
+    mkdir -p ${SIS1100_DEVDIR}
+
+    echo "Creating devices in ${SIS1100_DEVDIR} ..."
+    card=`expr $MAXCARDS - 1`
+    while [ $card -ge 0 ]; do
+	type=`expr $MAXTYPES - 1`
+        while [ $type -ge 0 ]; do
+            user=`expr $MAXUSER - 1`
+            while [ $user -ge 0 ]; do
+                # echo "    " user $user
+                cardbits=`shiftv $card $CARDSHIFT`
+                typebits=`shiftv $type $TYPESHIFT`
+                minorbits=`expr $cardbits + $typebits + $user`
+                name=`mkname $card $type $user`
+                mknod $name c $major $minorbits
+                user=`expr $user - 1`
+            done
+            type=`expr $type - 1`
+        done
+	card=`expr $card - 1`
+    done
+    
+    chown $SIS1100_OWNER $SIS1100_DEVDIR/${SIS1100_BASENAME}*
+    chgrp $SIS1100_GROUP $SIS1100_DEVDIR/${SIS1100_BASENAME}*
+    chmod $SIS1100_MODE  $SIS1100_DEVDIR/${SIS1100_BASENAME}*
+}
+
+check_and_kill()
+{
+    [ -z "$1" ] && return -1
+
+    pid=`lsof $1 2>/dev/null | sed '1d' | awk '{printf "%s  ", $2;}'`
+    if [ "$pid" ]; then
+        echo "File $1 is used by process: $pid"
+        echo "Killing live processes ..."
+        for i in $pid ; do
+            kill $i
+        done
+    #else
+    #    echo "File $1 is not used."
+    fi
+
+    return 0
+}
+
+remove_devices() {
+    echo "Deleting exist device files ..."
+    for i in $SIS1100_DEVDIR/${SIS1100_BASENAME}* ; do
+	check_and_kill $i
+	rm -f $i
+    done
+}
+
+# Source LSB init functions providing:
+#   start_daemon, killproc, pidofproc, 
+#   log_success_msg, log_failure_msg and log_warning_msg.
+. /lib/lsb/init-functions
+
+sis1100_start() {
+    log_daemon_msg "Loading SIS1100 PCI-to-VME interface module" "sis1100"
+
+    #create_devices
+
+    log_end_msg $?
+    return $?
+}
+
+sis1100_stop() {
+    log_daemon_msg "Removing SIS1100 PCI-to-VME interface module" "sis1100"
+
+    remove_devices
+    if `lsmod | grep -q ${SIS1100_MODULE_NAME}` ; then
+	modprobe -r ${SIS1100_MODULE_NAME}
+    else
+        echo "Module ${SIS1100_MODULE_NAME} is not loaded."
+    fi
+
+    log_end_msg $?
+    return $?
+}
+
+sis1100_status() {
+    echo -n "Module ${SIS1100_MODULE_NAME} "
+    if `lsmod | grep -q ${SIS1100_MODULE_NAME}` ; then
+	echo "is loaded."	
+    else
+	echo "is not loaded."
+    fi
+
+    echo "Devices locate in ${SIS1100_DEVDIR}:"
+    ls -l $SIS1100_DEVDIR/${SIS1100_BASENAME}*
+}
+
+case "$1" in
+    start)
+	sis1100_start
+	;;
+    stop)
+	sis1100_stop
+	;;
+    restart)
+	sis1100_stop && sleep 3
+	sis1100_start
+	;;
+    status)
+	sis1100_status
+	;;
+    *)
+	echo "Usage: $0 {start|stop|status|restart}"
+	;;
+esac
+
+exit 0
+

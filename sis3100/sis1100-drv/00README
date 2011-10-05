@@ -1,0 +1,74 @@
+SIS1100 Driver for Linux
+========================
+
+This directory contains driver for SIS1100 PCI-to-VME interface for Linux kernel
+up to 2.6.34. The driver is based on the work from STRUCK co, and is slightly
+modified in order to satisfy our need in CIAE.
+                                 ---- by Exaos Lee <Exaos.Lee AT gmail DOT com>
+
+INSTALL
+=======
+
+There are two ways to install sis1100 module, manually or using dkms.
+
+I.  Manually installation
+    1. Compile the module
+       make
+    2. Copy the `sis1100.ko` to modules dir
+       cp sis1100.ko /lib/modules/<kernel-version>/updates/
+    3. Execute `depmod -a`
+    4. Insert module
+       insmod sis1100
+
+    Then, you may find devices under `/dev`, such as `/dev/sis1100_00remote`.
+
+II. Using DKMS
+    1. Copy sources to `/usr/src` as `sis1100-2.13`
+       cp -rvp ./ /usr/src/sis1100-2.13
+    2. Update dkms info
+       dkms add -m sis1100 -v 2.13
+    3. Build module
+       dkms build -m sis1100 -v 2.13
+    4. Install module
+       dkms install -m sis1100 -v 2.13
+    5. Modprobe
+       modprobe sis1100
+
+Usage
+=====
+
+If the module is installed properly and the SIS3100 is connected, you can find
+kernel messages like these (`dmesg | grep sis1100`):
+
+       	[   17.282122] sis1100: found SIS1100 PCI at 0000:02:02.0
+	[   17.302593] sis1100[0]: hardwired device id: 0x9054
+	[   17.310579] sis1100[0]: 64 Bit DMA not available
+	[   17.319776] sis1100[0]: local ident: 0x07010101
+	[   17.330568] sis1100[0]: HW version 1; FW code 1; FW version 7
+    	[   17.338353] sis1100[0]: size of remote space: 0x10000000 (256 MByte)
+	[   17.346392] sis1100[0]: serial number not set
+	[   17.358605] sis1100[0]: remote ident: 0x06010102
+	[   17.368339] sis1100[0]: remote is VME
+	[   17.376873] sis1100[0]: remote HW_ver 1 FW_code 1 FW_ver 6
+	[   17.384036] sis1100[0]: no SDRAM installed
+	[   17.391107] sis1100[0]: 3100: size of SDRAM: 0x0 (0 MByte)
+	[   17.398234] sis1100[0]: 3100: DSP is not present
+	[   17.403847] sis1100[0]: 3100: remote stat=0x0001c000
+	[   17.410898] sis1100[0]: 3100: berr_time=6250 ns
+	[   17.417904] sis1100[0]: 3100: long_time=10 ms
+
+The above messages tell that the driver works well.
+
+When the kernel module is loaded, default devices `/dev/sis1100_*` will be
+created. But the default owner of dev files is root. You can change it to common
+user with two ways also, manually or automatically:
+     1. manually change the owner and mode --
+     	chown das:root /dev/sis1100*
+	chmod 0644 /dev/sis1100*
+     2. Using udev rules to change the privilleges and owner automatically --
+	cp 92-struck.rules /etc/udev/rules.d/
+	service udev force-reload
+
+If you want to load sis1100 whenever the system reboots, you can add `sis1100`
+to the end of file `/etc/modules`.
+

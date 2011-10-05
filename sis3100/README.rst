@@ -18,3 +18,9 @@ The debian package source is slightly modified from `dkms mkdsc` results:
   5. sudo dkms mkdsc -m sis1100 -v 2.13 --source-only
 
 
+Build `sis1100-dkms_2.13_all.deb`
+---------------------------------
+
+  $ dpkg_buildpackage
+
+

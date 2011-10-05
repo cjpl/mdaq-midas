@@ -25,14 +25,14 @@ debian packages can be installed by reference here::
 
 2. prepare the "*orig.tar.gz"::
 
-   $ ./autoconf/prepare-orig.sh
+   $ ./debian/prepare-orig.sh
 
 3. generate debian packages::
 
    $ dpkg-buildpackage
 
-Package: mdaq-roody
-~~~~~~~~~~~~~~~~~~~
+Package: mdaq-roody, mdaq-rootana
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This package contains sources from `ROODY` and `rootana`::
 
@@ -41,8 +41,6 @@ This package contains sources from `ROODY` and `rootana`::
 2. http://daq-plone.triumf.ca/SR/rootana
 
 You may refer to DAQ-Triumf_ for more related codes.
-
-[FIXME]!
 
 .. DAQ-Triumf_: http://daq-plone.triumf.ca/SR
 

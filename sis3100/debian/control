@@ -1,0 +1,11 @@
+Source: sis1100-dkms
+Section: misc
+Priority: optional
+Maintainer: Dynamic Kernel Modules Support Team <pkg-dkms-maint@lists.alioth.debian.org>
+Build-Depends: debhelper (>= 7), dkms
+Standards-Version: 3.8.1
+
+Package: sis1100-dkms
+Architecture: all
+Depends: dkms (>= 1.95), ${misc:Depends}
+Description: sis1100 driver in DKMS format.

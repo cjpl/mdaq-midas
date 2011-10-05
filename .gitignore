@@ -6,10 +6,15 @@ debs/
 */build/
 */.pc/
 *.orig.tar.gz
+*.debian.tar.gz
 *.orig/
 *.dsc
 *.deb
 *.changes
+*/debian/*.log
+*/debian/*.substvars
+*/debian/*.debhelper
+*/debian/files
 
 # midas
 midas/midas/

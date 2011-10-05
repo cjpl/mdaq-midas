@@ -1,0 +1,8 @@
+build/librootana.a		/usr/lib/mdaq/lib/
+build/libNetDirectory.a		/usr/lib/mdaq/lib/
+build/*.exe   			/usr/lib/mdaq/bin/rootana-samples/
+rootana/*.h	       		/usr/lib/mdaq/include/rootana/
+rootana/libNetDirectory/TNetDirectory.h		/usr/lib/mdaq/include/rootana/
+rootana/libNetDirectory/RootLock.h		/usr/lib/mdaq/include/rootana/
+rootana/libNetDirectory/netDirectoryServer.h	/usr/lib/mdaq/include/rootana/
+

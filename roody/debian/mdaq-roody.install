@@ -1,3 +1,5 @@
-bin/roody        /usr/bin
-bin/roody_el     /usr/bin
-lib/		 /usr/lib/mdaq/
+build/roody      /usr/bin/roody
+build/roody_el   /usr/bin/roody_el
+build/roody.so   /usr/lib/mdaq/lib
+roody/include/[A-Z]*.h	 /usr/lib/mdaq/include/roody/
+

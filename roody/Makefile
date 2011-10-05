@@ -52,89 +52,110 @@ HAVE_ROODYSO = 1
 endif
 
 #-----------------------------------------------------------------------
-CXXFLAGS = $(ARCH_FLAGS) -Wall -Wuninitialized -fPIC $(MDAQ_CFLAGS) $(ROOT_CFLAGS)
-INCLUDE := -I. -Iroody/include -Iroody/src -Iaddons -IrootanalibNetDirectory
+CXXFLAGS = $(ARCH_FLAGS) -Wall -Wuninitialized -fPIC $(MDAQ_CFLAGS) $(ROOT_CFLAGS)\
+ -DHAVE_LIBNETDIRECTORY
+INCLUDE := -I. -Iroody/include -Iroody/src -Ibuild -Irootana/libNetDirectory
 CXXFLAGS += $(INCLUDE)
-LDFLAGS += -Llib -lNetDirectory $(ROOT_GLIBS) $(MDAQ_LIBS)
+LDFLAGS += -Lbuild -lNetDirectory $(ROOT_GLIBS) $(MDAQ_LIBS)
 
 ################################################################
 
-ROODY_OBJS = obj/DataSourceTDirectory.o obj/Roody.o obj/RoodyDict.o \
-       obj/TGTextDialog.o obj/TGTextDialogDict.o \
-       obj/TPeakFindPanel.o obj/TPeakFindPanelDict.o \
-       obj/MTGListTree.o obj/MTGListTreeDict.o \
-       obj/TAxisLimitsDialog.o obj/TAxisLimitsDialogDict.o \
-       obj/RoodyXML.o
+ROODY_OBJS = build/obj/DataSourceTDirectory.o build/obj/Roody.o \
+       build/obj/RoodyDict.o \
+       build/obj/TGTextDialog.o build/obj/TGTextDialogDict.o \
+       build/obj/TPeakFindPanel.o build/obj/TPeakFindPanelDict.o \
+       build/obj/MTGListTree.o build/obj/MTGListTreeDict.o \
+       build/obj/TAxisLimitsDialog.o build/obj/TAxisLimitsDialogDict.o \
+       build/obj/RoodyXML.o
 
-libNetDirectory_OBJS = objnet/TNetDirectory.o \
-	objnet/TNetDirectoryDict.o \
-	objnet/netDirectoryServer.o \
-	objnet/RootLock.o
+libNetDirectory_OBJS = build/objnet/TNetDirectory.o \
+	build/objnet/TNetDirectoryDict.o \
+	build/objnet/netDirectoryServer.o \
+	build/objnet/RootLock.o
+
+ROOTANA_OBJS = build/objana/TMidasFile.o  build/objana/TMidasEvent.o \
+	build/objana/XmlOdb.o  build/objana/HttpOdb.o \
+	build/objana/midasServer.o \
+	build/objana/TMidasOnline.o \
+	build/objnet/RootLock.o \
+	build/objnet/netDirectoryServer.o
+
+ROOTANA_EXAMPLES = build/event_dump.exe  build/analyzer.exe \
+	build/test_midasServer.exe build/testODB.exe
 
 #-----------------------------------------------------------------------
-ALL = pre_dir lib/libNetDirectory.a bin/roody_el bin/roody lib/roody.so
+ALL = pre_dir build/libNetDirectory.a \
+      build/roody_el build/roody build/roody.so \
+      build/librootana.a  $(ROOTANA_EXAMPLES)
 
 .SUFFIXES: .cxx .o .so .a
 
 all: $(ALL)
 
 pre_dir:
-	@mkdir -p bin lib obj objnet
+	@mkdir -p build/obj build/objnet build/objana
 
-bin/roody_el: obj/main_el.o $(ROODY_OBJS)
+build/roody_el: build/obj/main_el.o $(ROODY_OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS)
 
-bin/roody: obj/main.o $(ROODY_OBJS)
+build/roody: build/obj/main.o $(ROODY_OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS)
 
-lib/roody.so: $(ROODY_OBJS) lib/libNetDirectory.a
+build/roody.so: $(ROODY_OBJS) build/libNetDirectory.a
 	$(CXX) $^ -o $@ -shared $(LDFLAGS)
 
-lib/libNetDirectory.a: $(libNetDirectory_OBJS)
+build/librootana.a: $(ROOTANA_OBJS)
 	-rm -f $@
 	ar -rv $@ $^
+
+build/libNetDirectory.a: $(libNetDirectory_OBJS)
+	-rm -f $@
+	ar -rv $@ $^
+
+build/%.exe: rootana/%.cxx build/librootana.a
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
 depend:
 ifdef HAVE_DEPEND
 	-g++ $(CXXFLAGS) $(INCLUDE) -c -MM roody/src/*.cxx > Makefile.depends1
-	sed 's#^#obj/#' Makefile.depends1 > Makefile.depends2
-	sed 's#^obj/ #   #' Makefile.depends2 > Makefile.depends
+	sed 's#^#build/obj/#' Makefile.depends1 > Makefile.depends2
+	sed 's#^build/obj/ #   #' Makefile.depends2 > Makefile.depends
 	-rm -f Makefile.depends1 Makefile.depends2
 endif
 
-obj/main_el.o: addons/main_el.cxx addons/rootsys.h
+build/obj/main_el.o: addons/main_el.cxx build/rootsys.h
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-obj/main.o: roody/src/main.cxx addons/rootsys.h
+build/obj/main.o: roody/src/main.cxx build/rootsys.h
 
-addons/rootsys.h:
+build/rootsys.h:
 	@echo "char const *rootsys = \"$(ROOTSYS)\";" > $@
 
-clean:
-	rm -v -f bin/roody_el bin/roody obj/* core roody/src/*Dict.* lib/*.so \
-		objnet/* rootana/libNetDirectory/%Dict.* lib/*.a
+clean-dicts:
+	rm -v -f roody/src/*Dict.* rootana/libNetDirectory/*Dict.*
 
-obj/%Dict.o: roody/include/%Dict.h
+clean: clean-dicts
+	rm -v -rf build/
+
+build/obj/%Dict.o: roody/include/%Dict.h
 
 roody/include/%Dict.h: roody/src/%Dict.cxx
 
 roody/src/%Dict.cxx: roody/include/%.h
 	LD_LIBRARY_PATH=$(ROOT_LIBDIR) $(CINT) -f $@ -c $^
 
-obj/%.o: roody/src/%.cxx
+build/obj/%.o: roody/src/%.cxx
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-objnet/%Dict.o: objnet/%Dict.cxx
+build/objnet/%Dict.o: build/objnet/%Dict.cxx
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-objnet/%Dict.cxx: rootana/libNetDirectory/%.h
+build/objnet/%Dict.cxx: rootana/libNetDirectory/%.h
 	LD_LIBRARY_PATH=$(ROOT_LIBDIR) $(CINT) -f $@ -c $^
 
-objnet/%.o: rootana/libNetDirectory/%.cxx
-	$(CXX) $(CXXFLAGS) -Irootana/libNetDirectory -c -o $@ $<
+build/objnet/%.o: rootana/libNetDirectory/%.cxx
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-#obj/%.o: @srcdir@roody/src/%.cpp
-#	$(CXX) $(CXXFLAGS) -c -o $@ $<
-
--include Makefile.depends
+build/objana/%.o: rootana/%.cxx
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 

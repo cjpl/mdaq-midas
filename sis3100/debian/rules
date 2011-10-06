@@ -34,7 +34,8 @@ install: build
 	dh_prep
 	dh_installdirs
 	$(MAKE) DESTDIR=$(CURDIR)/debian/sis1100-dkms NAME=sis1100 VERSION=$(VERSION) install
-	$(MAKE) -C $(CURDIR)/libsis3100 DESTDIR=$(CURDIR)/debian/libsis3100-dev install
+	$(MAKE) -C $(CURDIR)/libsis3100 DESTDIR=$(CURDIR)/debian/libsis3100-dev install-sis3100
+	$(MAKE) -C $(CURDIR)/libsis3100 DESTDIR=$(CURDIR)/debian/libmvme-sis3100 install-mvme
 
 binary-arch: build install
 

@@ -15,3 +15,8 @@ Architecture: any
 Depends: ${misc:Depends}, mdaq
 Description: sis3100 dev files for mdaq-midas
 
+Package: libmvme-sis3100
+Architecture: any
+Depends: ${misc:Depends}, mdaq
+Description: MIDAS MVME library with lib_sis3100
+

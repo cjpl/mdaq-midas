@@ -3,8 +3,9 @@ sis3100 (2.13) unstable; urgency=low
   * Add multi-package setting.
     * libsis3100-dev
     * sis1100-dkms
+    * libmvme-sis3100
 
- -- Exaos Lee <Exaos.Lee@gmail.com>  Fri, 07 Oct 2011 01:47:02 +0800
+ -- Exaos Lee <Exaos.Lee@gmail.com>  Fri, 07 Oct 2011 03:15:28 +0800
 
 sis1100-dkms (2.13) stable; urgency=low
 

@@ -1,7 +1,7 @@
-Source: sis1100-dkms
+Source: sis3100
 Section: misc
 Priority: optional
-Maintainer: Dynamic Kernel Modules Support Team <pkg-dkms-maint@lists.alioth.debian.org>
+Maintainer: Exaos Lee <Exaos.Lee@gmail.com>
 Build-Depends: debhelper (>= 7), dkms
 Standards-Version: 3.8.1
 
@@ -9,3 +9,9 @@ Package: sis1100-dkms
 Architecture: all
 Depends: dkms (>= 1.95), ${misc:Depends}
 Description: sis1100 driver in DKMS format.
+
+Package: libsis3100-dev
+Architecture: any
+Depends: ${misc:Depends}, mdaq
+Description: sis3100 dev files for mdaq-midas
+

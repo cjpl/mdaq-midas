@@ -4,8 +4,8 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-DEB_NAME=sis1100
-NAME=sis1100
+#DEB_NAME=sis1100
+#NAME=sis1100
 VERSION=2.13
 
 configure: configure-stamp
@@ -33,7 +33,8 @@ install: build
 	dh_testroot
 	dh_prep
 	dh_installdirs
-	$(MAKE) DESTDIR=$(CURDIR)/debian/$(DEB_NAME)-dkms NAME=$(NAME) VERSION=$(VERSION) install
+	$(MAKE) DESTDIR=$(CURDIR)/debian/sis1100-dkms NAME=sis1100 VERSION=$(VERSION) install
+	$(MAKE) -C $(CURDIR)/libsis3100 DESTDIR=$(CURDIR)/debian/libsis3100-dev install
 
 binary-arch: build install
 

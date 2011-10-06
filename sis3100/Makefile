@@ -1,6 +1,6 @@
 #/usr/bin/make
 SRC = $(DESTDIR)/usr/src
-SHARE = $(DESTDIR)/usr/share/$(NAME)-dkms
+SHARE = $(DESTDIR)/usr/share/sis1100-dkms
 
 all:
 
@@ -9,16 +9,16 @@ clean:
 install:
 
 #source tree
-ifeq ("$(wildcard $(NAME)-$(VERSION))", "$(NAME)-$(VERSION)")
+ifeq ("$(wildcard sis1100-$(VERSION))", "sis1100-$(VERSION)")
 	install -d "$(SRC)"
-	cp -a $(NAME)-$(VERSION) $(SRC)
-	chmod 644 -R "$(SRC)/$(NAME)-$(VERSION)"
+	cp -a sis1100-$(VERSION) $(SRC)
+	chmod 644 -R "$(SRC)/sis1100-$(VERSION)"
 endif
 
 #tarball, possibly with binaries
-ifeq ("$(wildcard $(NAME)-$(VERSION).dkms.tar.gz)", "$(NAME)-$(VERSION).dkms.tar.gz")
+ifeq ("$(wildcard sis1100-$(VERSION).dkms.tar.gz)", "sis1100-$(VERSION).dkms.tar.gz")
 	install -d "$(SHARE)"
-	install -m 644 $(NAME)-$(VERSION).dkms.tar.gz "$(SHARE)"
+	install -m 644 sis1100-$(VERSION).dkms.tar.gz "$(SHARE)"
 endif
 
 # install udev.rules

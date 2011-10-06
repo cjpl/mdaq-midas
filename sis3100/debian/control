@@ -12,7 +12,7 @@ Description: sis1100 driver in DKMS format.
 
 Package: libsis3100-dev
 Architecture: any
-Depends: ${misc:Depends}, mdaq, sis3100-dkms
+Depends: ${misc:Depends}, mdaq, sis1100-dkms
 Description: sis3100 dev files for mdaq-midas
 
 Package: libmvme-sis3100

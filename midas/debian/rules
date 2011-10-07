@@ -32,6 +32,7 @@ build-noroot:
 
 ## Build source with root support
 build-root: build-noroot
+	-@rm $(BUILD_DIR)/mlogger*
 	@mkdir -p $(BUILD_DIR)/root
 	@cd $(BUILD_DIR) && \
 	$(CURDIR)/autoconf/configure --enable-root --prefix=/usr \

@@ -103,6 +103,9 @@ def check_mdaq_install():
     # check MIDASSYS environment
     if 'MIDASSYS' not in os.environ:
         os.environ.setdefault("MIDASSYS", mdaq_dir)
+    # update "PATH" environment
+    if mdaq_bin not in os.environ['PATH'].split(':'):
+        os.environ['PATH']=':'.join([mdaq_bin, os.environ['PATH']])
 
 #-----------------------------------------------------------------------
 # mdaq run

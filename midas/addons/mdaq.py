@@ -158,8 +158,10 @@ def read_conf(fcnf):
 
     # Experiment info
     if 'experiment' in cnf: dict_sign( exp_conf, cnf['experiment'] )
-    # MIDAS system
+    # MIDAS system: mdaq_sys or midas_sys
     if 'mdaq_sys' in cnf: dict_sign( mdaq_sys, cnf['mdaq_sys'] )
+    else:
+        if 'midas_sys' in cnf: dict_sign(mdaq_sys, cnf['midas_sys'])
 
     # check MIDAS installation
     check_mdaq_install()

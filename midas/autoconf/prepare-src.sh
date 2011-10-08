@@ -41,6 +41,11 @@ else
     echo
 fi
 
+if [[ ! -f midas/doc/logo.png ]]; then
+    wget -c http://midas.psi.ch/img/midas_logo.jpg
+    convert midas_logo.jpg  png:midas/doc/logo.png
+fi
+
 ####
 cd ${OLD_DIR}
 

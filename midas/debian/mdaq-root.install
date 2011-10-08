@@ -1,7 +1,0 @@
-build/root/usr/bin/                      /usr/
-build/root/usr/lib/mdaq/bin		 /usr/lib/mdaq
-build/root/usr/lib/mdaq/lib		 /usr/lib/mdaq
-build/root/usr/lib/mdaq/include 	 /usr/lib/mdaq
-build/root/usr/share/mdaq	 	 /usr/share
-build/root/usr/share/doc/mdaq	 	 /usr/share/doc
-

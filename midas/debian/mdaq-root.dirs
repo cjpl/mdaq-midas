@@ -1,0 +1,10 @@
+usr/bin
+usr/lib/mdaq
+usr/lib/mdaq/bin
+usr/lib/mdaq/lib
+usr/lib/mdaq/include
+usr/share/mdaq/drivers
+usr/share/mdaq/src
+usr/share/doc/mdaq
+usr/share/doc/mdaq/etc
+usr/share/doc/mdaq/examples

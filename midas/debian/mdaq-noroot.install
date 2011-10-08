@@ -1,7 +1,0 @@
-build/noroot/usr/bin	           /usr
-build/noroot/usr/lib/mdaq/bin/     /usr/lib/mdaq
-build/noroot/usr/lib/mdaq/lib/     /usr/lib/mdaq
-build/noroot/usr/lib/mdaq/include  /usr/lib/mdaq
-build/noroot/usr/share/mdaq	   /usr/share
-build/noroot/usr/share/doc/mdaq    /usr/share/doc
-

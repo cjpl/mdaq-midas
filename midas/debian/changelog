@@ -1,3 +1,10 @@
+mdaq (2.3.0+r5196-5) unstable; urgency=low
+
+  * Fix bug in mdaq.py: add os.environ['PATH']
+  * Fix bug in debian/rules: build mdaq-root with root.
+
+ -- Exaos Lee <Exaos.Lee@gmail.com>  Sat, 08 Oct 2011 14:04:33 +0800
+
 mdaq (2.3.0+r5196-4) unstable; urgency=low
 
   * Fix bug in mdaq.py: no executable found.

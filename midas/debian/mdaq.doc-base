@@ -1,9 +1,0 @@
-Document: mdaq
-Title: MIDAS/PSI Manual
-Author: Stefan Ritt, Pierre Amaudruz, Konstantin Olchanski
-Abstract: This manual describes what mdaq is and how it can be used.
-Section: Misc
-
-Format: HTML
-Index: /usr/share/doc/mdaq/html/index.html
-Files: /usr/share/doc/mdaq/html/*.html

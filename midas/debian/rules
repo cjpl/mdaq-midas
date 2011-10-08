@@ -2,6 +2,7 @@
 # -*- makefile -*-
 #include /usr/share/cdbs/1/rules/debhelper.mk
 #include /usr/share/cdbs/1/class/autotools.mk
+BUILD_DIR=$(CURDIR)/build
 
 # Uncomment this to turn on verbose mode.
 export DH_VERBOSE=1
@@ -12,38 +13,40 @@ export DH_OPTIONS
 # PKGDIR
 override_dh_auto_build:
 	dh_auto_build -- build
+
 override_dh_auto_configure:
 	@echo "Skip!"
 
 pre-build:
+	dh_clean
+	dh_testdir
+	dh_prep
+	dh_installdirs
 	cd $(CURDIR) && ./autoconf/prepare-src.sh
-
-BUILD_DIR=$(CURDIR)/build
+	@mkdir -p $(BUILD_DIR)
 
 ## Build source without root support
 build-noroot:
-	@mkdir -p $(BUILD_DIR)/noroot
+	@rm -f $(BUILD_DIR)/mlogger* $(BUILD_DIR)/lazylogger*
 	@cd $(BUILD_DIR) && \
 	$(CURDIR)/autoconf/configure --disable-root --prefix=/usr \
 	   --exec-prefix=/usr/lib/mdaq --docdir=/usr/share/doc/mdaq \
 	   --includedir=/usr/lib/mdaq/include \
 	   --datadir=/usr/share/mdaq \
-	&& $(MAKE) DESTDIR=`pwd`/noroot install
+	&& $(MAKE) DESTDIR=$(CURDIR)/debian/mdaq-noroot install
 
 ## Build source with root support
-build-root: build-noroot
-	-@rm $(BUILD_DIR)/mlogger*
-	@mkdir -p $(BUILD_DIR)/root
+build-root:
+	@rm -f $(BUILD_DIR)/mlogger* $(BUILD_DIR)/lazylogger*
 	@cd $(BUILD_DIR) && \
 	$(CURDIR)/autoconf/configure --enable-root --prefix=/usr \
 	   --exec-prefix=/usr/lib/mdaq --docdir=/usr/share/doc/mdaq \
 	   --includedir=/usr/lib/mdaq/include \
 	   --datadir=/usr/share/mdaq \
-	&& $(MAKE) DESTDIR=`pwd`/root install
+	&& $(MAKE) DESTDIR=$(CURDIR)/debian/mdaq-root install
 
 ## Build docs
 dox-build:
-	@mkdir -p $(BUILD_DIR)/doc
 	-cd $(CURDIR)/midas/doc/src/ && ./make_contents.pl > contents_output.txt 2>&1
 	-cd $(CURDIR)/midas/doc/src/ && ./doit.pl > doit_output.txt 2>&1
 	-cd $(CURDIR)/midas/doc/src/ && ./make_index.pl > index_output.txt 2>&1
@@ -52,8 +55,9 @@ dox-build:
 	cd $(CURDIR)/midas/doc && doxygen
 	cd $(CURDIR)/midas/doc && cp -p src/*.js src/*.css html/
 	@echo "Copying files ..."
-	@mv $(CURDIR)/midas/doc/html $(BUILD_DIR)/doc
-	@mv $(CURDIR)/midas/doc/images/* $(BUILD_DIR)/doc/html
+	@mv $(CURDIR)/midas/doc/html $(CURDIR)/debian/mdaq-doc/usr/share/doc/mdaq
+	@mv $(CURDIR)/midas/doc/images/*  $(CURDIR)/debian/mdaq-doc/usr/share/doc/mdaq/html/
+	@cp -p $(CURDIR)/midas/doc/logo.png  $(CURDIR)/debian/mdaq-doc/usr/share/doc/mdaq/html
 	@echo "Clean up midas/doc/ ..."
 	-cd $(CURDIR)/midas/doc/src && \
 		rm -f *_output.txt *_info.txt docindex.dox Organization.dox
@@ -63,9 +67,9 @@ dox-build:
 %:
 	dh $@
 
-build: build-root build-noroot dox-build
+build: pre-build dox-build build-noroot  build-root
 
-pre-clean:
+clean:
 	@rm -rf $(BUILD_DIR)
 	@cd $(CURDIR)/debian && rm -f *.debhelper *.substvars *.log
 

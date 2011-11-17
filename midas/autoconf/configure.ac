@@ -2,7 +2,7 @@
 # June 17, 2011 -- created by Exaos Lee <exaos.lee(at)gmail.com>
 ###########################################################
 # Prelude
-AC_INIT([mdaq], [2.3.0+r5196], [exaos.lee@gmail.com])
+AC_INIT([mdaq], [2.3.0+r5218], [exaos.lee@gmail.com])
 
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST

@@ -1,3 +1,9 @@
+mdaq (2.3.0+r5218-1) unstable; urgency=low
+
+  * Update new upstream source: svn+r5218
+
+ -- Exaos Lee <Exaos.Lee@gmail.com>  Thu, 17 Nov 2011 14:39:00 +0800
+
 mdaq (2.3.0+r5196-5) unstable; urgency=low
 
   * Fix bug in mdaq.py: add os.environ['PATH']

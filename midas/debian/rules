@@ -57,7 +57,7 @@ dox-build:
 	@echo "Copying files ..."
 	@mv $(CURDIR)/midas/doc/html $(CURDIR)/debian/mdaq-doc/usr/share/doc/mdaq
 	@mv $(CURDIR)/midas/doc/images/*  $(CURDIR)/debian/mdaq-doc/usr/share/doc/mdaq/html/
-	@cp -p $(CURDIR)/midas/doc/logo.png  $(CURDIR)/debian/mdaq-doc/usr/share/doc/mdaq/html
+	-@cp -p $(CURDIR)/midas/doc/logo.png  $(CURDIR)/debian/mdaq-doc/usr/share/doc/mdaq/html
 	@echo "Clean up midas/doc/ ..."
 	-cd $(CURDIR)/midas/doc/src && \
 		rm -f *_output.txt *_info.txt docindex.dox Organization.dox

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MIDAS_SVN="svn+ssh://svn@savannah.psi.ch/afs/psi.ch/project/meg/svn/midas/trunk"
-MIDAS_REV=5196
+MIDAS_REV=5218
 MXML_SVN="svn+ssh://svn@savannah.psi.ch/afs/psi.ch/project/meg/svn/mxml/trunk"
 MXML_REV=70
 MIDASDOC_URL="http://ladd00.triumf.ca/~daqweb/ftp/midasdoc-images.tar.gz"
@@ -11,7 +11,7 @@ MDAQ_WDIR=$(dirname $(readlink -f $0))/../
 cd ${MDAQ_WDIR}
 
 # Checkout mxml
-if [[ ! -d midas ]]; then
+if [[ ! -d mxml ]]; then
     echo "## Checkout mxml source from public subversion repository ..."
     svn checkout ${MXML_SVN} -r ${MXML_REV} mxml
 else

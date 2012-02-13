@@ -37,9 +37,18 @@ obj-m += sis1100.o
 
 else
 
+ifneq (,$(findstring 3., $(KERNVER)))
+EXTRA_CFLAGS += -DMODULENAME=$(MODULENAME)
+
+obj-m += sis1100.o
+
+else
+
 modules: sis1100.o
 
 sis1100.o: $(sis1100-objs)
 	$(LD) -r -o $@ $^
+
+endif
 
 endif

@@ -163,7 +163,8 @@ mhist_SOURCES = mhist.c
 mhist_OBJECTS = mhist.$(OBJEXT)
 mhist_LDADD = $(LDADD)
 mhist_DEPENDENCIES = libmidas.a
-am_mhttpd_OBJECTS = mhttpd-mhttpd.$(OBJEXT) mgd.$(OBJEXT)
+am_mhttpd_OBJECTS = mhttpd-mhttpd.$(OBJEXT) mgd.$(OBJEXT) \
+	mhttpd-sequencer.$(OBJEXT)
 mhttpd_OBJECTS = $(am_mhttpd_OBJECTS)
 mhttpd_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CXXLD) $(mhttpd_CXXFLAGS) $(CXXFLAGS) \
@@ -469,7 +470,7 @@ mdaq-config
 
 
 # per-code configure
-mhttpd_SOURCES = @srcdir@/../midas/src/mhttpd.cxx @srcdir@/../midas/src/mgd.c
+mhttpd_SOURCES = @srcdir@/../midas/src/mhttpd.cxx @srcdir@/../midas/src/mgd.c @srcdir@/../midas/src/sequencer.cxx
 mhttpd_LDADD = @mscb_obj@ libmidas.a
 mhttpd_CXXFLAGS = $(AM_CXXFLAGS) -I@mscb_dir@
 mhttpd_DEPENDENCIES = @mscb_obj@
@@ -786,6 +787,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mhdump.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mhist.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mhttpd-mhttpd.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mhttpd-sequencer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/midas.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mlogger.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mlxspeaker.Po@am__quote@
@@ -1186,6 +1188,20 @@ mhttpd-mhttpd.obj: @srcdir@/../midas/src/mhttpd.cxx
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='@srcdir@/../midas/src/mhttpd.cxx' object='mhttpd-mhttpd.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mhttpd_CXXFLAGS) $(CXXFLAGS) -c -o mhttpd-mhttpd.obj `if test -f '@srcdir@/../midas/src/mhttpd.cxx'; then $(CYGPATH_W) '@srcdir@/../midas/src/mhttpd.cxx'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/mhttpd.cxx'; fi`
+
+mhttpd-sequencer.o: @srcdir@/../midas/src/sequencer.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mhttpd_CXXFLAGS) $(CXXFLAGS) -MT mhttpd-sequencer.o -MD -MP -MF $(DEPDIR)/mhttpd-sequencer.Tpo -c -o mhttpd-sequencer.o `test -f '@srcdir@/../midas/src/sequencer.cxx' || echo '$(srcdir)/'`@srcdir@/../midas/src/sequencer.cxx
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/mhttpd-sequencer.Tpo $(DEPDIR)/mhttpd-sequencer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='@srcdir@/../midas/src/sequencer.cxx' object='mhttpd-sequencer.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mhttpd_CXXFLAGS) $(CXXFLAGS) -c -o mhttpd-sequencer.o `test -f '@srcdir@/../midas/src/sequencer.cxx' || echo '$(srcdir)/'`@srcdir@/../midas/src/sequencer.cxx
+
+mhttpd-sequencer.obj: @srcdir@/../midas/src/sequencer.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mhttpd_CXXFLAGS) $(CXXFLAGS) -MT mhttpd-sequencer.obj -MD -MP -MF $(DEPDIR)/mhttpd-sequencer.Tpo -c -o mhttpd-sequencer.obj `if test -f '@srcdir@/../midas/src/sequencer.cxx'; then $(CYGPATH_W) '@srcdir@/../midas/src/sequencer.cxx'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/sequencer.cxx'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/mhttpd-sequencer.Tpo $(DEPDIR)/mhttpd-sequencer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='@srcdir@/../midas/src/sequencer.cxx' object='mhttpd-sequencer.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mhttpd_CXXFLAGS) $(CXXFLAGS) -c -o mhttpd-sequencer.obj `if test -f '@srcdir@/../midas/src/sequencer.cxx'; then $(CYGPATH_W) '@srcdir@/../midas/src/sequencer.cxx'; else $(CYGPATH_W) '$(srcdir)/@srcdir@/../midas/src/sequencer.cxx'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

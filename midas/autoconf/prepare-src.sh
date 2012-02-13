@@ -1,9 +1,9 @@
 #!/bin/bash
 
 MIDAS_SVN="svn+ssh://svn@savannah.psi.ch/afs/psi.ch/project/meg/svn/midas/trunk"
-MIDAS_REV=5218
+MIDAS_REV=5254
 MXML_SVN="svn+ssh://svn@savannah.psi.ch/afs/psi.ch/project/meg/svn/mxml/trunk"
-MXML_REV=70
+MXML_REV=73
 MIDASDOC_URL="http://ladd00.triumf.ca/~daqweb/ftp/midasdoc-images.tar.gz"
 
 OLD_DIR=`pwd`
@@ -44,6 +44,7 @@ fi
 if [[ ! -f midas/doc/logo.png ]]; then
     wget -c http://midas.psi.ch/img/midas_logo.jpg
     convert midas_logo.jpg  png:midas/doc/logo.png
+    rm midas_logo.jpg
 fi
 
 ####

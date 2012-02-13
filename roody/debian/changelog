@@ -1,3 +1,9 @@
+mdaq-roody (1.1.0+r236-2) unstable; urgency=low
+
+  * Build with now ROOT version (5.30.00~)
+
+ -- Exaos Lee <Exaos.Lee@gmail.com>  Mon, 13 Feb 2012 14:27:03 +0800
+
 mdaq-roody (1.1.0+r236-1) unstable; urgency=low
 
   * New pacakge name: mdaq-roody

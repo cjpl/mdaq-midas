@@ -10,7 +10,7 @@ Vcs-Browser: http://ladd00.triumf.ca/viewcvs/roody/trunk/
 
 Package: mdaq-roody
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, root-system, mdaq-root | daq-midas-root
+Depends: ${shlibs:Depends}, ${misc:Depends}, root-system (>= 5.28.00~), mdaq-root | daq-midas-root
 Conflicts: daq-roody
 Description: a ROOT application to be used with daq-midas
  Roody is an application based solely on the CERN-ROOT for histogram display. It
@@ -22,7 +22,7 @@ Description: a ROOT application to be used with daq-midas
 
 Package: mdaq-rootana
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, root-system, mdaq-root | daq-midas-root
+Depends: ${shlibs:Depends}, ${misc:Depends}, root-system (>= 5.28.00~), mdaq-root | daq-midas-root
 Description: a C++ library based on ROOT to be used for data analysing
  ROOTANA is a simple ROOT based analyzer for MIDAS.
  .

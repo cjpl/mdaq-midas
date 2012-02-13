@@ -1,8 +1,8 @@
 #!/bin/bash
 
 MDAQ_WDIR=$(dirname $(readlink -f $0))/../
-ORIG_FILE=${MDAQ_WDIR}/../mdaq_2.3.0+r5218.orig.tar.gz
-ORIG_PREFIX=mdaq-2.3.0+r5218
+ORIG_FILE=${MDAQ_WDIR}/../mdaq_2.3.0+r5254.orig.tar.gz
+ORIG_PREFIX=mdaq-2.3.0+r5254
 
 if [[ -f ${ORIG_FILE} ]]; then
     echo "Orignal file is ready. No further action needed!"

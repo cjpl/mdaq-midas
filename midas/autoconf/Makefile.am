@@ -80,7 +80,7 @@ mscb.o: mscb.c
 	$(CXX) $(AM_CXXFLAGS) -c -o $@ $<
 
 # per-code configure
-mhttpd_SOURCES = @srcdir@/../midas/src/mhttpd.cxx @srcdir@/../midas/src/mgd.c
+mhttpd_SOURCES = @srcdir@/../midas/src/mhttpd.cxx @srcdir@/../midas/src/mgd.c @srcdir@/../midas/src/sequencer.cxx
 mhttpd_LDADD =  @mscb_obj@ libmidas.a
 mhttpd_CXXFLAGS = $(AM_CXXFLAGS) -I@mscb_dir@
 mhttpd_DEPENDENCIES = @mscb_obj@
